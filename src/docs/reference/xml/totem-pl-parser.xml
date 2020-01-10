@@ -1,0 +1,1097 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN" "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd" [
+	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+	<!ENTITY version SYSTEM "version.xml">
+	<!ENTITY slash "/">
+]>
+<refentry id="TotemPlParser">
+<refmeta>
+<refentrytitle role="top_of_page" id="TotemPlParser.top_of_page">TotemPlParser</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>TOTEM-PL-PARSER Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>TotemPlParser</refname>
+<refpurpose>playlist parser</refpurpose>
+</refnamediv>
+<refsect1 id="TotemPlParser.stability-level">
+<title>Stability Level</title>
+Stable, unless otherwise indicated
+</refsect1>
+
+<refsynopsisdiv id="TotemPlParser.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+
+#include &lt;totem-pl-parser.h&gt;
+
+                    <link linkend="TotemPlParser-struct">TotemPlParser</link>;
+typedef             <link linkend="TotemPlParserClass">TotemPlParserClass</link>;
+enum                <link linkend="TotemPlParserResult">TotemPlParserResult</link>;
+enum                <link linkend="TotemPlParserType">TotemPlParserType</link>;
+enum                <link linkend="TotemPlParserError">TotemPlParserError</link>;
+<link linkend="void">void</link>                (<link linkend="TotemPlParserIterFunc">*TotemPlParserIterFunc</link>)            (<link linkend="GtkTreeModel">GtkTreeModel</link> *model,
+                                                         <link linkend="GtkTreeIter">GtkTreeIter</link> *iter,
+                                                         <link linkend="char">char</link> **uri,
+                                                         <link linkend="char">char</link> **title,
+                                                         <link linkend="gboolean">gboolean</link> *custom_title,
+                                                         <link linkend="gpointer">gpointer</link> user_data);
+<link linkend="TotemPlParser">TotemPlParser</link> *     <link linkend="totem-pl-parser-new">totem_pl_parser_new</link>                 (void);
+<link linkend="TotemPlParserResult">TotemPlParserResult</link>  <link linkend="totem-pl-parser-parse">totem_pl_parser_parse</link>              (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         const <link linkend="char">char</link> *uri,
+                                                         <link linkend="gboolean">gboolean</link> fallback);
+<link linkend="void">void</link>                <link linkend="totem-pl-parser-parse-async">totem_pl_parser_parse_async</link>         (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         const <link linkend="char">char</link> *uri,
+                                                         <link linkend="gboolean">gboolean</link> fallback,
+                                                         <link linkend="GCancellable">GCancellable</link> *cancellable,
+                                                         <link linkend="GAsyncReadyCallback">GAsyncReadyCallback</link> callback,
+                                                         <link linkend="gpointer">gpointer</link> user_data);
+<link linkend="TotemPlParserResult">TotemPlParserResult</link>  <link linkend="totem-pl-parser-parse-finish">totem_pl_parser_parse_finish</link>       (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         <link linkend="GAsyncResult">GAsyncResult</link> *async_result,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="TotemPlParserResult">TotemPlParserResult</link>  <link linkend="totem-pl-parser-parse-with-base">totem_pl_parser_parse_with_base</link>    (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         const <link linkend="char">char</link> *uri,
+                                                         const <link linkend="char">char</link> *base,
+                                                         <link linkend="gboolean">gboolean</link> fallback);
+<link linkend="void">void</link>                <link linkend="totem-pl-parser-parse-with-base-async">totem_pl_parser_parse_with_base_async</link>
+                                                        (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         const <link linkend="char">char</link> *uri,
+                                                         const <link linkend="char">char</link> *base,
+                                                         <link linkend="gboolean">gboolean</link> fallback,
+                                                         <link linkend="GCancellable">GCancellable</link> *cancellable,
+                                                         <link linkend="GAsyncReadyCallback">GAsyncReadyCallback</link> callback,
+                                                         <link linkend="gpointer">gpointer</link> user_data);
+<link linkend="gboolean">gboolean</link>            <link linkend="totem-pl-parser-write">totem_pl_parser_write</link>               (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         <link linkend="GtkTreeModel">GtkTreeModel</link> *model,
+                                                         <link linkend="TotemPlParserIterFunc">TotemPlParserIterFunc</link> func,
+                                                         const <link linkend="char">char</link> *output,
+                                                         <link linkend="TotemPlParserType">TotemPlParserType</link> type,
+                                                         <link linkend="gpointer">gpointer</link> user_data,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>            <link linkend="totem-pl-parser-write-with-title">totem_pl_parser_write_with_title</link>    (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         <link linkend="GtkTreeModel">GtkTreeModel</link> *model,
+                                                         <link linkend="TotemPlParserIterFunc">TotemPlParserIterFunc</link> func,
+                                                         const <link linkend="char">char</link> *output,
+                                                         const <link linkend="char">char</link> *title,
+                                                         <link linkend="TotemPlParserType">TotemPlParserType</link> type,
+                                                         <link linkend="gpointer">gpointer</link> user_data,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="gint64">gint64</link>              <link linkend="totem-pl-parser-parse-duration">totem_pl_parser_parse_duration</link>      (const <link linkend="char">char</link> *duration,
+                                                         <link linkend="gboolean">gboolean</link> debug);
+<link linkend="guint64">guint64</link>             <link linkend="totem-pl-parser-parse-date">totem_pl_parser_parse_date</link>          (const <link linkend="char">char</link> *date_str,
+                                                         <link linkend="gboolean">gboolean</link> debug);
+<link linkend="void">void</link>                <link linkend="totem-pl-parser-add-ignored-scheme">totem_pl_parser_add_ignored_scheme</link>  (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         const <link linkend="char">char</link> *scheme);
+<link linkend="void">void</link>                <link linkend="totem-pl-parser-add-ignored-mimetype">totem_pl_parser_add_ignored_mimetype</link>
+                                                        (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         const <link linkend="char">char</link> *mimetype);
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-URI--CAPS">TOTEM_PL_PARSER_FIELD_URI</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-GENRE--CAPS">TOTEM_PL_PARSER_FIELD_GENRE</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-TITLE--CAPS">TOTEM_PL_PARSER_FIELD_TITLE</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-AUTHOR--CAPS">TOTEM_PL_PARSER_FIELD_AUTHOR</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-ALBUM--CAPS">TOTEM_PL_PARSER_FIELD_ALBUM</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-BASE--CAPS">TOTEM_PL_PARSER_FIELD_BASE</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-VOLUME--CAPS">TOTEM_PL_PARSER_FIELD_VOLUME</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-AUTOPLAY--CAPS">TOTEM_PL_PARSER_FIELD_AUTOPLAY</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-DURATION--CAPS">TOTEM_PL_PARSER_FIELD_DURATION</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-DURATION-MS--CAPS">TOTEM_PL_PARSER_FIELD_DURATION_MS</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-STARTTIME--CAPS">TOTEM_PL_PARSER_FIELD_STARTTIME</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-ENDTIME--CAPS">TOTEM_PL_PARSER_FIELD_ENDTIME</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-COPYRIGHT--CAPS">TOTEM_PL_PARSER_FIELD_COPYRIGHT</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-ABSTRACT--CAPS">TOTEM_PL_PARSER_FIELD_ABSTRACT</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-DESCRIPTION--CAPS">TOTEM_PL_PARSER_FIELD_DESCRIPTION</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-SUMMARY--CAPS">TOTEM_PL_PARSER_FIELD_SUMMARY</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-MOREINFO--CAPS">TOTEM_PL_PARSER_FIELD_MOREINFO</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-SCREENSIZE--CAPS">TOTEM_PL_PARSER_FIELD_SCREENSIZE</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-UI-MODE--CAPS">TOTEM_PL_PARSER_FIELD_UI_MODE</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-PUB-DATE--CAPS">TOTEM_PL_PARSER_FIELD_PUB_DATE</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-FILESIZE--CAPS">TOTEM_PL_PARSER_FIELD_FILESIZE</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-LANGUAGE--CAPS">TOTEM_PL_PARSER_FIELD_LANGUAGE</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-CONTACT--CAPS">TOTEM_PL_PARSER_FIELD_CONTACT</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-IMAGE-URI--CAPS">TOTEM_PL_PARSER_FIELD_IMAGE_URI</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-DOWNLOAD-URI--CAPS">TOTEM_PL_PARSER_FIELD_DOWNLOAD_URI</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-ID--CAPS">TOTEM_PL_PARSER_FIELD_ID</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-IS-PLAYLIST--CAPS">TOTEM_PL_PARSER_FIELD_IS_PLAYLIST</link>
+#define             <link linkend="TOTEM-PL-PARSER-FIELD-SUBTITLE-URI--CAPS">TOTEM_PL_PARSER_FIELD_SUBTITLE_URI</link>
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="TotemPlParser.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----TotemPlParser
+</synopsis>
+</refsect1>
+
+
+
+
+
+<refsect1 id="TotemPlParser.properties" role="properties">
+<title role="properties.title">Properties</title>
+<synopsis>
+  &quot;<link linkend="TotemPlParser--debug">debug</link>&quot;                    <link linkend="gboolean">gboolean</link>              : Read / Write
+  &quot;<link linkend="TotemPlParser--disable-unsafe">disable-unsafe</link>&quot;           <link linkend="gboolean">gboolean</link>              : Read / Write
+  &quot;<link linkend="TotemPlParser--force">force</link>&quot;                    <link linkend="gboolean">gboolean</link>              : Read / Write
+  &quot;<link linkend="TotemPlParser--recurse">recurse</link>&quot;                  <link linkend="gboolean">gboolean</link>              : Read / Write / Construct
+</synopsis>
+</refsect1>
+
+<refsect1 id="TotemPlParser.signals" role="signal_proto">
+<title role="signal_proto.title">Signals</title>
+<synopsis>
+  &quot;<link linkend="TotemPlParser-entry-parsed">entry-parsed</link>&quot;                                   : Run Last
+  &quot;<link linkend="TotemPlParser-playlist-ended">playlist-ended</link>&quot;                                 : Run Last
+  &quot;<link linkend="TotemPlParser-playlist-started">playlist-started</link>&quot;                               : Run Last
+</synopsis>
+</refsect1>
+
+
+<refsect1 id="TotemPlParser.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+<link linkend="TotemPlParser"><type>TotemPlParser</type></link> is a general-purpose playlist parser and writer, with
+support for several different types of playlist. Note that totem-pl-parser requires a main loop
+to operate properly (e.g. for the <link linkend="TotemPlParser-entry-parsed"><type>"entry-parsed"</type></link> signal to be emitted).
+</para>
+<para>
+<example>
+ <title>Reading a Playlist</title>
+ <programlisting>
+TotemPlParser *pl = totem_pl_parser_new ();
+g_object_set (pl, "recurse", FALSE, "disable-unsafe", TRUE, NULL);
+g_signal_connect (G_OBJECT (pl), "playlist-started", G_CALLBACK (playlist_started), NULL);
+g_signal_connect (G_OBJECT (pl), "entry-parsed", G_CALLBACK (entry_parsed), NULL);
+
+if (totem_pl_parser_parse (pl, "http://example.com/playlist.pls", FALSE) != TOTEM_PL_PARSER_RESULT_SUCCESS)
+	g_error ("Playlist parsing failed.");
+
+g_object_unref (pl);
+ </programlisting>
+</example>
+</para>
+<para>
+<example>
+ <title>Reading a Playlist Asynchronously</title>
+ <programlisting>
+TotemPlParser *pl = totem_pl_parser_new ();
+g_object_set (pl, "recurse", FALSE, "disable-unsafe", TRUE, NULL);
+g_signal_connect (G_OBJECT (pl), "playlist-started", G_CALLBACK (playlist_started), NULL);
+g_signal_connect (G_OBJECT (pl), "entry-parsed", G_CALLBACK (entry_parsed), NULL);
+
+totem_pl_parser_parse_async (pl, "http://example.com/playlist.pls", FALSE, NULL, parse_cb, NULL);
+g_object_unref (pl);
+
+static void
+parse_cb (TotemPlParser *parser, GAsyncResult *result, gpointer user_data)
+{
+GError *error = NULL;
+	if (totem_pl_parser_parse_finish (parser, result, &amp;error) != TOTEM_PL_PARSER_RESULT_SUCCESS) {
+		g_error ("Playlist parsing failed: %s", error->message);
+		g_error_free (error);
+	}
+}
+ </programlisting>
+</example>
+</para>
+<para>
+<example>
+ <title>Getting Metadata from Entries</title>
+ <programlisting>
+static void
+entry_parsed (TotemPlParser *parser, const gchar *uri, GHashTable *metadata, gpointer user_data)
+{
+	gchar *title = g_hash_table_lookup (metadata, TOTEM_PL_PARSER_FIELD_TITLE);
+	if (title != NULL)
+		g_message ("Entry title: %s", title);
+	else
+		g_message ("Entry (URI: %s) has no title.", uri);
+}
+ </programlisting>
+</example>
+</para>
+<para>
+<example>
+ <title>Writing a Playlist</title>
+ <programlisting>
+void
+parser_func (GtkTreeModel *model, GtkTreeIter *iter,
+		gchar **uri, gchar **title, gboolean *custom_title,
+		gpointer user_data)
+{
+	gtk_tree_model_get (model, iter,
+		0, uri,
+		1, title,
+		2, custom_title,
+		-1);
+}
+
+{
+	TotemPlParser *pl;
+	GtkTreeModel *tree_model;
+
+	pl = totem_pl_parser_new ();
+
+	&slash;* Your tree model can be as simple or as complex as you like;
+	 * parser_func() will just have to return the entry title, URI and custom title flag from it. *&slash;
+	tree_model = gtk_list_store_new (3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_BOOLEAN);
+	populate_model (tree_model);
+
+	if (totem_pl_parser_write (pl, tree_model, parser_func, "/tmp/playlist.pls",
+				   TOTEM_PL_PARSER_PLS, NULL, NULL) != TRUE) {
+		g_error ("Playlist writing failed.");
+	}
+
+	g_object_unref (tree_model);
+	g_object_unref (pl);
+}
+ </programlisting>
+</example></para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="TotemPlParser.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="TotemPlParser-struct" role="struct">
+<title>TotemPlParser</title>
+<indexterm zone="TotemPlParser-struct"><primary>TotemPlParser</primary></indexterm><programlisting>typedef struct _TotemPlParser TotemPlParser;</programlisting>
+<para>
+All the fields in the <link linkend="TotemPlParser"><type>TotemPlParser</type></link> structure are private and should never be accessed directly.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TotemPlParserClass" role="typedef">
+<title>TotemPlParserClass</title>
+<indexterm zone="TotemPlParserClass"><primary>TotemPlParserClass</primary></indexterm><programlisting>typedef struct TotemPlParserClass      TotemPlParserClass;
+</programlisting>
+<para>
+The class structure for the <link linkend="TotemPlParser"><type>TotemPlParser</type></link> type.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TotemPlParserResult" role="enum">
+<title>enum TotemPlParserResult</title>
+<indexterm zone="TotemPlParserResult"><primary>TotemPlParserResult</primary></indexterm><programlisting>typedef enum {
+	TOTEM_PL_PARSER_RESULT_UNHANDLED,
+	TOTEM_PL_PARSER_RESULT_ERROR,
+	TOTEM_PL_PARSER_RESULT_SUCCESS,
+	TOTEM_PL_PARSER_RESULT_IGNORED,
+	TOTEM_PL_PARSER_RESULT_CANCELLED
+} TotemPlParserResult;
+</programlisting>
+<para>
+Gives the result of parsing a playlist.</para>
+<para>
+</para><variablelist role="enum">
+<varlistentry id="TOTEM-PL-PARSER-RESULT-UNHANDLED--CAPS" role="constant">
+<term><literal>TOTEM_PL_PARSER_RESULT_UNHANDLED</literal></term>
+<listitem><simpara> The playlist could not be handled.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-PL-PARSER-RESULT-ERROR--CAPS" role="constant">
+<term><literal>TOTEM_PL_PARSER_RESULT_ERROR</literal></term>
+<listitem><simpara> There was an error parsing the playlist.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-PL-PARSER-RESULT-SUCCESS--CAPS" role="constant">
+<term><literal>TOTEM_PL_PARSER_RESULT_SUCCESS</literal></term>
+<listitem><simpara> The playlist was parsed successfully.
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-PL-PARSER-RESULT-IGNORED--CAPS" role="constant">
+<term><literal>TOTEM_PL_PARSER_RESULT_IGNORED</literal></term>
+<listitem><simpara> The playlist was ignored due to its scheme or MIME type (see <link linkend="totem-pl-parser-add-ignored-scheme"><function>totem_pl_parser_add_ignored_scheme()</function></link>
+and <link linkend="totem-pl-parser-add-ignored-mimetype"><function>totem_pl_parser_add_ignored_mimetype()</function></link>).
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-PL-PARSER-RESULT-CANCELLED--CAPS" role="constant">
+<term><literal>TOTEM_PL_PARSER_RESULT_CANCELLED</literal></term>
+<listitem><simpara> Parsing of the playlist was cancelled part-way through.
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="TotemPlParserType" role="enum">
+<title>enum TotemPlParserType</title>
+<indexterm zone="TotemPlParserType"><primary>TotemPlParserType</primary></indexterm><programlisting>typedef enum {
+	TOTEM_PL_PARSER_PLS,
+	TOTEM_PL_PARSER_M3U,
+	TOTEM_PL_PARSER_M3U_DOS,
+	TOTEM_PL_PARSER_XSPF,
+	TOTEM_PL_PARSER_IRIVER_PLA,
+} TotemPlParserType;
+</programlisting>
+<para>
+The type of playlist a <link linkend="TotemPlParser"><type>TotemPlParser</type></link> will parse.</para>
+<para>
+</para><variablelist role="enum">
+<varlistentry id="TOTEM-PL-PARSER-PLS--CAPS" role="constant">
+<term><literal>TOTEM_PL_PARSER_PLS</literal></term>
+<listitem><simpara> PLS parser
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-PL-PARSER-M3U--CAPS" role="constant">
+<term><literal>TOTEM_PL_PARSER_M3U</literal></term>
+<listitem><simpara> M3U parser
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-PL-PARSER-M3U-DOS--CAPS" role="constant">
+<term><literal>TOTEM_PL_PARSER_M3U_DOS</literal></term>
+<listitem><simpara> M3U (DOS linebreaks) parser
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-PL-PARSER-XSPF--CAPS" role="constant">
+<term><literal>TOTEM_PL_PARSER_XSPF</literal></term>
+<listitem><simpara> XSPF parser
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-PL-PARSER-IRIVER-PLA--CAPS" role="constant">
+<term><literal>TOTEM_PL_PARSER_IRIVER_PLA</literal></term>
+<listitem><simpara> iRiver PLA parser
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="TotemPlParserError" role="enum">
+<title>enum TotemPlParserError</title>
+<indexterm zone="TotemPlParserError"><primary>TotemPlParserError</primary></indexterm><programlisting>typedef enum {
+	TOTEM_PL_PARSER_ERROR_NO_DISC,
+	TOTEM_PL_PARSER_ERROR_MOUNT_FAILED
+} TotemPlParserError;
+</programlisting>
+<para>
+Allows you to differentiate between different
+errors occurring during file operations in a <link linkend="TotemPlParser"><type>TotemPlParser</type></link>.</para>
+<para>
+</para><variablelist role="enum">
+<varlistentry id="TOTEM-PL-PARSER-ERROR-NO-DISC--CAPS" role="constant">
+<term><literal>TOTEM_PL_PARSER_ERROR_NO_DISC</literal></term>
+<listitem><simpara> Error attempting to open a disc device when no disc is present
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="TOTEM-PL-PARSER-ERROR-MOUNT-FAILED--CAPS" role="constant">
+<term><literal>TOTEM_PL_PARSER_ERROR_MOUNT_FAILED</literal></term>
+<listitem><simpara> An attempted mount operation failed
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="TotemPlParserIterFunc" role="function">
+<title>TotemPlParserIterFunc ()</title>
+<indexterm zone="TotemPlParserIterFunc"><primary>TotemPlParserIterFunc</primary></indexterm><programlisting><link linkend="void">void</link>                (*TotemPlParserIterFunc)            (<link linkend="GtkTreeModel">GtkTreeModel</link> *model,
+                                                         <link linkend="GtkTreeIter">GtkTreeIter</link> *iter,
+                                                         <link linkend="char">char</link> **uri,
+                                                         <link linkend="char">char</link> **title,
+                                                         <link linkend="gboolean">gboolean</link> *custom_title,
+                                                         <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+Functions such as <link linkend="totem-pl-parser-write"><function>totem_pl_parser_write()</function></link> accept pointers to <link linkend="TotemPlParserIterFunc"><function>TotemPlParserIterFunc()</function></link>s
+as callbacks to call for each entry in the playlist. These functions
+are specific to each use of the playlist API, and should set the entry's
+<parameter>uri</parameter>, <parameter>title</parameter> and <parameter>custom_title</parameter> return values, getting the data from <parameter>model</parameter>
+or otherwise.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>model</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GtkTreeModel"><type>GtkTreeModel</type></link> containing the playlist entries
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>iter</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GtkTreeIter"><type>GtkTreeIter</type></link> pointing to the current row
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>uri</parameter>&#160;:</term>
+<listitem><simpara> return location for the entry's URI, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>. <acronym>out</acronym>. <acronym>transfer</acronym> full. </simpara></listitem></varlistentry>
+<varlistentry><term><parameter>title</parameter>&#160;:</term>
+<listitem><simpara> return location for the entry's title, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>. <acronym>out</acronym>. <acronym>transfer</acronym> full. </simpara></listitem></varlistentry>
+<varlistentry><term><parameter>custom_title</parameter>&#160;:</term>
+<listitem><simpara> return location for a boolean which, if <link linkend="TRUE--CAPS"><literal>TRUE</literal></link>, indicates that the entry's <parameter>title</parameter> is custom; or <link linkend="NULL--CAPS"><literal>NULL</literal></link>. <acronym>out</acronym>. <acronym>transfer</acronym> full. </simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara> user data to pass to the function
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-parser-new" role="function">
+<title>totem_pl_parser_new ()</title>
+<indexterm zone="totem-pl-parser-new"><primary sortas="new">totem_pl_parser_new</primary></indexterm><programlisting><link linkend="TotemPlParser">TotemPlParser</link> *     totem_pl_parser_new                 (void);</programlisting>
+<para>
+Creates a <link linkend="TotemPlParser"><type>TotemPlParser</type></link> object.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a new <link linkend="TotemPlParser"><type>TotemPlParser</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-parser-parse" role="function">
+<title>totem_pl_parser_parse ()</title>
+<indexterm zone="totem-pl-parser-parse"><primary sortas="parse">totem_pl_parser_parse</primary></indexterm><programlisting><link linkend="TotemPlParserResult">TotemPlParserResult</link>  totem_pl_parser_parse              (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         const <link linkend="char">char</link> *uri,
+                                                         <link linkend="gboolean">gboolean</link> fallback);</programlisting>
+<para>
+Parses a playlist given by the absolute URI <parameter>uri</parameter>. This method is
+synchronous, and will block on (e.g.) network requests to slow
+servers. <link linkend="totem-pl-parser-parse-async"><function>totem_pl_parser_parse_async()</function></link> is recommended instead.
+</para>
+<para>
+Return values are as <link linkend="totem-pl-parser-parse-with-base"><function>totem_pl_parser_parse_with_base()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlParser"><type>TotemPlParser</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>uri</parameter>&#160;:</term>
+<listitem><simpara> the URI of the playlist to parse
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fallback</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the parser should add the playlist URI to the
+end of the playlist on parse failure
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a <link linkend="TotemPlParserResult"><type>TotemPlParserResult</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-parser-parse-async" role="function">
+<title>totem_pl_parser_parse_async ()</title>
+<indexterm zone="totem-pl-parser-parse-async"><primary sortas="parse_async">totem_pl_parser_parse_async</primary></indexterm><programlisting><link linkend="void">void</link>                totem_pl_parser_parse_async         (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         const <link linkend="char">char</link> *uri,
+                                                         <link linkend="gboolean">gboolean</link> fallback,
+                                                         <link linkend="GCancellable">GCancellable</link> *cancellable,
+                                                         <link linkend="GAsyncReadyCallback">GAsyncReadyCallback</link> callback,
+                                                         <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+Starts asynchronous parsing of a playlist given by the absolute URI <parameter>uri</parameter>. <parameter>self</parameter> and <parameter>uri</parameter> are both reffed/copied
+when this function is called, so can safely be freed after this function returns.
+</para>
+<para>
+For more details, see <link linkend="totem-pl-parser-parse"><function>totem_pl_parser_parse()</function></link>, which is the synchronous version of this function.
+</para>
+<para>
+When the operation is finished, <parameter>callback</parameter> will be called. You can then call <link linkend="totem-pl-parser-parse-finish"><function>totem_pl_parser_parse_finish()</function></link>
+to get the results of the operation.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlParser"><type>TotemPlParser</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>uri</parameter>&#160;:</term>
+<listitem><simpara> the URI of the playlist to parse
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fallback</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the parser should add the playlist URI to the
+end of the playlist on parse failure
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cancellable</parameter>&#160;:</term>
+<listitem><simpara> optional <link linkend="GCancellable"><type>GCancellable</type></link> object, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>. <acronym>allow-none</acronym>. </simpara></listitem></varlistentry>
+<varlistentry><term><parameter>callback</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GAsyncReadyCallback"><type>GAsyncReadyCallback</type></link> to call when parsing is finished. <acronym>allow-none</acronym>. </simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to the <parameter>callback</parameter> function
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-parser-parse-finish" role="function">
+<title>totem_pl_parser_parse_finish ()</title>
+<indexterm zone="totem-pl-parser-parse-finish"><primary sortas="parse_finish">totem_pl_parser_parse_finish</primary></indexterm><programlisting><link linkend="TotemPlParserResult">TotemPlParserResult</link>  totem_pl_parser_parse_finish       (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         <link linkend="GAsyncResult">GAsyncResult</link> *async_result,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Finishes an asynchronous playlist parsing operation started with <link linkend="totem-pl-parser-parse-async"><function>totem_pl_parser_parse_async()</function></link>
+or <link linkend="totem-pl-parser-parse-with-base-async"><function>totem_pl_parser_parse_with_base_async()</function></link>.
+</para>
+<para>
+If parsing of the playlist is cancelled part-way through, <link linkend="TOTEM-PL-PARSER-RESULT-CANCELLED--CAPS"><literal>TOTEM_PL_PARSER_RESULT_CANCELLED</literal></link> is returned when
+this function is called.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlParser"><type>TotemPlParser</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>async_result</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GAsyncResult"><type>GAsyncResult</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GError"><type>GError</type></link>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a <link linkend="TotemPlParserResult"><type>TotemPlParserResult</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-parser-parse-with-base" role="function">
+<title>totem_pl_parser_parse_with_base ()</title>
+<indexterm zone="totem-pl-parser-parse-with-base"><primary sortas="parse_with_base">totem_pl_parser_parse_with_base</primary></indexterm><programlisting><link linkend="TotemPlParserResult">TotemPlParserResult</link>  totem_pl_parser_parse_with_base    (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         const <link linkend="char">char</link> *uri,
+                                                         const <link linkend="char">char</link> *base,
+                                                         <link linkend="gboolean">gboolean</link> fallback);</programlisting>
+<para>
+Parses a playlist given by the absolute URI <parameter>uri</parameter>, using
+<parameter>base</parameter> to resolve relative paths where appropriate.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlParser"><type>TotemPlParser</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>uri</parameter>&#160;:</term>
+<listitem><simpara> the URI of the playlist to parse
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>base</parameter>&#160;:</term>
+<listitem><simpara> the base path for relative filenames, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>. <acronym>allow-none</acronym>. </simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fallback</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the parser should add the playlist URI to the
+end of the playlist on parse failure
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a <link linkend="TotemPlParserResult"><type>TotemPlParserResult</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-parser-parse-with-base-async" role="function">
+<title>totem_pl_parser_parse_with_base_async ()</title>
+<indexterm zone="totem-pl-parser-parse-with-base-async"><primary sortas="parse_with_base_async">totem_pl_parser_parse_with_base_async</primary></indexterm><programlisting><link linkend="void">void</link>                totem_pl_parser_parse_with_base_async
+                                                        (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         const <link linkend="char">char</link> *uri,
+                                                         const <link linkend="char">char</link> *base,
+                                                         <link linkend="gboolean">gboolean</link> fallback,
+                                                         <link linkend="GCancellable">GCancellable</link> *cancellable,
+                                                         <link linkend="GAsyncReadyCallback">GAsyncReadyCallback</link> callback,
+                                                         <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+Starts asynchronous parsing of a playlist given by the absolute URI <parameter>uri</parameter>, using <parameter>base</parameter> to resolve relative paths where appropriate.
+<parameter>self</parameter> and <parameter>uri</parameter> are both reffed/copied when this function is called, so can safely be freed after this function returns.
+</para>
+<para>
+For more details, see <link linkend="totem-pl-parser-parse-with-base"><function>totem_pl_parser_parse_with_base()</function></link>, which is the synchronous version of this function.
+</para>
+<para>
+When the operation is finished, <parameter>callback</parameter> will be called. You can then call <link linkend="totem-pl-parser-parse-finish"><function>totem_pl_parser_parse_finish()</function></link>
+to get the results of the operation.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlParser"><type>TotemPlParser</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>uri</parameter>&#160;:</term>
+<listitem><simpara> the URI of the playlist to parse
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>base</parameter>&#160;:</term>
+<listitem><simpara> the base path for relative filenames, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>. <acronym>allow-none</acronym>. </simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fallback</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the parser should add the playlist URI to the
+end of the playlist on parse failure
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cancellable</parameter>&#160;:</term>
+<listitem><simpara> optional <link linkend="GCancellable"><type>GCancellable</type></link> object, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>. <acronym>allow-none</acronym>. </simpara></listitem></varlistentry>
+<varlistentry><term><parameter>callback</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GAsyncReadyCallback"><type>GAsyncReadyCallback</type></link> to call when parsing is finished. <acronym>allow-none</acronym>. </simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara> data to pass to the <parameter>callback</parameter> function
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-parser-write" role="function">
+<title>totem_pl_parser_write ()</title>
+<indexterm zone="totem-pl-parser-write"><primary sortas="write">totem_pl_parser_write</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            totem_pl_parser_write               (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         <link linkend="GtkTreeModel">GtkTreeModel</link> *model,
+                                                         <link linkend="TotemPlParserIterFunc">TotemPlParserIterFunc</link> func,
+                                                         const <link linkend="char">char</link> *output,
+                                                         <link linkend="TotemPlParserType">TotemPlParserType</link> type,
+                                                         <link linkend="gpointer">gpointer</link> user_data,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Writes the playlist held by <parameter>parser</parameter> and <parameter>model</parameter> out to the file of
+path <parameter>output</parameter>. The playlist is written in the format <parameter>type</parameter> and is given
+a <link linkend="NULL--CAPS"><literal>NULL</literal></link> title.
+</para>
+<para>
+For each entry in the <parameter>model</parameter>, the function <parameter>func</parameter> is called (and passed
+<parameter>user_data</parameter>), which gets various metadata values about the entry for
+the playlist writer.
+</para>
+<para>
+Possible error codes are as per <link linkend="totem-pl-parser-write-with-title"><function>totem_pl_parser_write_with_title()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlParser"><type>TotemPlParser</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>model</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GtkTreeModel"><type>GtkTreeModel</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara> a pointer to a <link linkend="TotemPlParserIterFunc"><type>TotemPlParserIterFunc</type></link> callback function
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>output</parameter>&#160;:</term>
+<listitem><simpara> the output path and filename
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlParserType"><type>TotemPlParserType</type></link> for the ouputted playlist
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara> a pointer to be passed to each call of <parameter>func</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> return location for a <link linkend="GError"><type>GError</type></link>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> on success
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-parser-write-with-title" role="function">
+<title>totem_pl_parser_write_with_title ()</title>
+<indexterm zone="totem-pl-parser-write-with-title"><primary sortas="write_with_title">totem_pl_parser_write_with_title</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            totem_pl_parser_write_with_title    (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         <link linkend="GtkTreeModel">GtkTreeModel</link> *model,
+                                                         <link linkend="TotemPlParserIterFunc">TotemPlParserIterFunc</link> func,
+                                                         const <link linkend="char">char</link> *output,
+                                                         const <link linkend="char">char</link> *title,
+                                                         <link linkend="TotemPlParserType">TotemPlParserType</link> type,
+                                                         <link linkend="gpointer">gpointer</link> user_data,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Writes the playlist held by <parameter>parser</parameter> and <parameter>model</parameter> out to the file of
+path <parameter>output</parameter>. The playlist is written in the format <parameter>type</parameter> and is
+given the title <parameter>title</parameter>.
+</para>
+<para>
+For each entry in the <parameter>model</parameter>, the function <parameter>func</parameter> is called (and passed
+<parameter>user_data</parameter>), which gets various metadata values about the entry for
+the playlist writer.
+</para>
+<para>
+If the <parameter>output</parameter> file is a directory the <link linkend="G-IO-ERROR-IS-DIRECTORY--CAPS"><type>G_IO_ERROR_IS_DIRECTORY</type></link> error
+will be returned, and if the file is some other form of non-regular file
+then a <link linkend="G-IO-ERROR-NOT-REGULAR-FILE--CAPS"><type>G_IO_ERROR_NOT_REGULAR_FILE</type></link> error will be returned. Some file
+systems don't allow all file names, and may return a
+<link linkend="G-IO-ERROR-INVALID-FILENAME--CAPS"><type>G_IO_ERROR_INVALID_FILENAME</type></link> error, and if the name is too long,
+<link linkend="G-IO-ERROR-FILENAME-TOO-LONG--CAPS"><type>G_IO_ERROR_FILENAME_TOO_LONG</type></link> will be returned. Other errors are possible
+too, and depend on what kind of filesystem the file is on.
+</para>
+<para>
+In extreme cases, a <link linkend="G-IO-ERROR-INVALID-ARGUMENT--CAPS"><type>G_IO_ERROR_INVALID_ARGUMENT</type></link> error can be returned, if
+parts of the playlist to be written are too long.
+</para>
+<para>
+If writing a PLA playlist and there is an error converting a URI's encoding,
+a code from <link linkend="GConvertError"><type>GConvertError</type></link> will be returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlParser"><type>TotemPlParser</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>model</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GtkTreeModel"><type>GtkTreeModel</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>func</parameter>&#160;:</term>
+<listitem><simpara> a pointer to a <link linkend="TotemPlParserIterFunc"><type>TotemPlParserIterFunc</type></link> callback function
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>output</parameter>&#160;:</term>
+<listitem><simpara> the output path and filename
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>title</parameter>&#160;:</term>
+<listitem><simpara> the playlist title
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlParserType"><type>TotemPlParserType</type></link> for the ouputted playlist
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara> a pointer to be passed to each call of <parameter>func</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> return location for a <link linkend="GError"><type>GError</type></link>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> on success
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-parser-parse-duration" role="function">
+<title>totem_pl_parser_parse_duration ()</title>
+<indexterm zone="totem-pl-parser-parse-duration"><primary sortas="parse_duration">totem_pl_parser_parse_duration</primary></indexterm><programlisting><link linkend="gint64">gint64</link>              totem_pl_parser_parse_duration      (const <link linkend="char">char</link> *duration,
+                                                         <link linkend="gboolean">gboolean</link> debug);</programlisting>
+<para>
+Parses the given duration string and returns it as a <type>gint64</type>
+denoting the duration in seconds.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>duration</parameter>&#160;:</term>
+<listitem><simpara> the duration string to parse
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>debug</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if debug statements should be printed
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the duration in seconds, or -1 on error
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-parser-parse-date" role="function">
+<title>totem_pl_parser_parse_date ()</title>
+<indexterm zone="totem-pl-parser-parse-date"><primary sortas="parse_date">totem_pl_parser_parse_date</primary></indexterm><programlisting><link linkend="guint64">guint64</link>             totem_pl_parser_parse_date          (const <link linkend="char">char</link> *date_str,
+                                                         <link linkend="gboolean">gboolean</link> debug);</programlisting>
+<para>
+Parses the given date string and returns it as a <type>gint64</type>
+denoting the date in seconds since the UNIX Epoch.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>date_str</parameter>&#160;:</term>
+<listitem><simpara> the date string to parse
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>debug</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if debug statements should be printed
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the date in seconds, or -1 on error
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-parser-add-ignored-scheme" role="function">
+<title>totem_pl_parser_add_ignored_scheme ()</title>
+<indexterm zone="totem-pl-parser-add-ignored-scheme"><primary sortas="add_ignored_scheme">totem_pl_parser_add_ignored_scheme</primary></indexterm><programlisting><link linkend="void">void</link>                totem_pl_parser_add_ignored_scheme  (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         const <link linkend="char">char</link> *scheme);</programlisting>
+<para>
+Adds a scheme to the list of schemes to ignore, so that
+any URI using that scheme is ignored during playlist parsing.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlParser"><type>TotemPlParser</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>scheme</parameter>&#160;:</term>
+<listitem><simpara> the scheme to ignore
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-parser-add-ignored-mimetype" role="function">
+<title>totem_pl_parser_add_ignored_mimetype ()</title>
+<indexterm zone="totem-pl-parser-add-ignored-mimetype"><primary sortas="add_ignored_mimetype">totem_pl_parser_add_ignored_mimetype</primary></indexterm><programlisting><link linkend="void">void</link>                totem_pl_parser_add_ignored_mimetype
+                                                        (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                         const <link linkend="char">char</link> *mimetype);</programlisting>
+<para>
+Adds a mimetype to the list of mimetypes to ignore, so that
+any URI of that mimetype is ignored during playlist parsing.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlParser"><type>TotemPlParser</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>mimetype</parameter>&#160;:</term>
+<listitem><simpara> the mimetype to ignore
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-URI--CAPS" role="macro" condition="since:2.26">
+<title>TOTEM_PL_PARSER_FIELD_URI</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-URI--CAPS" role="2.26"><primary sortas="FIELD_URI">TOTEM_PL_PARSER_FIELD_URI</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_URI		"url"
+</programlisting>
+<para>
+Metadata field for an entry's URI.</para>
+<para>
+</para><para role="since">Since 2.26</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-GENRE--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_GENRE</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-GENRE--CAPS"><primary sortas="FIELD_GENRE">TOTEM_PL_PARSER_FIELD_GENRE</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_GENRE		"genre"
+</programlisting>
+<para>
+Metadata field for an entry's genre.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-TITLE--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_TITLE</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-TITLE--CAPS"><primary sortas="FIELD_TITLE">TOTEM_PL_PARSER_FIELD_TITLE</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_TITLE		"title"
+</programlisting>
+<para>
+Metadata field for an entry's displayable title.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-AUTHOR--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_AUTHOR</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-AUTHOR--CAPS"><primary sortas="FIELD_AUTHOR">TOTEM_PL_PARSER_FIELD_AUTHOR</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_AUTHOR		"author"
+</programlisting>
+<para>
+Metadata field for an entry's author/composer/director.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-ALBUM--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_ALBUM</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-ALBUM--CAPS"><primary sortas="FIELD_ALBUM">TOTEM_PL_PARSER_FIELD_ALBUM</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_ALBUM		"album"
+</programlisting>
+<para>
+Metadata field for an entry's album.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-BASE--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_BASE</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-BASE--CAPS"><primary sortas="FIELD_BASE">TOTEM_PL_PARSER_FIELD_BASE</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_BASE		"base"
+</programlisting>
+<para>
+Metadata field for an entry's base path.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-VOLUME--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_VOLUME</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-VOLUME--CAPS"><primary sortas="FIELD_VOLUME">TOTEM_PL_PARSER_FIELD_VOLUME</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_VOLUME		"volume"
+</programlisting>
+<para>
+Metadata field for an entry's playback volume.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-AUTOPLAY--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_AUTOPLAY</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-AUTOPLAY--CAPS"><primary sortas="FIELD_AUTOPLAY">TOTEM_PL_PARSER_FIELD_AUTOPLAY</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_AUTOPLAY		"autoplay"
+</programlisting>
+<para>
+Metadata field for an entry's "autoplay" flag, which is <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the entry should play automatically.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-DURATION--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_DURATION</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-DURATION--CAPS"><primary sortas="FIELD_DURATION">TOTEM_PL_PARSER_FIELD_DURATION</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_DURATION		"duration"
+</programlisting>
+<para>
+Metadata field for an entry's playback duration, which should be parsed using <link linkend="totem-pl-parser-parse-duration"><function>totem_pl_parser_parse_duration()</function></link>.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-DURATION-MS--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_DURATION_MS</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-DURATION-MS--CAPS"><primary sortas="FIELD_DURATION_MS">TOTEM_PL_PARSER_FIELD_DURATION_MS</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_DURATION_MS	"duration-ms"
+</programlisting>
+<para>
+Metadata field for an entry's playback duration, in milliseconds. It's only used when an entry's
+duration is available in that format, so one would get either the <link linkend="TOTEM-PL-PARSER-FIELD-DURATION--CAPS"><literal>TOTEM_PL_PARSER_FIELD_DURATION</literal></link>
+or <link linkend="TOTEM-PL-PARSER-FIELD-DURATION-MS--CAPS"><literal>TOTEM_PL_PARSER_FIELD_DURATION_MS</literal></link> as metadata.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-STARTTIME--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_STARTTIME</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-STARTTIME--CAPS"><primary sortas="FIELD_STARTTIME">TOTEM_PL_PARSER_FIELD_STARTTIME</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_STARTTIME		"starttime"
+</programlisting>
+<para>
+Metadata field for an entry's playback start time, which should be parsed using <link linkend="totem-pl-parser-parse-duration"><function>totem_pl_parser_parse_duration()</function></link>.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-ENDTIME--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_ENDTIME</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-ENDTIME--CAPS"><primary sortas="FIELD_ENDTIME">TOTEM_PL_PARSER_FIELD_ENDTIME</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_ENDTIME		"endtime"
+</programlisting>
+<para>
+Metadata field for an entry's playback end time.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-COPYRIGHT--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_COPYRIGHT</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-COPYRIGHT--CAPS"><primary sortas="FIELD_COPYRIGHT">TOTEM_PL_PARSER_FIELD_COPYRIGHT</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_COPYRIGHT		"copyright"
+</programlisting>
+<para>
+Metadata field for an entry's copyright line.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-ABSTRACT--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_ABSTRACT</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-ABSTRACT--CAPS"><primary sortas="FIELD_ABSTRACT">TOTEM_PL_PARSER_FIELD_ABSTRACT</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_ABSTRACT		"abstract"
+</programlisting>
+<para>
+Metadata field for an entry's abstract text.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-DESCRIPTION--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_DESCRIPTION</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-DESCRIPTION--CAPS"><primary sortas="FIELD_DESCRIPTION">TOTEM_PL_PARSER_FIELD_DESCRIPTION</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_DESCRIPTION	"description"
+</programlisting>
+<para>
+Metadata field for an entry's description.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-SUMMARY--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_SUMMARY</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-SUMMARY--CAPS"><primary sortas="FIELD_SUMMARY">TOTEM_PL_PARSER_FIELD_SUMMARY</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_SUMMARY		TOTEM_PL_PARSER_FIELD_DESCRIPTION
+</programlisting>
+<para>
+Metadata field for an entry's summary. (In practice, identical to <link linkend="TOTEM-PL-PARSER-FIELD-DESCRIPTION--CAPS"><literal>TOTEM_PL_PARSER_FIELD_DESCRIPTION</literal></link>.)</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-MOREINFO--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_MOREINFO</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-MOREINFO--CAPS"><primary sortas="FIELD_MOREINFO">TOTEM_PL_PARSER_FIELD_MOREINFO</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_MOREINFO		"moreinfo"
+</programlisting>
+<para>
+Metadata field for an entry's "more info" URI.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-SCREENSIZE--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_SCREENSIZE</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-SCREENSIZE--CAPS"><primary sortas="FIELD_SCREENSIZE">TOTEM_PL_PARSER_FIELD_SCREENSIZE</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_SCREENSIZE	"screensize"
+</programlisting>
+<para>
+Metadata field for an entry's preferred screen size.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-UI-MODE--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_UI_MODE</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-UI-MODE--CAPS"><primary sortas="FIELD_UI_MODE">TOTEM_PL_PARSER_FIELD_UI_MODE</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_UI_MODE		"ui-mode"
+</programlisting>
+<para>
+Metadata field for an entry's preferred UI mode.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-PUB-DATE--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_PUB_DATE</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-PUB-DATE--CAPS"><primary sortas="FIELD_PUB_DATE">TOTEM_PL_PARSER_FIELD_PUB_DATE</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_PUB_DATE		"publication-date"
+</programlisting>
+<para>
+Metadata field for an entry's publication date, which should be parsed using <link linkend="totem-pl-parser-parse-date"><function>totem_pl_parser_parse_date()</function></link>.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-FILESIZE--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_FILESIZE</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-FILESIZE--CAPS"><primary sortas="FIELD_FILESIZE">TOTEM_PL_PARSER_FIELD_FILESIZE</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_FILESIZE		"filesize"
+</programlisting>
+<para>
+Metadata field for an entry's filesize in bytes. This is only advisory, and can sometimes not match the actual filesize of the stream.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-LANGUAGE--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_LANGUAGE</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-LANGUAGE--CAPS"><primary sortas="FIELD_LANGUAGE">TOTEM_PL_PARSER_FIELD_LANGUAGE</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_LANGUAGE		"language"
+</programlisting>
+<para>
+Metadata field for an entry's audio language.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-CONTACT--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_CONTACT</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-CONTACT--CAPS"><primary sortas="FIELD_CONTACT">TOTEM_PL_PARSER_FIELD_CONTACT</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_CONTACT		"contact"
+</programlisting>
+<para>
+Metadata field for an entry's contact details for the webmaster.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-IMAGE-URI--CAPS" role="macro" condition="since:2.26">
+<title>TOTEM_PL_PARSER_FIELD_IMAGE_URI</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-IMAGE-URI--CAPS" role="2.26"><primary sortas="FIELD_IMAGE_URI">TOTEM_PL_PARSER_FIELD_IMAGE_URI</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_IMAGE_URI		"image-url"
+</programlisting>
+<para>
+Metadata field for an entry's thumbnail image URI.</para>
+<para>
+</para><para role="since">Since 2.26</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-DOWNLOAD-URI--CAPS" role="macro" condition="since:2.26">
+<title>TOTEM_PL_PARSER_FIELD_DOWNLOAD_URI</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-DOWNLOAD-URI--CAPS" role="2.26"><primary sortas="FIELD_DOWNLOAD_URI">TOTEM_PL_PARSER_FIELD_DOWNLOAD_URI</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_DOWNLOAD_URI	"download-url"
+</programlisting>
+<para>
+Metadata field for an entry's download URI. Only used if an alternate download
+location is available for the entry.</para>
+<para>
+</para><para role="since">Since 2.26</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-ID--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_ID</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-ID--CAPS"><primary sortas="FIELD_ID">TOTEM_PL_PARSER_FIELD_ID</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_ID		"id"
+</programlisting>
+<para>
+Metadata field for an entry's identifier. Its use is dependent on the format
+of the playlist parsed, and its origin.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-IS-PLAYLIST--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_IS_PLAYLIST</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-IS-PLAYLIST--CAPS"><primary sortas="FIELD_IS_PLAYLIST">TOTEM_PL_PARSER_FIELD_IS_PLAYLIST</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_IS_PLAYLIST	"is-playlist"
+</programlisting>
+<para>
+Metadata field used to tell the calling code that the parsing of a playlist
+started. It is only <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> for the metadata passed to <link linkend="TotemPlParser-playlist-started"><type>"playlist-started"</type></link> or
+<link linkend="TotemPlParser-playlist-ended"><type>"playlist-ended"</type></link> signal handlers.</para>
+<para>
+</para></refsect2>
+<refsect2 id="TOTEM-PL-PARSER-FIELD-SUBTITLE-URI--CAPS" role="macro">
+<title>TOTEM_PL_PARSER_FIELD_SUBTITLE_URI</title>
+<indexterm zone="TOTEM-PL-PARSER-FIELD-SUBTITLE-URI--CAPS"><primary sortas="FIELD_SUBTITLE_URI">TOTEM_PL_PARSER_FIELD_SUBTITLE_URI</primary></indexterm><programlisting>#define TOTEM_PL_PARSER_FIELD_SUBTITLE_URI	"subtitle-uri"
+</programlisting>
+<para>
+The URI of the entry's subtitle file.</para>
+<para>
+</para></refsect2>
+
+</refsect1>
+<refsect1 id="TotemPlParser.property-details" role="property_details">
+<title role="property_details.title">Property Details</title>
+<refsect2 id="TotemPlParser--debug" role="property"><title>The <literal>&quot;debug&quot;</literal> property</title>
+<indexterm zone="TotemPlParser--debug"><primary>TotemPlParser:debug</primary></indexterm><programlisting>  &quot;debug&quot;                    <link linkend="gboolean">gboolean</link>              : Read / Write</programlisting>
+<para>
+If <link linkend="TRUE--CAPS"><literal>TRUE</literal></link>, the parser will output debug information.</para>
+<para>
+</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="TotemPlParser--disable-unsafe" role="property"><title>The <literal>&quot;disable-unsafe&quot;</literal> property</title>
+<indexterm zone="TotemPlParser--disable-unsafe"><primary>TotemPlParser:disable-unsafe</primary></indexterm><programlisting>  &quot;disable-unsafe&quot;           <link linkend="gboolean">gboolean</link>              : Read / Write</programlisting>
+<para>
+If <link linkend="TRUE--CAPS"><literal>TRUE</literal></link>, the parser will not parse unsafe locations, such as local devices
+and local files if the playlist isn't local. This is useful if the library
+is parsing a playlist from a remote location such as a website.</para>
+<para>
+</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="TotemPlParser--force" role="property"><title>The <literal>&quot;force&quot;</literal> property</title>
+<indexterm zone="TotemPlParser--force"><primary>TotemPlParser:force</primary></indexterm><programlisting>  &quot;force&quot;                    <link linkend="gboolean">gboolean</link>              : Read / Write</programlisting>
+<para>
+If <link linkend="TRUE--CAPS"><literal>TRUE</literal></link>, the parser will attempt to parse a playlist, even if it
+appears to be unsupported (usually because of its filename extension).</para>
+<para>
+</para><para>Default value: FALSE</para>
+</refsect2>
+<refsect2 id="TotemPlParser--recurse" role="property"><title>The <literal>&quot;recurse&quot;</literal> property</title>
+<indexterm zone="TotemPlParser--recurse"><primary>TotemPlParser:recurse</primary></indexterm><programlisting>  &quot;recurse&quot;                  <link linkend="gboolean">gboolean</link>              : Read / Write / Construct</programlisting>
+<para>
+If <link linkend="TRUE--CAPS"><literal>TRUE</literal></link>, the parser will recursively fetch playlists linked to by
+the current one.</para>
+<para>
+</para><para>Default value: TRUE</para>
+</refsect2>
+</refsect1>
+
+<refsect1 id="TotemPlParser.signal-details" role="signals">
+<title role="signals.title">Signal Details</title>
+<refsect2 id="TotemPlParser-entry-parsed" role="signal"><title>The <literal>&quot;entry-parsed&quot;</literal> signal</title>
+<indexterm zone="TotemPlParser-entry-parsed"><primary>TotemPlParser::entry-parsed</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="TotemPlParser">TotemPlParser</link>         *parser,
+                                                        <link linkend="gchar">gchar</link>                 *uri,
+                                                        <link linkend="TotemPlParserMetadata">TotemPlParserMetadata</link> *metadata,
+                                                        <link linkend="gpointer">gpointer</link>               user_data)      : Run Last</programlisting>
+<para>
+The ::entry-parsed signal is emitted when a new entry is parsed.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&#160;:</term>
+<listitem><simpara> the object which received the signal
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>uri</parameter>&#160;:</term>
+<listitem><simpara> the URI of the entry parsed
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>metadata</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GHashTable"><type>GHashTable</type></link> of metadata relating to the entry added
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="TotemPlParser-playlist-ended" role="signal"><title>The <literal>&quot;playlist-ended&quot;</literal> signal</title>
+<indexterm zone="TotemPlParser-playlist-ended"><primary>TotemPlParser::playlist-ended</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="TotemPlParser">TotemPlParser</link> *parser,
+                                                        <link linkend="gchar">gchar</link>         *uri,
+                                                        <link linkend="gpointer">gpointer</link>       user_data)      : Run Last</programlisting>
+<para>
+The ::playlist-ended signal is emitted when a playlist is finished
+parsing. It is only called when <link linkend="TotemPlParser-playlist-started"><type>"playlist-started"</type></link>
+has been called for that playlist.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&#160;:</term>
+<listitem><simpara> the object which received the signal
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>uri</parameter>&#160;:</term>
+<listitem><simpara> the URI of the playlist that finished parsing.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2 id="TotemPlParser-playlist-started" role="signal"><title>The <literal>&quot;playlist-started&quot;</literal> signal</title>
+<indexterm zone="TotemPlParser-playlist-started"><primary>TotemPlParser::playlist-started</primary></indexterm><programlisting><link linkend="void">void</link>                user_function                      (<link linkend="TotemPlParser">TotemPlParser</link>         *parser,
+                                                        <link linkend="gchar">gchar</link>                 *uri,
+                                                        <link linkend="TotemPlParserMetadata">TotemPlParserMetadata</link> *metadata,
+                                                        <link linkend="gpointer">gpointer</link>               user_data)      : Run Last</programlisting>
+<para>
+The ::playlist-started signal is emitted when a playlist parsing has
+started. This signal isn't emitted for all types of playlists, but
+can be relied on to be called for playlists which support playlist
+metadata, such as title.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&#160;:</term>
+<listitem><simpara> the object which received the signal
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>uri</parameter>&#160;:</term>
+<listitem><simpara> the URI of the new playlist started
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>metadata</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="GHashTable"><type>GHashTable</type></link> of metadata relating to the playlist that
+started.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&#160;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+</refsect1>
+
+
+
+</refentry>

@@ -1,0 +1,383 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN" "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd" [
+	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+	<!ENTITY version SYSTEM "version.xml">
+	<!ENTITY slash "/">
+]>
+<refentry id="TotemPlPlaylist">
+<refmeta>
+<refentrytitle role="top_of_page" id="TotemPlPlaylist.top_of_page">TotemPlPlaylist</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>TOTEM-PL-PARSER Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>TotemPlPlaylist</refname>
+<refpurpose>playlist object</refpurpose>
+</refnamediv>
+<refsect1 id="TotemPlPlaylist.stability-level">
+<title>Stability Level</title>
+Stable, unless otherwise indicated
+</refsect1>
+
+<refsynopsisdiv id="TotemPlPlaylist.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+
+#include &lt;totem-pl-playlist.h&gt;
+
+typedef             <link linkend="TotemPlPlaylist">TotemPlPlaylist</link>;
+typedef             <link linkend="TotemPlPlaylistClass">TotemPlPlaylistClass</link>;
+<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *   <link linkend="totem-pl-playlist-new">totem_pl_playlist_new</link>               (void);
+<link linkend="guint">guint</link>               <link linkend="totem-pl-playlist-size">totem_pl_playlist_size</link>              (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist);
+<link linkend="void">void</link>                <link linkend="totem-pl-playlist-prepend">totem_pl_playlist_prepend</link>           (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter);
+<link linkend="void">void</link>                <link linkend="totem-pl-playlist-append">totem_pl_playlist_append</link>            (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter);
+<link linkend="void">void</link>                <link linkend="totem-pl-playlist-insert">totem_pl_playlist_insert</link>            (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="gint">gint</link> position,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter);
+<link linkend="gboolean">gboolean</link>            <link linkend="totem-pl-playlist-iter-first">totem_pl_playlist_iter_first</link>        (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter);
+<link linkend="gboolean">gboolean</link>            <link linkend="totem-pl-playlist-iter-next">totem_pl_playlist_iter_next</link>         (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter);
+<link linkend="gboolean">gboolean</link>            <link linkend="totem-pl-playlist-iter-prev">totem_pl_playlist_iter_prev</link>         (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter);
+<link linkend="gboolean">gboolean</link>            <link linkend="totem-pl-playlist-get-value">totem_pl_playlist_get_value</link>         (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter,
+                                                         const <link linkend="gchar">gchar</link> *key,
+                                                         <link linkend="GValue">GValue</link> *value);
+<link linkend="void">void</link>                <link linkend="totem-pl-playlist-get-valist">totem_pl_playlist_get_valist</link>        (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter,
+                                                         <link linkend="va-list">va_list</link> args);
+<link linkend="void">void</link>                <link linkend="totem-pl-playlist-get">totem_pl_playlist_get</link>               (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter,
+                                                         ...);
+<link linkend="gboolean">gboolean</link>            <link linkend="totem-pl-playlist-set-value">totem_pl_playlist_set_value</link>         (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter,
+                                                         const <link linkend="gchar">gchar</link> *key,
+                                                         <link linkend="GValue">GValue</link> *value);
+<link linkend="void">void</link>                <link linkend="totem-pl-playlist-set-valist">totem_pl_playlist_set_valist</link>        (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter,
+                                                         <link linkend="va-list">va_list</link> args);
+<link linkend="void">void</link>                <link linkend="totem-pl-playlist-set">totem_pl_playlist_set</link>               (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter,
+                                                         ...);
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1 id="TotemPlPlaylist.object-hierarchy" role="object_hierarchy">
+<title role="object_hierarchy.title">Object Hierarchy</title>
+<synopsis>
+  <link linkend="GObject">GObject</link>
+   +----TotemPlPlaylist
+</synopsis>
+</refsect1>
+
+
+
+
+
+
+
+
+<refsect1 id="TotemPlPlaylist.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+<link linkend="TotemPlPlaylist"><type>TotemPlPlaylist</type></link> represents a playlist, provides API to either navigate through
+the playlist elements, or perform additions or modifications. See also
+<link linkend="totem-pl-parser-save"><function>totem_pl_parser_save()</function></link>.</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="TotemPlPlaylist.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="TotemPlPlaylist" role="typedef">
+<title>TotemPlPlaylist</title>
+<indexterm zone="TotemPlPlaylist"><primary>TotemPlPlaylist</primary></indexterm><programlisting>typedef struct TotemPlPlaylist TotemPlPlaylist;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="TotemPlPlaylistClass" role="typedef">
+<title>TotemPlPlaylistClass</title>
+<indexterm zone="TotemPlPlaylistClass"><primary>TotemPlPlaylistClass</primary></indexterm><programlisting>typedef struct TotemPlPlaylistClass TotemPlPlaylistClass;
+</programlisting>
+<para>
+</para></refsect2>
+<refsect2 id="totem-pl-playlist-new" role="function">
+<title>totem_pl_playlist_new ()</title>
+<indexterm zone="totem-pl-playlist-new"><primary sortas="pl_playlist_new">totem_pl_playlist_new</primary></indexterm><programlisting><link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *   totem_pl_playlist_new               (void);</programlisting>
+<para>
+Creates a new <link linkend="TotemPlPlaylist"><type>TotemPlPlaylist</type></link> object.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> The newly created <link linkend="TotemPlPlaylist"><type>TotemPlPlaylist</type></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-playlist-size" role="function">
+<title>totem_pl_playlist_size ()</title>
+<indexterm zone="totem-pl-playlist-size"><primary sortas="pl_playlist_size">totem_pl_playlist_size</primary></indexterm><programlisting><link linkend="guint">guint</link>               totem_pl_playlist_size              (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist);</programlisting>
+<para>
+Returns the number of elements in <parameter>playlist</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>playlist</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylist"><type>TotemPlPlaylist</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> The number of elements
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-playlist-prepend" role="function">
+<title>totem_pl_playlist_prepend ()</title>
+<indexterm zone="totem-pl-playlist-prepend"><primary sortas="pl_playlist_prepend">totem_pl_playlist_prepend</primary></indexterm><programlisting><link linkend="void">void</link>                totem_pl_playlist_prepend           (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter);</programlisting>
+<para>
+Prepends a new empty element to <parameter>playlist</parameter>, and modifies <parameter>iter</parameter> so
+it points to it. To fill in values, you need to call
+<link linkend="totem-pl-playlist-set"><function>totem_pl_playlist_set()</function></link> or <link linkend="totem-pl-playlist-set-value"><function>totem_pl_playlist_set_value()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>playlist</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylist"><type>TotemPlPlaylist</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>iter</parameter>&#160;:</term>
+<listitem><simpara> an unset <link linkend="TotemPlPlaylistIter"><type>TotemPlPlaylistIter</type></link> for returning the location
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-playlist-append" role="function">
+<title>totem_pl_playlist_append ()</title>
+<indexterm zone="totem-pl-playlist-append"><primary sortas="pl_playlist_append">totem_pl_playlist_append</primary></indexterm><programlisting><link linkend="void">void</link>                totem_pl_playlist_append            (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter);</programlisting>
+<para>
+Appends a new empty element to <parameter>playlist</parameter>, and modifies <parameter>iter</parameter> so
+it points to it. To fill in values, you need to call
+<link linkend="totem-pl-playlist-set"><function>totem_pl_playlist_set()</function></link> or <link linkend="totem-pl-playlist-set-value"><function>totem_pl_playlist_set_value()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>playlist</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylist"><type>TotemPlPlaylist</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>iter</parameter>&#160;:</term>
+<listitem><simpara> an unset <link linkend="TotemPlPlaylistIter"><type>TotemPlPlaylistIter</type></link> for returning the location
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-playlist-insert" role="function">
+<title>totem_pl_playlist_insert ()</title>
+<indexterm zone="totem-pl-playlist-insert"><primary sortas="pl_playlist_insert">totem_pl_playlist_insert</primary></indexterm><programlisting><link linkend="void">void</link>                totem_pl_playlist_insert            (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="gint">gint</link> position,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter);</programlisting>
+<para>
+Inserts a new empty element to <parameter>playlist</parameter> at <parameter>position</parameter>, and modifies
+<parameter>iter</parameter> so it points to it. To fill in values, you need to call
+<link linkend="totem-pl-playlist-set"><function>totem_pl_playlist_set()</function></link> or <link linkend="totem-pl-playlist-set-value"><function>totem_pl_playlist_set_value()</function></link>.
+</para>
+<para>
+<parameter>position</parameter> may be minor than 0 to prepend elements, or bigger than
+the current <parameter>playlist</parameter> size to append elements.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>playlist</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylist"><type>TotemPlPlaylist</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>position</parameter>&#160;:</term>
+<listitem><simpara> position in the playlist
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>iter</parameter>&#160;:</term>
+<listitem><simpara> an unset <link linkend="TotemPlPlaylistIter"><type>TotemPlPlaylistIter</type></link> for returning the location
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-playlist-iter-first" role="function">
+<title>totem_pl_playlist_iter_first ()</title>
+<indexterm zone="totem-pl-playlist-iter-first"><primary sortas="pl_playlist_iter_first">totem_pl_playlist_iter_first</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            totem_pl_playlist_iter_first        (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter);</programlisting>
+<para>
+Modifies <parameter>iter</parameter> so it points to the first element in <parameter>playlist</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>playlist</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylist"><type>TotemPlPlaylist</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>iter</parameter>&#160;:</term>
+<listitem><simpara> an unset <link linkend="TotemPlPlaylistIter"><type>TotemPlPlaylistIter</type></link> for returning the location
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if there is such first element.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-playlist-iter-next" role="function">
+<title>totem_pl_playlist_iter_next ()</title>
+<indexterm zone="totem-pl-playlist-iter-next"><primary sortas="pl_playlist_iter_next">totem_pl_playlist_iter_next</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            totem_pl_playlist_iter_next         (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter);</programlisting>
+<para>
+Modifies <parameter>iter</parameter> so it points to the next element it previously
+pointed to. This function will return <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> if there was no
+next element, or <parameter>iter</parameter> didn't actually point to any element
+in <parameter>playlist</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>playlist</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylist"><type>TotemPlPlaylist</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>iter</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylistIter"><type>TotemPlPlaylistIter</type></link> pointing to some item in <parameter>playlist</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if there was next element.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-playlist-iter-prev" role="function">
+<title>totem_pl_playlist_iter_prev ()</title>
+<indexterm zone="totem-pl-playlist-iter-prev"><primary sortas="pl_playlist_iter_prev">totem_pl_playlist_iter_prev</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            totem_pl_playlist_iter_prev         (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter);</programlisting>
+<para>
+Modifies <parameter>iter</parameter> so it points to the previous element it previously
+pointed to. This function will return <link linkend="FALSE--CAPS"><literal>FALSE</literal></link> if there was no
+previous element, or <parameter>iter</parameter> didn't actually point to any element
+in <parameter>playlist</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>playlist</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylist"><type>TotemPlPlaylist</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>iter</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylistIter"><type>TotemPlPlaylistIter</type></link> pointing to some item in <parameter>playlist</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if there was previous element.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-playlist-get-value" role="function">
+<title>totem_pl_playlist_get_value ()</title>
+<indexterm zone="totem-pl-playlist-get-value"><primary sortas="pl_playlist_get_value">totem_pl_playlist_get_value</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            totem_pl_playlist_get_value         (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter,
+                                                         const <link linkend="gchar">gchar</link> *key,
+                                                         <link linkend="GValue">GValue</link> *value);</programlisting>
+<para>
+Gets the value for <parameter>key</parameter> (Such as <link linkend="TOTEM-PL-PARSER-FIELD-URI--CAPS"><literal>TOTEM_PL_PARSER_FIELD_URI</literal></link>) in
+the playlist item pointed by <parameter>iter</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>playlist</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylist"><type>TotemPlPlaylist</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>iter</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylistIter"><type>TotemPlPlaylistIter</type></link> pointing to some item in <parameter>playlist</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara> data key
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> an empty <link linkend="GValue"><type>GValue</type></link> to set
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if <parameter>iter</parameter> contains data for <parameter>key</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-playlist-get-valist" role="function">
+<title>totem_pl_playlist_get_valist ()</title>
+<indexterm zone="totem-pl-playlist-get-valist"><primary sortas="pl_playlist_get_valist">totem_pl_playlist_get_valist</primary></indexterm><programlisting><link linkend="void">void</link>                totem_pl_playlist_get_valist        (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter,
+                                                         <link linkend="va-list">va_list</link> args);</programlisting>
+<para>
+See <link linkend="totem-pl-playlist-get"><function>totem_pl_playlist_get()</function></link>, this function takes a va_list.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>playlist</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylist"><type>TotemPlPlaylist</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>iter</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylistIter"><type>TotemPlPlaylistIter</type></link> pointing to some item in <parameter>playlist</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>args</parameter>&#160;:</term>
+<listitem><simpara> a va_list
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-playlist-get" role="function">
+<title>totem_pl_playlist_get ()</title>
+<indexterm zone="totem-pl-playlist-get"><primary sortas="pl_playlist_get">totem_pl_playlist_get</primary></indexterm><programlisting><link linkend="void">void</link>                totem_pl_playlist_get               (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter,
+                                                         ...);</programlisting>
+<para>
+Gets the value for one or more keys from the element pointed
+by <parameter>iter</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>playlist</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylist"><type>TotemPlPlaylist</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>iter</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylistIter"><type>TotemPlPlaylistIter</type></link> pointing to some item in <parameter>playlist</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>...</parameter>&#160;:</term>
+<listitem><simpara> pairs of key/return location for value, terminated by <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-playlist-set-value" role="function">
+<title>totem_pl_playlist_set_value ()</title>
+<indexterm zone="totem-pl-playlist-set-value"><primary sortas="pl_playlist_set_value">totem_pl_playlist_set_value</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            totem_pl_playlist_set_value         (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter,
+                                                         const <link linkend="gchar">gchar</link> *key,
+                                                         <link linkend="GValue">GValue</link> *value);</programlisting>
+<para>
+Sets the value for <parameter>key</parameter> in the element pointed by <parameter>iter</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>playlist</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylist"><type>TotemPlPlaylist</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>iter</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylistIter"><type>TotemPlPlaylistIter</type></link> pointing to some item in <parameter>playlist</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&#160;:</term>
+<listitem><simpara> key to set the value for
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&#160;:</term>
+<listitem><simpara> <link linkend="GValue"><type>GValue</type></link> containing the key value
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the value could be stored in <parameter>playlist</parameter>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-playlist-set-valist" role="function">
+<title>totem_pl_playlist_set_valist ()</title>
+<indexterm zone="totem-pl-playlist-set-valist"><primary sortas="pl_playlist_set_valist">totem_pl_playlist_set_valist</primary></indexterm><programlisting><link linkend="void">void</link>                totem_pl_playlist_set_valist        (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter,
+                                                         <link linkend="va-list">va_list</link> args);</programlisting>
+<para>
+See <link linkend="totem-pl-playlist-set"><function>totem_pl_playlist_set()</function></link>, this function takes a va_list.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>playlist</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylist"><type>TotemPlPlaylist</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>iter</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylistIter"><type>TotemPlPlaylistIter</type></link> pointing to some item in <parameter>playlist</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>args</parameter>&#160;:</term>
+<listitem><simpara> a va_list
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-pl-playlist-set" role="function">
+<title>totem_pl_playlist_set ()</title>
+<indexterm zone="totem-pl-playlist-set"><primary sortas="pl_playlist_set">totem_pl_playlist_set</primary></indexterm><programlisting><link linkend="void">void</link>                totem_pl_playlist_set               (<link linkend="TotemPlPlaylist">TotemPlPlaylist</link> *playlist,
+                                                         <link linkend="TotemPlPlaylistIter">TotemPlPlaylistIter</link> *iter,
+                                                         ...);</programlisting>
+<para>
+Sets the value for one or several keys in the element pointed
+by <parameter>iter</parameter>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>playlist</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylist"><type>TotemPlPlaylist</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>iter</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemPlPlaylistIter"><type>TotemPlPlaylistIter</type></link> pointing to some item in <parameter>playlist</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>...</parameter>&#160;:</term>
+<listitem><simpara> key/value string pairs, terminated with <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

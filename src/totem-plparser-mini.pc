@@ -1,0 +1,12 @@
+prefix=/usr
+exec_prefix=${prefix}
+libdir=/usr/lib64
+includedir=${prefix}/include
+gconf_serverdir=${exec_prefix}/libexec
+
+
+Name: totem-plparser-mini
+Description: Totem Playlist Parser library, mini version
+Version: 2.28.3
+Libs: -L${libdir} -ltotem-plparser-mini
+Cflags: -I${includedir}/totem-pl-parser/1/plparser

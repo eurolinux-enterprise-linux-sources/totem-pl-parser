@@ -1,0 +1,222 @@
+<!-- ##### SECTION ./tmpl/totem-pl-playlist-iter.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/totem-pl-playlist-iter.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/totem-pl-playlist-iter.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/totem-pl-playlist-iter.sgml:Stability_Level ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/totem-pl-playlist-iter.sgml:Title ##### -->
+TotemPlPlaylistIter
+
+
+<!-- ##### SECTION ./tmpl/totem-pl-playlist.sgml:Long_Description ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/totem-pl-playlist.sgml:See_Also ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### SECTION ./tmpl/totem-pl-playlist.sgml:Short_Description ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/totem-pl-playlist.sgml:Stability_Level ##### -->
+
+
+
+<!-- ##### SECTION ./tmpl/totem-pl-playlist.sgml:Title ##### -->
+TotemPlPlaylist
+
+
+<!-- ##### MACRO TOTEM_PL_PARSER_FIELD_DOWNLOAD_URL ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO TOTEM_PL_PARSER_FIELD_IMAGE_URL ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### MACRO TOTEM_PL_PARSER_FIELD_URL ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF TotemPlPlaylist ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF TotemPlPlaylistClass ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### TYPEDEF TotemPlPlaylistIter ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION totem_pl_parser_save ##### -->
+<para>
+
+</para>
+
+@parser: 
+@playlist: 
+@dest: 
+@title: 
+@type: 
+@error: 
+@Returns: 
+
+<!-- ##### FUNCTION totem_pl_playlist_append ##### -->
+<para>
+
+</para>
+
+@playlist: 
+@iter: 
+
+<!-- ##### FUNCTION totem_pl_playlist_get ##### -->
+<para>
+
+</para>
+
+@playlist: 
+@iter: 
+@Varargs: 
+
+<!-- ##### FUNCTION totem_pl_playlist_get_valist ##### -->
+<para>
+
+</para>
+
+@playlist: 
+@iter: 
+@args: 
+
+<!-- ##### FUNCTION totem_pl_playlist_get_value ##### -->
+<para>
+
+</para>
+
+@playlist: 
+@iter: 
+@key: 
+@value: 
+@Returns: 
+
+<!-- ##### FUNCTION totem_pl_playlist_insert ##### -->
+<para>
+
+</para>
+
+@playlist: 
+@position: 
+@iter: 
+
+<!-- ##### FUNCTION totem_pl_playlist_iter_first ##### -->
+<para>
+
+</para>
+
+@playlist: 
+@iter: 
+@Returns: 
+
+<!-- ##### FUNCTION totem_pl_playlist_iter_next ##### -->
+<para>
+
+</para>
+
+@playlist: 
+@iter: 
+@Returns: 
+
+<!-- ##### FUNCTION totem_pl_playlist_iter_prev ##### -->
+<para>
+
+</para>
+
+@playlist: 
+@iter: 
+@Returns: 
+
+<!-- ##### FUNCTION totem_pl_playlist_new ##### -->
+<para>
+
+</para>
+
+@Returns: 
+
+<!-- ##### FUNCTION totem_pl_playlist_prepend ##### -->
+<para>
+
+</para>
+
+@playlist: 
+@iter: 
+
+<!-- ##### FUNCTION totem_pl_playlist_set ##### -->
+<para>
+
+</para>
+
+@playlist: 
+@iter: 
+@Varargs: 
+
+<!-- ##### FUNCTION totem_pl_playlist_set_valist ##### -->
+<para>
+
+</para>
+
+@playlist: 
+@iter: 
+@args: 
+
+<!-- ##### FUNCTION totem_pl_playlist_set_value ##### -->
+<para>
+
+</para>
+
+@playlist: 
+@iter: 
+@key: 
+@value: 
+@Returns: 
+
+<!-- ##### FUNCTION totem_pl_playlist_size ##### -->
+<para>
+
+</para>
+
+@playlist: 
+@Returns: 
+

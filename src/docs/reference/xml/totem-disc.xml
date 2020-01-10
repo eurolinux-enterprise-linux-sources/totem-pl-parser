@@ -1,0 +1,259 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN" "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd" [
+	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+	<!ENTITY version SYSTEM "version.xml">
+	<!ENTITY slash "/">
+]>
+<refentry id="totem-pl-parser-totem-disc">
+<refmeta>
+<refentrytitle role="top_of_page" id="totem-pl-parser-totem-disc.top_of_page">totem-disc</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>TOTEM-PL-PARSER Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>totem-disc</refname>
+<refpurpose>disc utility functions</refpurpose>
+</refnamediv>
+<refsect1 id="totem-pl-parser-totem-disc.stability-level">
+<title>Stability Level</title>
+Stable, unless otherwise indicated
+</refsect1>
+
+<refsynopsisdiv id="totem-pl-parser-totem-disc.synopsis" role="synopsis">
+<title role="synopsis.title">Synopsis</title>
+
+<synopsis>
+
+#include &lt;totem-disc.h&gt;
+
+enum                <link linkend="TotemDiscMediaType">TotemDiscMediaType</link>;
+<link linkend="TotemDiscMediaType">TotemDiscMediaType</link>  <link linkend="totem-cd-detect-type">totem_cd_detect_type</link>                (const <link linkend="char">char</link> *device,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="TotemDiscMediaType">TotemDiscMediaType</link>  <link linkend="totem-cd-detect-type-with-url">totem_cd_detect_type_with_url</link>       (const <link linkend="char">char</link> *device,
+                                                         <link linkend="char">char</link> **mrl,
+                                                         <link linkend="GError">GError</link> **error);
+<link linkend="TotemDiscMediaType">TotemDiscMediaType</link>  <link linkend="totem-cd-detect-type-from-dir">totem_cd_detect_type_from_dir</link>       (const <link linkend="char">char</link> *dir,
+                                                         <link linkend="char">char</link> **mrl,
+                                                         <link linkend="GError">GError</link> **error);
+const <link linkend="char">char</link> *        <link linkend="totem-cd-get-human-readable-name">totem_cd_get_human_readable_name</link>    (<link linkend="TotemDiscMediaType">TotemDiscMediaType</link> type);
+<link linkend="char">char</link> *              <link linkend="totem-cd-mrl-from-type">totem_cd_mrl_from_type</link>              (const <link linkend="char">char</link> *scheme,
+                                                         const <link linkend="char">char</link> *dir);
+<link linkend="gboolean">gboolean</link>            <link linkend="totem-cd-has-medium">totem_cd_has_medium</link>                 (const <link linkend="char">char</link> *device);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+
+
+<refsect1 id="totem-pl-parser-totem-disc.description" role="desc">
+<title role="desc.title">Description</title>
+<para>
+This file has various different disc utility functions for getting
+the media types and labels of discs.
+</para>
+<para>
+The functions in this file refer to MRLs, which are a special form
+of URIs used by xine to refer to things such as DVDs. An example of
+an MRL would be <literal>dvd:///dev/scd0</literal>, which is not a
+valid URI as far as, for example, GIO is concerned.
+</para>
+<para>
+The rest of the totem-pl-parser API exclusively uses URIs.</para>
+<para>
+</para>
+</refsect1>
+
+<refsect1 id="totem-pl-parser-totem-disc.details" role="details">
+<title role="details.title">Details</title>
+<refsect2 id="TotemDiscMediaType" role="enum">
+<title>enum TotemDiscMediaType</title>
+<indexterm zone="TotemDiscMediaType"><primary>TotemDiscMediaType</primary></indexterm><programlisting>typedef enum {
+  MEDIA_TYPE_ERROR = -1,
+  MEDIA_TYPE_DATA = 1,
+  MEDIA_TYPE_CDDA,
+  MEDIA_TYPE_VCD,
+  MEDIA_TYPE_DVD,
+  MEDIA_TYPE_DVB,
+  MEDIA_TYPE_NUM_TYPES
+} TotemDiscMediaType;
+</programlisting>
+<para>
+Gives the media type of a disc, or <link linkend="MEDIA-TYPE-ERROR--CAPS"><literal>MEDIA_TYPE_ERROR</literal></link> if the media type
+could not be determined.</para>
+<para>
+</para><variablelist role="enum">
+<varlistentry id="MEDIA-TYPE-ERROR--CAPS" role="constant">
+<term><literal>MEDIA_TYPE_ERROR</literal></term>
+<listitem><simpara> there was an error determining the media's type
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MEDIA-TYPE-DATA--CAPS" role="constant">
+<term><literal>MEDIA_TYPE_DATA</literal></term>
+<listitem><simpara> data disc
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MEDIA-TYPE-CDDA--CAPS" role="constant">
+<term><literal>MEDIA_TYPE_CDDA</literal></term>
+<listitem><simpara> audio CD
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MEDIA-TYPE-VCD--CAPS" role="constant">
+<term><literal>MEDIA_TYPE_VCD</literal></term>
+<listitem><simpara> video CD
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MEDIA-TYPE-DVD--CAPS" role="constant">
+<term><literal>MEDIA_TYPE_DVD</literal></term>
+<listitem><simpara> video DVD
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MEDIA-TYPE-DVB--CAPS" role="constant">
+<term><literal>MEDIA_TYPE_DVB</literal></term>
+<listitem><simpara> digital television
+</simpara></listitem>
+</varlistentry>
+<varlistentry id="MEDIA-TYPE-NUM-TYPES--CAPS" role="constant">
+<term><literal>MEDIA_TYPE_NUM_TYPES</literal></term>
+<listitem><simpara> the number of supported media types
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-cd-detect-type" role="function">
+<title>totem_cd_detect_type ()</title>
+<indexterm zone="totem-cd-detect-type"><primary>totem_cd_detect_type</primary></indexterm><programlisting><link linkend="TotemDiscMediaType">TotemDiscMediaType</link>  totem_cd_detect_type                (const <link linkend="char">char</link> *device,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Detects the disc's type, given its device node path.
+</para>
+<para>
+Possible error codes are as per <link linkend="totem-cd-detect-type-with-url"><function>totem_cd_detect_type_with_url()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>device</parameter>&#160;:</term>
+<listitem><simpara> a device node path
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> return location for a <link linkend="GError"><type>GError</type></link>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TotemDiscMediaType"><type>TotemDiscMediaType</type></link> corresponding to the disc's type, or <link linkend="MEDIA-TYPE-ERROR--CAPS"><type>MEDIA_TYPE_ERROR</type></link> on failure
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-cd-detect-type-with-url" role="function">
+<title>totem_cd_detect_type_with_url ()</title>
+<indexterm zone="totem-cd-detect-type-with-url"><primary>totem_cd_detect_type_with_url</primary></indexterm><programlisting><link linkend="TotemDiscMediaType">TotemDiscMediaType</link>  totem_cd_detect_type_with_url       (const <link linkend="char">char</link> *device,
+                                                         <link linkend="char">char</link> **mrl,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Detects the disc's type, given its device node path. If
+a string pointer is passed to <parameter>mrl</parameter>, it will return the disc's
+MRL as from <link linkend="totem-cd-mrl-from-type"><function>totem_cd_mrl_from_type()</function></link>.
+</para>
+<para>
+Note that this function does synchronous I/O.
+</para>
+<para>
+Possible error codes are as per <link linkend="totem-cd-detect-type-from-dir"><function>totem_cd_detect_type_from_dir()</function></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>device</parameter>&#160;:</term>
+<listitem><simpara> a device node path
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>mrl</parameter>&#160;:</term>
+<listitem><simpara> return location for the disc's MRL, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>. <acronym>out</acronym>. <acronym>transfer</acronym> full. <acronym>allow-none</acronym> full. </simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> return location for a <link linkend="GError"><type>GError</type></link>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TotemDiscMediaType"><type>TotemDiscMediaType</type></link> corresponding to the disc's type, or <link linkend="MEDIA-TYPE-ERROR--CAPS"><type>MEDIA_TYPE_ERROR</type></link> on failure
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-cd-detect-type-from-dir" role="function">
+<title>totem_cd_detect_type_from_dir ()</title>
+<indexterm zone="totem-cd-detect-type-from-dir"><primary>totem_cd_detect_type_from_dir</primary></indexterm><programlisting><link linkend="TotemDiscMediaType">TotemDiscMediaType</link>  totem_cd_detect_type_from_dir       (const <link linkend="char">char</link> *dir,
+                                                         <link linkend="char">char</link> **mrl,
+                                                         <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Detects the disc's type, given its mount directory URI. If
+a string pointer is passed to <parameter>mrl</parameter>, it will return the disc's
+MRL as from <link linkend="totem-cd-mrl-from-type"><function>totem_cd_mrl_from_type()</function></link>.
+</para>
+<para>
+Note that this function does synchronous I/O.
+</para>
+<para>
+If no disc is present in the drive, a <link linkend="TOTEM-PL-PARSER-ERROR-NO-DISC--CAPS"><type>TOTEM_PL_PARSER_ERROR_NO_DISC</type></link>
+error will be returned. On unknown mounting errors, a
+<link linkend="TOTEM-PL-PARSER-ERROR-MOUNT-FAILED--CAPS"><type>TOTEM_PL_PARSER_ERROR_MOUNT_FAILED</type></link> error will be returned. On other
+I/O errors, or if resolution of symlinked mount paths failed, a code from
+<link linkend="GIOErrorEnum"><type>GIOErrorEnum</type></link> will be returned.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>dir</parameter>&#160;:</term>
+<listitem><simpara> a directory URI
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>mrl</parameter>&#160;:</term>
+<listitem><simpara> return location for the disc's MRL, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>. <acronym>out</acronym>. <acronym>transfer</acronym> full. <acronym>allow-none</acronym> full. </simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&#160;:</term>
+<listitem><simpara> return location for a <link linkend="GError"><type>GError</type></link>, or <link linkend="NULL--CAPS"><literal>NULL</literal></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TotemDiscMediaType"><type>TotemDiscMediaType</type></link> corresponding to the disc's type, or <link linkend="MEDIA-TYPE-ERROR--CAPS"><type>MEDIA_TYPE_ERROR</type></link> on failure
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-cd-get-human-readable-name" role="function">
+<title>totem_cd_get_human_readable_name ()</title>
+<indexterm zone="totem-cd-get-human-readable-name"><primary>totem_cd_get_human_readable_name</primary></indexterm><programlisting>const <link linkend="char">char</link> *        totem_cd_get_human_readable_name    (<link linkend="TotemDiscMediaType">TotemDiscMediaType</link> type);</programlisting>
+<para>
+Returns the human-readable name for the given
+<link linkend="TotemDiscMediaType"><type>TotemDiscMediaType</type></link>.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>type</parameter>&#160;:</term>
+<listitem><simpara> a <link linkend="TotemDiscMediaType"><type>TotemDiscMediaType</type></link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> the disc media type's readable name, which must not be freed, or <link linkend="NULL--CAPS"><literal>NULL</literal></link> for unhandled media types
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-cd-mrl-from-type" role="function">
+<title>totem_cd_mrl_from_type ()</title>
+<indexterm zone="totem-cd-mrl-from-type"><primary>totem_cd_mrl_from_type</primary></indexterm><programlisting><link linkend="char">char</link> *              totem_cd_mrl_from_type              (const <link linkend="char">char</link> *scheme,
+                                                         const <link linkend="char">char</link> *dir);</programlisting>
+<para>
+Builds an MRL using the scheme <parameter>scheme</parameter> and the given URI <parameter>dir</parameter>,
+taking the filename from the URI if it's a <filename>file://</filename> and just
+using the whole URI otherwise.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>scheme</parameter>&#160;:</term>
+<listitem><simpara> a scheme (e.g. "dvd")
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dir</parameter>&#160;:</term>
+<listitem><simpara> a directory URI
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> a newly-allocated string containing the MRL
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2 id="totem-cd-has-medium" role="function">
+<title>totem_cd_has_medium ()</title>
+<indexterm zone="totem-cd-has-medium"><primary>totem_cd_has_medium</primary></indexterm><programlisting><link linkend="gboolean">gboolean</link>            totem_cd_has_medium                 (const <link linkend="char">char</link> *device);</programlisting>
+<para>
+Returns whether the disc has a physical medium.</para>
+<para>
+</para><variablelist role="params">
+<varlistentry><term><parameter>device</parameter>&#160;:</term>
+<listitem><simpara> a device node path
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis>&#160;:</term><listitem><simpara> <link linkend="TRUE--CAPS"><literal>TRUE</literal></link> if the disc physically exists
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

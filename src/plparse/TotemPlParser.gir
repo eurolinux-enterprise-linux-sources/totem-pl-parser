@@ -1,0 +1,738 @@
+<?xml version="1.0"?>
+<!-- This file was automatically generated from C sources - DO NOT EDIT!
+To affect the contents of this file, edit the original C definitions,
+and/or use gtk-doc annotations.  -->
+<repository version="1.0"
+            xmlns="http://www.gtk.org/introspection/core/1.0"
+            xmlns:c="http://www.gtk.org/introspection/c/1.0"
+            xmlns:glib="http://www.gtk.org/introspection/glib/1.0">
+  <include name="Atk" version="1.0"/>
+  <include name="GLib" version="2.0"/>
+  <include name="GModule" version="2.0"/>
+  <include name="GObject" version="2.0"/>
+  <include name="Gdk" version="2.0"/>
+  <include name="GdkPixbuf" version="2.0"/>
+  <include name="Gio" version="2.0"/>
+  <include name="Gtk" version="2.0"/>
+  <include name="Pango" version="1.0"/>
+  <include name="cairo" version="1.0"/>
+  <namespace name="TotemPlParser"
+             version="TotemPlParser"
+             shared-library="libtotem-plparser.so.12"
+             c:prefix="TotemPlParser">
+    <record name="Class"
+            c:type="TotemPlParserClass"
+            doc="which can be overridden by inheriting classes
+which can be overridden by inheriting classes
+which can be overridden by inheriting classes
+The class structure for the #TotemPlParser type.">
+      <field name="parent_class" writable="1">
+        <type name="GObject.ObjectClass" c:type="GObjectClass"/>
+      </field>
+      <field name="entry_parsed">
+        <type name="any" c:type="pointer"/>
+      </field>
+      <field name="playlist_started">
+        <type name="any" c:type="pointer"/>
+      </field>
+      <field name="playlist_ended">
+        <type name="any" c:type="pointer"/>
+      </field>
+    </record>
+    <enumeration name="Error"
+                 doc="Allows you to differentiate between different
+errors occurring during file operations in a #TotemPlParser."
+                 glib:type-name="TotemPlParserError"
+                 glib:get-type="totem_pl_parser_error_get_type"
+                 c:type="TotemPlParserError"
+                 glib:error-quark="totem_pl_parser_error_quark">
+      <member name="no_disc"
+              value="0"
+              c:identifier="TOTEM_PL_PARSER_ERROR_NO_DISC"
+              glib:nick="no-disc"/>
+      <member name="mount_failed"
+              value="1"
+              c:identifier="TOTEM_PL_PARSER_ERROR_MOUNT_FAILED"
+              glib:nick="mount-failed"/>
+    </enumeration>
+    <callback name="IterFunc"
+              c:type="TotemPlParserIterFunc"
+              doc="Functions such as totem_pl_parser_write() accept pointers to TotemPlParserIterFunc()s
+as callbacks to call for each entry in the playlist. These functions
+are specific to each use of the playlist API, and should set the entry&apos;s
+or otherwise.">
+      <return-value transfer-ownership="none">
+        <type name="none" c:type="void"/>
+      </return-value>
+      <parameters>
+        <parameter name="model" transfer-ownership="none">
+          <type name="Gtk.TreeModel" c:type="GtkTreeModel*"/>
+        </parameter>
+        <parameter name="iter" transfer-ownership="none">
+          <type name="Gtk.TreeIter" c:type="GtkTreeIter*"/>
+        </parameter>
+        <parameter name="uri"
+                   direction="out"
+                   transfer-ownership="full"
+                   doc="return location for the entry&apos;s URI, or %NULL">
+          <type name="utf8" c:type="char**"/>
+        </parameter>
+        <parameter name="title"
+                   direction="out"
+                   transfer-ownership="full"
+                   doc="return location for the entry&apos;s title, or %NULL">
+          <type name="utf8" c:type="char**"/>
+        </parameter>
+        <parameter name="custom_title"
+                   direction="out"
+                   transfer-ownership="full"
+                   doc="return location for a boolean which, if %TRUE, indicates that the entry&apos;s @title is custom; or %NULL">
+          <type name="boolean" c:type="gboolean*"/>
+        </parameter>
+        <parameter name="user_data" transfer-ownership="none" closure="5">
+          <type name="any" c:type="gpointer"/>
+        </parameter>
+      </parameters>
+    </callback>
+    <glib:boxed c:type="TotemPlParserMetadata"
+                glib:name="Metadata"
+                glib:type-name="TotemPlParserMetadata"
+                glib:get-type="totem_pl_parser_metadata_get_type">
+    </glib:boxed>
+    <record name="Private" c:type="TotemPlParserPrivate">
+    </record>
+    <enumeration name="Result"
+                 doc="and totem_pl_parser_add_ignored_mimetype()).
+Gives the result of parsing a playlist."
+                 glib:type-name="TotemPlParserResult"
+                 glib:get-type="totem_pl_parser_result_get_type"
+                 c:type="TotemPlParserResult">
+      <member name="unhandled"
+              value="0"
+              c:identifier="TOTEM_PL_PARSER_RESULT_UNHANDLED"
+              glib:nick="unhandled"/>
+      <member name="error"
+              value="1"
+              c:identifier="TOTEM_PL_PARSER_RESULT_ERROR"
+              glib:nick="error"/>
+      <member name="success"
+              value="2"
+              c:identifier="TOTEM_PL_PARSER_RESULT_SUCCESS"
+              glib:nick="success"/>
+      <member name="ignored"
+              value="3"
+              c:identifier="TOTEM_PL_PARSER_RESULT_IGNORED"
+              glib:nick="ignored"/>
+      <member name="cancelled"
+              value="4"
+              c:identifier="TOTEM_PL_PARSER_RESULT_CANCELLED"
+              glib:nick="cancelled"/>
+    </enumeration>
+    <constant name="TOTEM_PL_PARSER_FIELD_ABSTRACT" value="abstract">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_ALBUM" value="album">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_AUTHOR" value="author">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_AUTOPLAY" value="autoplay">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_BASE" value="base">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_CONTACT" value="contact">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_COPYRIGHT" value="copyright">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_DESCRIPTION" value="description">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_DOWNLOAD_URI" value="download-url">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_DURATION" value="duration">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_DURATION_MS" value="duration-ms">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_ENDTIME" value="endtime">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_FILESIZE" value="filesize">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_GENRE" value="genre">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_ID" value="id">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_IMAGE_URI" value="image-url">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_IS_PLAYLIST" value="is-playlist">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_LANGUAGE" value="language">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_MOREINFO" value="moreinfo">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_PUB_DATE" value="publication-date">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_SCREENSIZE" value="screensize">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_STARTTIME" value="starttime">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_SUBTITLE_URI" value="subtitle-uri">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_TITLE" value="title">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_UI_MODE" value="ui-mode">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_URI" value="url">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_FIELD_VOLUME" value="volume">
+      <type name="utf8"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_VERSION_MAJOR" value="2">
+      <type name="int"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_VERSION_MICRO" value="3">
+      <type name="int"/>
+    </constant>
+    <constant name="TOTEM_PL_PARSER_VERSION_MINOR" value="28">
+      <type name="int"/>
+    </constant>
+    <enumeration name="TotemDiscMediaType"
+                 doc="Gives the media type of a disc, or %MEDIA_TYPE_ERROR if the media type
+could not be determined."
+                 c:type="TotemDiscMediaType">
+      <member name="error" value="-1" c:identifier="MEDIA_TYPE_ERROR"/>
+      <member name="data" value="1" c:identifier="MEDIA_TYPE_DATA"/>
+      <member name="cdda" value="2" c:identifier="MEDIA_TYPE_CDDA"/>
+      <member name="vcd" value="3" c:identifier="MEDIA_TYPE_VCD"/>
+      <member name="dvd" value="4" c:identifier="MEDIA_TYPE_DVD"/>
+      <member name="dvb" value="5" c:identifier="MEDIA_TYPE_DVB"/>
+      <member name="num_types" value="6" c:identifier="MEDIA_TYPE_NUM_TYPES"/>
+    </enumeration>
+    <class name="TotemPlParser"
+           c:type="TotemPlParser"
+           doc="All the fields in the #TotemPlParser structure are private and should never be accessed directly."
+           parent="GObject.Object"
+           glib:type-name="TotemPlParser"
+           glib:get-type="totem_pl_parser_get_type">
+      <constructor name="new"
+                   c:identifier="totem_pl_parser_new"
+                   doc="Creates a #TotemPlParser object.">
+        <return-value transfer-ownership="full">
+          <type name="TotemPlParser" c:type="TotemPlParser*"/>
+        </return-value>
+      </constructor>
+      <function name="parse_duration"
+                c:identifier="totem_pl_parser_parse_duration"
+                doc="Parses the given duration string and returns it as a &lt;type&gt;gint64&lt;/type&gt;
+denoting the duration in seconds.">
+        <return-value transfer-ownership="none">
+          <type name="int64" c:type="gint64"/>
+        </return-value>
+        <parameters>
+          <parameter name="duration" transfer-ownership="none">
+            <type name="utf8" c:type="char*"/>
+          </parameter>
+          <parameter name="debug" transfer-ownership="none">
+            <type name="boolean" c:type="gboolean"/>
+          </parameter>
+        </parameters>
+      </function>
+      <function name="parse_date"
+                c:identifier="totem_pl_parser_parse_date"
+                doc="Parses the given date string and returns it as a &lt;type&gt;gint64&lt;/type&gt;
+denoting the date in seconds since the UNIX Epoch.">
+        <return-value transfer-ownership="none">
+          <type name="uint64" c:type="guint64"/>
+        </return-value>
+        <parameters>
+          <parameter name="date_str" transfer-ownership="none">
+            <type name="utf8" c:type="char*"/>
+          </parameter>
+          <parameter name="debug" transfer-ownership="none">
+            <type name="boolean" c:type="gboolean"/>
+          </parameter>
+        </parameters>
+      </function>
+      <function name="can_parse_from_data"
+                c:identifier="totem_pl_parser_can_parse_from_data"
+                doc="Checks if the first @len bytes of @data can be parsed, using the same checks
+and precedences as totem_pl_parser_ignore().">
+        <return-value transfer-ownership="none">
+          <type name="boolean" c:type="gboolean"/>
+        </return-value>
+        <parameters>
+          <parameter name="data" transfer-ownership="none">
+            <type name="utf8" c:type="char*"/>
+          </parameter>
+          <parameter name="len" transfer-ownership="none">
+            <type name="size_t" c:type="gsize"/>
+          </parameter>
+          <parameter name="debug" transfer-ownership="none">
+            <type name="boolean" c:type="gboolean"/>
+          </parameter>
+        </parameters>
+      </function>
+      <function name="can_parse_from_filename"
+                c:identifier="totem_pl_parser_can_parse_from_filename"
+                doc="Checks if the file can be parsed, using the same checks and precedences
+as totem_pl_parser_ignore().">
+        <return-value transfer-ownership="none">
+          <type name="boolean" c:type="gboolean"/>
+        </return-value>
+        <parameters>
+          <parameter name="filename" transfer-ownership="none">
+            <type name="utf8" c:type="char*"/>
+          </parameter>
+          <parameter name="debug" transfer-ownership="none">
+            <type name="boolean" c:type="gboolean"/>
+          </parameter>
+        </parameters>
+      </function>
+      <method name="write"
+              c:identifier="totem_pl_parser_write"
+              doc="Writes the playlist held by @parser and @model out to the file of
+path @output. The playlist is written in the format @type and is given
+a %NULL title.
+For each entry in the @model, the function @func is called (and passed
+the playlist writer.
+Possible error codes are as per totem_pl_parser_write_with_title()."
+              throws="1">
+        <return-value transfer-ownership="none">
+          <type name="boolean" c:type="gboolean"/>
+        </return-value>
+        <parameters>
+          <parameter name="model" transfer-ownership="none">
+            <type name="Gtk.TreeModel" c:type="GtkTreeModel*"/>
+          </parameter>
+          <parameter name="func" transfer-ownership="none" scope="call">
+            <type name="IterFunc" c:type="TotemPlParserIterFunc"/>
+          </parameter>
+          <parameter name="output" transfer-ownership="none">
+            <type name="utf8" c:type="char*"/>
+          </parameter>
+          <parameter name="type" transfer-ownership="none">
+            <type name="Gtk.Type" c:type="TotemPlParserType"/>
+          </parameter>
+          <parameter name="user_data" transfer-ownership="none">
+            <type name="any" c:type="gpointer"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="write_with_title"
+              c:identifier="totem_pl_parser_write_with_title"
+              doc="Writes the playlist held by @parser and @model out to the file of
+path @output. The playlist is written in the format @type and is
+given the title @title.
+For each entry in the @model, the function @func is called (and passed
+the playlist writer.
+If the @output file is a directory the #G_IO_ERROR_IS_DIRECTORY error
+will be returned, and if the file is some other form of non-regular file
+then a #G_IO_ERROR_NOT_REGULAR_FILE error will be returned. Some file
+systems don&apos;t allow all file names, and may return a
+#G_IO_ERROR_INVALID_FILENAME error, and if the name is too long,
+#G_IO_ERROR_FILENAME_TOO_LONG will be returned. Other errors are possible
+too, and depend on what kind of filesystem the file is on.
+In extreme cases, a #G_IO_ERROR_INVALID_ARGUMENT error can be returned, if
+parts of the playlist to be written are too long.
+If writing a PLA playlist and there is an error converting a URI&apos;s encoding,
+a code from #GConvertError will be returned."
+              throws="1">
+        <return-value transfer-ownership="none">
+          <type name="boolean" c:type="gboolean"/>
+        </return-value>
+        <parameters>
+          <parameter name="model" transfer-ownership="none">
+            <type name="Gtk.TreeModel" c:type="GtkTreeModel*"/>
+          </parameter>
+          <parameter name="func" transfer-ownership="none" scope="call">
+            <type name="IterFunc" c:type="TotemPlParserIterFunc"/>
+          </parameter>
+          <parameter name="output" transfer-ownership="none">
+            <type name="utf8" c:type="char*"/>
+          </parameter>
+          <parameter name="title" transfer-ownership="none">
+            <type name="utf8" c:type="char*"/>
+          </parameter>
+          <parameter name="type" transfer-ownership="none">
+            <type name="Gtk.Type" c:type="TotemPlParserType"/>
+          </parameter>
+          <parameter name="user_data" transfer-ownership="none">
+            <type name="any" c:type="gpointer"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="add_ignored_scheme"
+              c:identifier="totem_pl_parser_add_ignored_scheme"
+              doc="Adds a scheme to the list of schemes to ignore, so that
+any URI using that scheme is ignored during playlist parsing.">
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <parameter name="scheme" transfer-ownership="none">
+            <type name="utf8" c:type="char*"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="add_ignored_mimetype"
+              c:identifier="totem_pl_parser_add_ignored_mimetype"
+              doc="Adds a mimetype to the list of mimetypes to ignore, so that
+any URI of that mimetype is ignored during playlist parsing.">
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <parameter name="mimetype" transfer-ownership="none">
+            <type name="utf8" c:type="char*"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="parse"
+              c:identifier="totem_pl_parser_parse"
+              doc="end of the playlist on parse failure
+Parses a playlist given by the absolute URI @uri. This method is
+synchronous, and will block on (e.g.) network requests to slow
+servers. totem_pl_parser_parse_async() is recommended instead.
+Return values are as totem_pl_parser_parse_with_base().">
+        <return-value transfer-ownership="full">
+          <type name="Result" c:type="TotemPlParserResult"/>
+        </return-value>
+        <parameters>
+          <parameter name="uri" transfer-ownership="none">
+            <type name="utf8" c:type="char*"/>
+          </parameter>
+          <parameter name="fallback" transfer-ownership="none">
+            <type name="boolean" c:type="gboolean"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="parse_async"
+              c:identifier="totem_pl_parser_parse_async"
+              doc="end of the playlist on parse failure
+Starts asynchronous parsing of a playlist given by the absolute URI @uri. @self and @uri are both reffed/copied
+when this function is called, so can safely be freed after this function returns.
+For more details, see totem_pl_parser_parse(), which is the synchronous version of this function.
+When the operation is finished, @callback will be called. You can then call totem_pl_parser_parse_finish()
+to get the results of the operation.">
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <parameter name="uri" transfer-ownership="none">
+            <type name="utf8" c:type="char*"/>
+          </parameter>
+          <parameter name="fallback" transfer-ownership="none">
+            <type name="boolean" c:type="gboolean"/>
+          </parameter>
+          <parameter name="cancellable"
+                     transfer-ownership="none"
+                     allow-none="1"
+                     doc="optional #GCancellable object, or %NULL">
+            <type name="Gio.Cancellable" c:type="GCancellable*"/>
+          </parameter>
+          <parameter name="callback"
+                     transfer-ownership="none"
+                     allow-none="1"
+                     scope="async"
+                     closure="5"
+                     doc="a #GAsyncReadyCallback to call when parsing is finished">
+            <type name="Gio.AsyncReadyCallback" c:type="GAsyncReadyCallback"/>
+          </parameter>
+          <parameter name="user_data" transfer-ownership="none">
+            <type name="any" c:type="gpointer"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="parse_finish"
+              c:identifier="totem_pl_parser_parse_finish"
+              doc="Finishes an asynchronous playlist parsing operation started with totem_pl_parser_parse_async()
+or totem_pl_parser_parse_with_base_async().
+If parsing of the playlist is cancelled part-way through, %TOTEM_PL_PARSER_RESULT_CANCELLED is returned when
+this function is called."
+              throws="1">
+        <return-value transfer-ownership="full">
+          <type name="Result" c:type="TotemPlParserResult"/>
+        </return-value>
+        <parameters>
+          <parameter name="async_result" transfer-ownership="none">
+            <type name="Gio.AsyncResult" c:type="GAsyncResult*"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="parse_with_base"
+              c:identifier="totem_pl_parser_parse_with_base"
+              doc="end of the playlist on parse failure
+Parses a playlist given by the absolute URI @uri, using">
+        <return-value transfer-ownership="full">
+          <type name="Result" c:type="TotemPlParserResult"/>
+        </return-value>
+        <parameters>
+          <parameter name="uri" transfer-ownership="none">
+            <type name="utf8" c:type="char*"/>
+          </parameter>
+          <parameter name="base"
+                     transfer-ownership="none"
+                     allow-none="1"
+                     doc="the base path for relative filenames, or %NULL">
+            <type name="utf8" c:type="char*"/>
+          </parameter>
+          <parameter name="fallback" transfer-ownership="none">
+            <type name="boolean" c:type="gboolean"/>
+          </parameter>
+        </parameters>
+      </method>
+      <method name="parse_with_base_async"
+              c:identifier="totem_pl_parser_parse_with_base_async"
+              doc="end of the playlist on parse failure
+Starts asynchronous parsing of a playlist given by the absolute URI @uri, using @base to resolve relative paths where appropriate.
+For more details, see totem_pl_parser_parse_with_base(), which is the synchronous version of this function.
+When the operation is finished, @callback will be called. You can then call totem_pl_parser_parse_finish()
+to get the results of the operation.">
+        <return-value transfer-ownership="none">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <parameter name="uri" transfer-ownership="none">
+            <type name="utf8" c:type="char*"/>
+          </parameter>
+          <parameter name="base"
+                     transfer-ownership="none"
+                     allow-none="1"
+                     doc="the base path for relative filenames, or %NULL">
+            <type name="utf8" c:type="char*"/>
+          </parameter>
+          <parameter name="fallback" transfer-ownership="none">
+            <type name="boolean" c:type="gboolean"/>
+          </parameter>
+          <parameter name="cancellable"
+                     transfer-ownership="none"
+                     allow-none="1"
+                     doc="optional #GCancellable object, or %NULL">
+            <type name="Gio.Cancellable" c:type="GCancellable*"/>
+          </parameter>
+          <parameter name="callback"
+                     transfer-ownership="none"
+                     allow-none="1"
+                     scope="async"
+                     closure="6"
+                     doc="a #GAsyncReadyCallback to call when parsing is finished">
+            <type name="Gio.AsyncReadyCallback" c:type="GAsyncReadyCallback"/>
+          </parameter>
+          <parameter name="user_data" transfer-ownership="none">
+            <type name="any" c:type="gpointer"/>
+          </parameter>
+        </parameters>
+      </method>
+      <property name="debug" writable="1">
+        <type name="boolean" c:type="gboolean"/>
+      </property>
+      <property name="disable-unsafe" writable="1">
+        <type name="boolean" c:type="gboolean"/>
+      </property>
+      <property name="force" writable="1">
+        <type name="boolean" c:type="gboolean"/>
+      </property>
+      <property name="recurse" writable="1" construct="1">
+        <type name="boolean" c:type="gboolean"/>
+      </property>
+      <field name="parent">
+        <type name="GObject.Object" c:type="GObject"/>
+      </field>
+      <field name="priv">
+        <type name="Private" c:type="TotemPlParserPrivate*"/>
+      </field>
+      <glib:signal name="entry-parsed">
+        <return-value transfer-ownership="full">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <parameter name="object" transfer-ownership="none">
+            <type name="utf8" c:type="gchararray"/>
+          </parameter>
+          <parameter name="p0" transfer-ownership="none">
+            <type name="Metadata" c:type="TotemPlParserMetadata"/>
+          </parameter>
+        </parameters>
+      </glib:signal>
+      <glib:signal name="playlist-ended">
+        <return-value transfer-ownership="full">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <parameter name="object" transfer-ownership="none">
+            <type name="utf8" c:type="gchararray"/>
+          </parameter>
+        </parameters>
+      </glib:signal>
+      <glib:signal name="playlist-started">
+        <return-value transfer-ownership="full">
+          <type name="none" c:type="void"/>
+        </return-value>
+        <parameters>
+          <parameter name="object" transfer-ownership="none">
+            <type name="utf8" c:type="gchararray"/>
+          </parameter>
+          <parameter name="p0" transfer-ownership="none">
+            <type name="Metadata" c:type="TotemPlParserMetadata"/>
+          </parameter>
+        </parameters>
+      </glib:signal>
+    </class>
+    <enumeration name="Type"
+                 doc="The type of playlist a #TotemPlParser will parse."
+                 glib:type-name="TotemPlParserType"
+                 glib:get-type="totem_pl_parser_type_get_type"
+                 c:type="TotemPlParserType">
+      <member name="pls"
+              value="0"
+              c:identifier="TOTEM_PL_PARSER_PLS"
+              glib:nick="pls"/>
+      <member name="m3u"
+              value="1"
+              c:identifier="TOTEM_PL_PARSER_M3U"
+              glib:nick="m3u"/>
+      <member name="m3u_dos"
+              value="2"
+              c:identifier="TOTEM_PL_PARSER_M3U_DOS"
+              glib:nick="m3u-dos"/>
+      <member name="xspf"
+              value="3"
+              c:identifier="TOTEM_PL_PARSER_XSPF"
+              glib:nick="xspf"/>
+      <member name="iriver_pla"
+              value="4"
+              c:identifier="TOTEM_PL_PARSER_IRIVER_PLA"
+              glib:nick="iriver-pla"/>
+    </enumeration>
+    <function name="totem_cd_detect_type"
+              c:identifier="totem_cd_detect_type"
+              doc="Detects the disc&apos;s type, given its device node path.
+Possible error codes are as per totem_cd_detect_type_with_url()."
+              throws="1">
+      <return-value transfer-ownership="full">
+        <type name="TotemDiscMediaType" c:type="TotemDiscMediaType"/>
+      </return-value>
+      <parameters>
+        <parameter name="device" transfer-ownership="none">
+          <type name="utf8" c:type="char*"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="totem_cd_detect_type_from_dir"
+              c:identifier="totem_cd_detect_type_from_dir"
+              doc="Detects the disc&apos;s type, given its mount directory URI. If
+a string pointer is passed to @mrl, it will return the disc&apos;s
+MRL as from totem_cd_mrl_from_type().
+Note that this function does synchronous I/O.
+If no disc is present in the drive, a #TOTEM_PL_PARSER_ERROR_NO_DISC
+error will be returned. On unknown mounting errors, a
+#TOTEM_PL_PARSER_ERROR_MOUNT_FAILED error will be returned. On other
+I/O errors, or if resolution of symlinked mount paths failed, a code from
+#GIOErrorEnum will be returned."
+              throws="1">
+      <return-value transfer-ownership="full">
+        <type name="TotemDiscMediaType" c:type="TotemDiscMediaType"/>
+      </return-value>
+      <parameters>
+        <parameter name="dir" transfer-ownership="none">
+          <type name="utf8" c:type="char*"/>
+        </parameter>
+        <parameter name="mrl"
+                   direction="out"
+                   transfer-ownership="full"
+                   allow-none="1"
+                   doc="return location for the disc&apos;s MRL, or %NULL">
+          <type name="utf8" c:type="char**"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="totem_cd_detect_type_with_url"
+              c:identifier="totem_cd_detect_type_with_url"
+              doc="Detects the disc&apos;s type, given its device node path. If
+a string pointer is passed to @mrl, it will return the disc&apos;s
+MRL as from totem_cd_mrl_from_type().
+Note that this function does synchronous I/O.
+Possible error codes are as per totem_cd_detect_type_from_dir()."
+              throws="1">
+      <return-value transfer-ownership="full">
+        <type name="TotemDiscMediaType" c:type="TotemDiscMediaType"/>
+      </return-value>
+      <parameters>
+        <parameter name="device" transfer-ownership="none">
+          <type name="utf8" c:type="char*"/>
+        </parameter>
+        <parameter name="mrl"
+                   direction="out"
+                   transfer-ownership="full"
+                   allow-none="1"
+                   doc="return location for the disc&apos;s MRL, or %NULL">
+          <type name="utf8" c:type="char**"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="totem_cd_get_human_readable_name"
+              c:identifier="totem_cd_get_human_readable_name"
+              doc="Returns the human-readable name for the given
+#TotemDiscMediaType.">
+      <return-value transfer-ownership="none">
+        <type name="utf8" c:type="char*"/>
+      </return-value>
+      <parameters>
+        <parameter name="type" transfer-ownership="none">
+          <type name="TotemDiscMediaType" c:type="TotemDiscMediaType"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="totem_cd_has_medium"
+              c:identifier="totem_cd_has_medium"
+              doc="Returns whether the disc has a physical medium.">
+      <return-value transfer-ownership="none">
+        <type name="boolean" c:type="gboolean"/>
+      </return-value>
+      <parameters>
+        <parameter name="device" transfer-ownership="none">
+          <type name="utf8" c:type="char*"/>
+        </parameter>
+      </parameters>
+    </function>
+    <function name="totem_cd_mrl_from_type"
+              c:identifier="totem_cd_mrl_from_type"
+              doc="Builds an MRL using the scheme @scheme and the given URI @dir,
+taking the filename from the URI if it&apos;s a &lt;filename&gt;file://&lt;/filename&gt; and just
+using the whole URI otherwise.">
+      <return-value transfer-ownership="full">
+        <type name="utf8" c:type="char*"/>
+      </return-value>
+      <parameters>
+        <parameter name="scheme" transfer-ownership="none">
+          <type name="utf8" c:type="char*"/>
+        </parameter>
+        <parameter name="dir" transfer-ownership="none">
+          <type name="utf8" c:type="char*"/>
+        </parameter>
+      </parameters>
+    </function>
+  </namespace>
+</repository>

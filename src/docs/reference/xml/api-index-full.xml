@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<!DOCTYPE indexdiv PUBLIC "-//OASIS//DTD DocBook XML V4.3//EN" "http://www.oasis-open.org/docbook/xml/4.3/docbookx.dtd" [
+	<!ENTITY % local.common.attrib "xmlns:xi  CDATA  #FIXED 'http://www.w3.org/2003/XInclude'">
+	<!ENTITY version SYSTEM "version.xml">
+	<!ENTITY slash "/">
+]>
+<indexdiv>
+<indexdiv><title>A</title>
+<indexentry><primaryie linkends="totem-pl-parser-add-ignored-mimetype"><link linkend="totem-pl-parser-add-ignored-mimetype">totem_pl_parser_add_ignored_mimetype</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-pl-parser-add-ignored-scheme"><link linkend="totem-pl-parser-add-ignored-scheme">totem_pl_parser_add_ignored_scheme</link></primaryie></indexentry>
+</indexdiv>
+<indexdiv><title>F</title>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-ABSTRACT--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-ABSTRACT--CAPS">TOTEM_PL_PARSER_FIELD_ABSTRACT</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-ALBUM--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-ALBUM--CAPS">TOTEM_PL_PARSER_FIELD_ALBUM</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-AUTHOR--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-AUTHOR--CAPS">TOTEM_PL_PARSER_FIELD_AUTHOR</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-AUTOPLAY--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-AUTOPLAY--CAPS">TOTEM_PL_PARSER_FIELD_AUTOPLAY</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-BASE--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-BASE--CAPS">TOTEM_PL_PARSER_FIELD_BASE</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-CONTACT--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-CONTACT--CAPS">TOTEM_PL_PARSER_FIELD_CONTACT</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-COPYRIGHT--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-COPYRIGHT--CAPS">TOTEM_PL_PARSER_FIELD_COPYRIGHT</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-DESCRIPTION--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-DESCRIPTION--CAPS">TOTEM_PL_PARSER_FIELD_DESCRIPTION</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-DOWNLOAD-URI--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-DOWNLOAD-URI--CAPS">TOTEM_PL_PARSER_FIELD_DOWNLOAD_URI</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-DURATION--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-DURATION--CAPS">TOTEM_PL_PARSER_FIELD_DURATION</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-DURATION-MS--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-DURATION-MS--CAPS">TOTEM_PL_PARSER_FIELD_DURATION_MS</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-ENDTIME--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-ENDTIME--CAPS">TOTEM_PL_PARSER_FIELD_ENDTIME</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-FILESIZE--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-FILESIZE--CAPS">TOTEM_PL_PARSER_FIELD_FILESIZE</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-GENRE--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-GENRE--CAPS">TOTEM_PL_PARSER_FIELD_GENRE</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-ID--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-ID--CAPS">TOTEM_PL_PARSER_FIELD_ID</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-IMAGE-URI--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-IMAGE-URI--CAPS">TOTEM_PL_PARSER_FIELD_IMAGE_URI</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-IS-PLAYLIST--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-IS-PLAYLIST--CAPS">TOTEM_PL_PARSER_FIELD_IS_PLAYLIST</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-LANGUAGE--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-LANGUAGE--CAPS">TOTEM_PL_PARSER_FIELD_LANGUAGE</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-MOREINFO--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-MOREINFO--CAPS">TOTEM_PL_PARSER_FIELD_MOREINFO</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-PUB-DATE--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-PUB-DATE--CAPS">TOTEM_PL_PARSER_FIELD_PUB_DATE</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-SCREENSIZE--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-SCREENSIZE--CAPS">TOTEM_PL_PARSER_FIELD_SCREENSIZE</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-STARTTIME--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-STARTTIME--CAPS">TOTEM_PL_PARSER_FIELD_STARTTIME</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-SUBTITLE-URI--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-SUBTITLE-URI--CAPS">TOTEM_PL_PARSER_FIELD_SUBTITLE_URI</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-SUMMARY--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-SUMMARY--CAPS">TOTEM_PL_PARSER_FIELD_SUMMARY</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-TITLE--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-TITLE--CAPS">TOTEM_PL_PARSER_FIELD_TITLE</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-UI-MODE--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-UI-MODE--CAPS">TOTEM_PL_PARSER_FIELD_UI_MODE</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-URI--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-URI--CAPS">TOTEM_PL_PARSER_FIELD_URI</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TOTEM-PL-PARSER-FIELD-VOLUME--CAPS"><link linkend="TOTEM-PL-PARSER-FIELD-VOLUME--CAPS">TOTEM_PL_PARSER_FIELD_VOLUME</link></primaryie></indexentry>
+</indexdiv>
+<indexdiv><title>N</title>
+<indexentry><primaryie linkends="totem-pl-parser-new"><link linkend="totem-pl-parser-new">totem_pl_parser_new</link></primaryie></indexentry>
+</indexdiv>
+<indexdiv><title>P</title>
+<indexentry><primaryie linkends="totem-pl-parser-parse"><link linkend="totem-pl-parser-parse">totem_pl_parser_parse</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-pl-parser-parse-async"><link linkend="totem-pl-parser-parse-async">totem_pl_parser_parse_async</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-pl-parser-parse-date"><link linkend="totem-pl-parser-parse-date">totem_pl_parser_parse_date</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-pl-parser-parse-duration"><link linkend="totem-pl-parser-parse-duration">totem_pl_parser_parse_duration</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-pl-parser-parse-finish"><link linkend="totem-pl-parser-parse-finish">totem_pl_parser_parse_finish</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-pl-parser-parse-with-base"><link linkend="totem-pl-parser-parse-with-base">totem_pl_parser_parse_with_base</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-pl-parser-parse-with-base-async"><link linkend="totem-pl-parser-parse-with-base-async">totem_pl_parser_parse_with_base_async</link></primaryie></indexentry>
+</indexdiv>
+<indexdiv><title>T</title>
+<indexentry><primaryie linkends="TotemDiscMediaType"><link linkend="TotemDiscMediaType">TotemDiscMediaType</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPlParser-struct"><link linkend="TotemPlParser-struct">TotemPlParser</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPlParser-entry-parsed"><link linkend="TotemPlParser-entry-parsed">TotemPlParser::entry-parsed</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPlParser-playlist-ended"><link linkend="TotemPlParser-playlist-ended">TotemPlParser::playlist-ended</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPlParser-playlist-started"><link linkend="TotemPlParser-playlist-started">TotemPlParser::playlist-started</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPlParser--debug"><link linkend="TotemPlParser--debug">TotemPlParser:debug</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPlParser--disable-unsafe"><link linkend="TotemPlParser--disable-unsafe">TotemPlParser:disable-unsafe</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPlParser--force"><link linkend="TotemPlParser--force">TotemPlParser:force</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPlParser--recurse"><link linkend="TotemPlParser--recurse">TotemPlParser:recurse</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPlParserClass"><link linkend="TotemPlParserClass">TotemPlParserClass</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPlParserError"><link linkend="TotemPlParserError">TotemPlParserError</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPlParserIterFunc"><link linkend="TotemPlParserIterFunc">TotemPlParserIterFunc</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPlParserResult"><link linkend="TotemPlParserResult">TotemPlParserResult</link></primaryie></indexentry>
+<indexentry><primaryie linkends="TotemPlParserType"><link linkend="TotemPlParserType">TotemPlParserType</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-cd-detect-type"><link linkend="totem-cd-detect-type">totem_cd_detect_type</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-cd-detect-type-from-dir"><link linkend="totem-cd-detect-type-from-dir">totem_cd_detect_type_from_dir</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-cd-detect-type-with-url"><link linkend="totem-cd-detect-type-with-url">totem_cd_detect_type_with_url</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-cd-get-human-readable-name"><link linkend="totem-cd-get-human-readable-name">totem_cd_get_human_readable_name</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-cd-has-medium"><link linkend="totem-cd-has-medium">totem_cd_has_medium</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-cd-mrl-from-type"><link linkend="totem-cd-mrl-from-type">totem_cd_mrl_from_type</link></primaryie></indexentry>
+</indexdiv>
+<indexdiv><title>W</title>
+<indexentry><primaryie linkends="totem-pl-parser-write"><link linkend="totem-pl-parser-write">totem_pl_parser_write</link></primaryie></indexentry>
+<indexentry><primaryie linkends="totem-pl-parser-write-with-title"><link linkend="totem-pl-parser-write-with-title">totem_pl_parser_write_with_title</link></primaryie></indexentry>
+</indexdiv>
+</indexdiv>
