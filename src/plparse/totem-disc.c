@@ -282,7 +282,8 @@ cd_cache_check_archive (CdCache *cache,
   int r;
 
   a = archive_read_new();
-  archive_read_support_format_iso9660(a);
+  archive_read_support_compression_all(a);
+  archive_read_support_format_all(a);
   r = archive_read_open_filename(a, filename, 10240);
   if (r != ARCHIVE_OK) {
     g_set_error (error, TOTEM_PL_PARSER_ERROR, TOTEM_PL_PARSER_ERROR_MOUNT_FAILED,
@@ -305,15 +306,10 @@ cd_cache_check_archive (CdCache *cache,
       content_types[0] = "x-content/video-svcd";
       cache->content_types = g_strdupv ((gchar**) content_types);
       break;
-    } else if (g_ascii_strcasecmp (name, "BDAV") == 0 ||
-               g_ascii_strcasecmp (name, "BDMV") == 0) {
-      content_types[0] = "x-content/video-bluray";
-      cache->content_types = g_strdupv ((gchar**) content_types);
-      break;
     }
     archive_read_data_skip(a);
   }
-  archive_read_free(a);
+  archive_read_finish(a);
   return TRUE;
 #endif
 }
@@ -415,7 +411,7 @@ cd_cache_new (const char *dev,
   found = cd_cache_get_dev_from_volumes (mon, device, &mountpoint, &volume);
   if (!found) {
     g_set_error (error, TOTEM_PL_PARSER_ERROR, TOTEM_PL_PARSER_ERROR_NO_DISC,
-	_("No media in drive for device “%s”."),
+	_("No media in drive for device '%s'."),
 	device);
     g_free (device);
     return NULL;
@@ -643,22 +639,6 @@ cd_cache_disc_is_dvd (CdCache *cache,
   return MEDIA_TYPE_DATA;
 }
 
-static TotemDiscMediaType
-cd_cache_disc_is_bd (CdCache *cache,
-		     GError **error)
-{
-  /* open disc, check capabilities and open mount */
-  if (!cd_cache_open_device (cache, error))
-    return MEDIA_TYPE_ERROR;
-  if (!cd_cache_open_mountpoint (cache, error))
-    return MEDIA_TYPE_ERROR;
-
-  if (cd_cache_has_content_type (cache, "x-content/video-bluray") != FALSE)
-    return MEDIA_TYPE_BD;
-
-  return MEDIA_TYPE_DATA;
-}
-
 /**
  * totem_cd_mrl_from_type:
  * @scheme: a scheme (e.g. "dvd")
@@ -733,8 +713,7 @@ totem_cd_detect_type_from_dir (const char *dir, char **mrl, GError **error)
   if (!(cache = cd_cache_new (dir, error)))
     return MEDIA_TYPE_ERROR;
   if ((type = cd_cache_disc_is_vcd (cache, error)) == MEDIA_TYPE_DATA &&
-      (type = cd_cache_disc_is_dvd (cache, error)) == MEDIA_TYPE_DATA &&
-      (type = cd_cache_disc_is_bd (cache, error)) == MEDIA_TYPE_DATA) {
+      (type = cd_cache_disc_is_dvd (cache, error)) == MEDIA_TYPE_DATA) {
     /* is it the directory itself? */
     char *parent;
 
@@ -748,8 +727,7 @@ totem_cd_detect_type_from_dir (const char *dir, char **mrl, GError **error)
     if (!cache)
       return MEDIA_TYPE_ERROR;
     if ((type = cd_cache_disc_is_vcd (cache, error)) == MEDIA_TYPE_DATA &&
-	(type = cd_cache_disc_is_dvd (cache, error)) == MEDIA_TYPE_DATA &&
-	(type = cd_cache_disc_is_bd (cache, error)) == MEDIA_TYPE_DATA) {
+	(type = cd_cache_disc_is_dvd (cache, error)) == MEDIA_TYPE_DATA) {
       /* crap, nothing found */
       cd_cache_free (cache);
       return type;
@@ -765,8 +743,6 @@ totem_cd_detect_type_from_dir (const char *dir, char **mrl, GError **error)
     *mrl = totem_cd_mrl_from_type ("dvd", cache->mountpoint ? cache->mountpoint : cache->device);
   } else if (type == MEDIA_TYPE_VCD) {
     *mrl = totem_cd_mrl_from_type ("vcd", cache->mountpoint);
-  } else if (type == MEDIA_TYPE_BD) {
-    *mrl = totem_cd_mrl_from_type ("bluray", cache->mountpoint);
   }
 
   cd_cache_free (cache);
@@ -812,8 +788,7 @@ totem_cd_detect_type_with_url (const char *device,
 
   if ((type == MEDIA_TYPE_DATA || type == MEDIA_TYPE_ERROR) &&
       (type = cd_cache_disc_is_vcd (cache, error)) == MEDIA_TYPE_DATA &&
-      (type = cd_cache_disc_is_dvd (cache, error)) == MEDIA_TYPE_DATA &&
-      (type = cd_cache_disc_is_bd (cache, error)) == MEDIA_TYPE_DATA) {
+      (type = cd_cache_disc_is_dvd (cache, error)) == MEDIA_TYPE_DATA) {
     /* crap, nothing found */
   }
 
@@ -854,17 +829,6 @@ totem_cd_detect_type_with_url (const char *device,
 	*mrl = totem_cd_mrl_from_type ("cdda", dev + 5);
       else
 	*mrl = totem_cd_mrl_from_type ("cdda", dev);
-    }
-    break;
-  case MEDIA_TYPE_BD:
-    {
-      const char *str;
-
-      if (!cache->is_iso)
-	str = cache->mountpoint ? cache->mountpoint : device;
-      else
-	str = cache->device;
-      *mrl = totem_cd_mrl_from_type ("bluray", str);
     }
     break;
   case MEDIA_TYPE_DATA:
@@ -951,8 +915,6 @@ totem_cd_get_human_readable_name (TotemDiscMediaType type)
     return N_("DVD");
   case MEDIA_TYPE_DVB:
     return N_("Digital Television");
-  case MEDIA_TYPE_BD:
-    return N_("Blu-ray");
   case MEDIA_TYPE_ERROR:
   case MEDIA_TYPE_DATA:
   default:

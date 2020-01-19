@@ -924,7 +924,7 @@ int main (int argc, char **argv)
       continue;
     }
     buf = mmap (NULL, st.st_size, PROT_READ, MAP_SHARED, fd, 0);
-    if (buf == MAP_FAILED)
+    if (!buf)
     {
       perror (argv[i]);
       if (close (fd))

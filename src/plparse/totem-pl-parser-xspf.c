@@ -40,12 +40,6 @@
 
 #define SAFE_FREE(x) { if (x != NULL) xmlFree (x); }
 
-static void
-debug_noop (void *ctx, const char *msg, ...)
-{
-	return;
-}
-
 static xmlDocPtr
 totem_pl_parser_parse_xml_file (GFile *file)
 {
@@ -70,7 +64,6 @@ totem_pl_parser_parse_xml_file (GFile *file)
 		}
 	}
 
-	xmlSetGenericErrorFunc (NULL, (xmlGenericErrorFunc) debug_noop);
 	doc = xmlParseMemory (contents, size);
 	if (doc == NULL)
 		doc = xmlRecoverMemory (contents, size);
@@ -341,7 +334,6 @@ parse_xspf_track (TotemPlParser *parser, GFile *base_file, xmlDocPtr doc,
 					}
 				}
 			}
-			g_clear_pointer (&app, xmlFree);
 		/* Parse Amazon AMZ extensions */
 		} else if (g_ascii_strcasecmp ((char *)node->name, "meta") == 0) {
 			xmlChar *rel;
@@ -354,7 +346,6 @@ parse_xspf_track (TotemPlParser *parser, GFile *base_file, xmlDocPtr doc,
 					id = xmlNodeListGetString (doc, node->xmlChildrenNode, 1);
 				else if (g_ascii_strcasecmp ((char *) rel, "http://www.amazon.com/dmusic/fileSize") == 0)
 					filesize = xmlNodeListGetString (doc, node->xmlChildrenNode, 1);
-				xmlFree (rel);
 			}
 		} else if (g_ascii_strcasecmp ((char *)node->name, "album") == 0)
 			album = xmlNodeListGetString (doc, node->xmlChildrenNode, 1);
@@ -526,7 +517,6 @@ totem_pl_parser_add_xspf_with_contents (TotemPlParser *parser,
 	xmlNodePtr node;
 	TotemPlParserResult retval = TOTEM_PL_PARSER_RESULT_UNHANDLED;
 
-	xmlSetGenericErrorFunc (NULL, (xmlGenericErrorFunc) debug_noop);
 	doc = xmlParseMemory (contents, strlen (contents));
 	if (doc == NULL)
 		doc = xmlRecoverMemory (contents, strlen (contents));

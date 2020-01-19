@@ -25,6 +25,7 @@
 #include <glib.h>
 
 #ifndef TOTEM_PL_PARSER_MINI
+#include <libsoup/soup-gnome.h>
 #include "xmlparser.h"
 #include "totem-pl-parser.h"
 #include "totem-disc.h"
@@ -116,12 +117,12 @@ is_image (const char *url)
 static TotemPlParserResult
 parse_rss_item (TotemPlParser *parser, xml_node_t *parent)
 {
-	const char *title, *uri, *description, *author, *img;
+	const char *title, *uri, *description, *author;
 	const char *pub_date, *duration, *filesize, *content_type, *id;
 	xml_node_t *node;
 
 	title = uri = description = author = content_type = NULL;
-	img = pub_date = duration = filesize = id = NULL;
+	pub_date = duration = filesize = id = NULL;
 
 	for (node = parent->child; node != NULL; node = node->next) {
 		if (node->name == NULL)
@@ -148,19 +149,10 @@ parse_rss_item (TotemPlParser *parser, xml_node_t *parent)
 		} else if (g_ascii_strcasecmp (node->name, "media:content") == 0) {
 			const char *tmp;
 
-			tmp = xml_parser_get_property (node, "medium");
-			if (tmp != NULL && g_str_equal (tmp, "image")) {
-				img = xml_parser_get_property (node, "url");
-				continue;
-			}
-
 			tmp = xml_parser_get_property (node, "type");
 			if (tmp != NULL &&
-			    g_str_has_prefix (tmp, "audio/") == FALSE) {
-				if (g_str_has_prefix (tmp, "image/"))
-					img = xml_parser_get_property (node, "url");
+			    g_str_has_prefix (tmp, "audio/") == FALSE)
 				continue;
-			}
 			content_type = tmp;
 
 			tmp = xml_parser_get_property (node, "url");
@@ -209,7 +201,6 @@ parse_rss_item (TotemPlParser *parser, xml_node_t *parent)
 					 TOTEM_PL_PARSER_FIELD_DURATION, duration,
 					 TOTEM_PL_PARSER_FIELD_FILESIZE, filesize,
 					 TOTEM_PL_PARSER_FIELD_CONTENT_TYPE, content_type,
-					 TOTEM_PL_PARSER_FIELD_IMAGE_URI, img,
 					 NULL);
 	}
 
@@ -608,15 +599,88 @@ totem_pl_parser_add_xml_feed (TotemPlParser *parser,
 #endif /* !HAVE_GMIME */
 }
 
+static GByteArray *
+totem_pl_parser_load_http_itunes (const char *uri,
+				  gboolean    debug)
+{
+	SoupMessage *msg;
+	SoupSession *session;
+	GByteArray *data;
+
+	if (debug)
+		g_print ("Loading ITMS playlist '%s'\n", uri);
+
+	session = soup_session_sync_new_with_options (
+	    SOUP_SESSION_ADD_FEATURE_BY_TYPE, SOUP_TYPE_GNOME_FEATURES_2_26,
+	    SOUP_SESSION_ADD_FEATURE_BY_TYPE, SOUP_TYPE_CONTENT_DECODER,
+	    SOUP_SESSION_USER_AGENT, "iTunes/10.0.0",
+	    SOUP_SESSION_ACCEPT_LANGUAGE_AUTO, TRUE,
+	    NULL);
+
+	msg = soup_message_new (SOUP_METHOD_GET, uri);
+	soup_session_send_message (session, msg);
+	if (SOUP_STATUS_IS_SUCCESSFUL (msg->status_code)) {
+		data = g_byte_array_new ();
+		g_byte_array_append (data,
+				     (guchar *) msg->response_body->data,
+				     msg->response_body->length);
+	} else {
+		return NULL;
+	}
+	g_object_unref (msg);
+	g_object_unref (session);
+
+	return data;
+}
+
+static const char *
+totem_pl_parser_parse_plist (xml_node_t *item)
+{
+	for (item = item->child; item != NULL; item = item->next) {
+		/* What we're looking for looks like:
+		 *  <key>action</key>
+		 *  <dict>
+		 *    <key>kind</key><string>Goto</string>
+		 *    <key>url</key><string>URL</string>
+		 */
+		if (g_ascii_strcasecmp (item->name, "key") == 0
+		    && g_ascii_strcasecmp (item->data, "action") == 0) {
+			xml_node_t *node = item->next;
+
+			if (node && g_ascii_strcasecmp (node->name, "[CDATA]") == 0)
+				node = node->next;
+			if (node && g_ascii_strcasecmp (node->name, "dict") == 0) {
+				for (node = node->child; node != NULL; node = node->next) {
+					if (g_ascii_strcasecmp (node->name, "key") == 0 &&
+					    g_ascii_strcasecmp (node->data, "url") == 0 &&
+					    node->next != NULL) {
+						node = node->next;
+						if (g_ascii_strcasecmp (node->name, "string") == 0)
+							return node->data;
+					}
+				}
+			}
+		} else {
+			const char *ret;
+
+			ret = totem_pl_parser_parse_plist (item);
+			if (ret != NULL)
+				return ret;
+		}
+	}
+
+	return NULL;
+}
+
 static char *
-totem_pl_parser_parse_json (char *data, gsize len, gboolean debug)
+totem_pl_parser_parse_html (char *data, gsize len, gboolean debug)
 {
 	char *s, *end;
 
-	s = g_strstr_len (data, len, "feedUrl\":\"");
+	s = g_strstr_len (data, len, "feed-url=\"");
 	if (s == NULL)
 		return NULL;
-	s += strlen ("feedUrl\":\"");
+	s += strlen ("feed-url=\"");
 	if (*s == '\0')
 		return NULL;
 	end = g_strstr_len (s, len - (s - data), "\"");
@@ -625,33 +689,56 @@ totem_pl_parser_parse_json (char *data, gsize len, gboolean debug)
 	return g_strndup (s, end - s);
 }
 
-static char *
-get_itms_id (GFile *file)
+static GFile *
+totem_pl_parser_get_feed_uri (char *data, gsize len, gboolean debug)
 {
-	char *uri, *start, *end, *id;
+	xml_node_t* doc;
+	const char *uri;
+	GFile *ret;
+	GByteArray *content;
 
-	uri = g_file_get_uri (file);
-	if (!uri)
+	uri = NULL;
+
+	/* Probably HTML, look for feed-url */
+	if (g_strstr_len (data, len, "feed-url") != NULL) {
+		char *feed_uri;
+		feed_uri = totem_pl_parser_parse_html (data, len, debug);
+		if (debug)
+			g_print ("Found feed-url in HTML: '%s'\n", feed_uri);
+		if (feed_uri == NULL)
+			return NULL;
+		ret = g_file_new_for_uri (feed_uri);
+		g_free (feed_uri);
+		return ret;
+	}
+
+	doc = totem_pl_parser_parse_xml_relaxed (data, len);
+	if (doc == NULL)
 		return NULL;
 
-	start = strstr (uri, "/id");
-	if (!start) {
-		g_free (uri);
+	/* If the document has no name */
+	if (doc->name == NULL
+	    || g_ascii_strcasecmp (doc->name, "plist") != 0) {
+		xml_parser_free_tree (doc);
 		return NULL;
 	}
 
-	end = strchr (start, '?');
-	if (!end)
-		end = strchr (start, '#');
-	if (!end || end - start <= 3) {
-		g_free (uri);
+	/* Redirect plist? Find a goto action */
+	uri = totem_pl_parser_parse_plist (doc);
+
+	if (debug)
+		g_print ("Found redirect URL: %s\n", uri);
+
+	if (uri == NULL) {
 		return NULL;
+	} else {
+
+		content = totem_pl_parser_load_http_itunes (uri, debug);
+		ret = totem_pl_parser_get_feed_uri ((char *) content->data, content->len, debug);
+		g_byte_array_free (content, TRUE);
 	}
 
-	id = g_strndup (start + 3, end - start - 3);
-	g_free (uri);
-
-	return id;
+	return ret;
 }
 
 TotemPlParserResult
@@ -664,41 +751,30 @@ totem_pl_parser_add_itms (TotemPlParser *parser,
 #ifndef HAVE_GMIME
 	WARN_NO_GMIME;
 #else
-	GFile *json_file, *feed_file;
+	GByteArray *content;
+	char *itms_uri;
+	GFile *feed_file;
 	TotemPlParserResult ret;
-	char *contents, *id, *json_uri, *feed_url;
-	gsize len;
 
-	id = get_itms_id (file);
-	if (id == NULL) {
-		DEBUG(file, g_print ("Could not get ITMS ID for URL '%s'\n", uri));
+	if (g_file_has_uri_scheme (file, "itms") != FALSE ||
+	    g_file_has_uri_scheme (file, "itmss") != FALSE) {
+		itms_uri= g_file_get_uri (file);
+		memcpy (itms_uri, "http", 4);
+	} else if (g_file_has_uri_scheme (file, "http") != FALSE) {
+		itms_uri = g_file_get_uri (file);
+	} else {
 		return TOTEM_PL_PARSER_RESULT_ERROR;
 	}
 
-	DEBUG(file, g_print ("Got ID '%s' for URL '%s'", id, uri));
+	/* Load the file using iTunes user-agent */
+	content = totem_pl_parser_load_http_itunes (itms_uri, totem_pl_parser_is_debugging_enabled (parser));
 
-	json_uri = g_strdup_printf ("https://itunes.apple.com/lookup?id=%s&entity=podcast", id);
-	g_free (id);
-	json_file = g_file_new_for_uri (json_uri);
-	g_free (json_uri);
-
-	if (g_file_load_contents (json_file, NULL, &contents, &len, NULL, NULL) == FALSE) {
-		DEBUG(json_file, g_print ("Failed to load URL '%s'\n", uri));
-		g_object_unref (json_file);
+	/* And look in the file for the feedURL */
+	feed_file = totem_pl_parser_get_feed_uri ((char *) content->data, content->len,
+						  totem_pl_parser_is_debugging_enabled (parser));
+	g_byte_array_free (content, TRUE);
+	if (feed_file == NULL)
 		return TOTEM_PL_PARSER_RESULT_ERROR;
-	}
-
-	feed_url = totem_pl_parser_parse_json (contents, len, totem_pl_parser_is_debugging_enabled (parser));
-	g_free (contents);
-	if (feed_url == NULL) {
-		DEBUG(json_file, g_print ("Failed to parse JSON file at '%s'\n", uri));
-		g_object_unref (json_file);
-		return TOTEM_PL_PARSER_RESULT_ERROR;
-	}
-
-	g_object_unref (json_file);
-	feed_file = g_file_new_for_uri (feed_url);
-	g_free (feed_url);
 
 	DEBUG(feed_file, g_print ("Found feed URI: %s\n", uri));
 

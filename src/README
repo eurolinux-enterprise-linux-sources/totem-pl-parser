@@ -15,19 +15,14 @@ See NEWS file
 Dependencies
 ============
 
-glib >= 2.36
-gmime >= 2.6 or >= 3.0
-libxml2
-
-libquvi >= 0.9.1 (optional)
-libarchive >= 3.0 (optional)
-libgcrypt (optional)
+glib with GIO (glib 2.16)
+gmime 2.4
 
 BUGS
 ====
 
 Bugs should be filed in GNOME's Bugzilla:
-http://bugzilla.gnome.org/enter_bug.cgi?product=totem-pl-parser
+http://bugzilla.gnome.org/enter_bug.cgi?product=totem&component=playlist%20parser
 
 To get a better debug output, run:
 # test-parser --debug
@@ -36,4 +31,4 @@ Contact
 =======
 
 Bastien Nocera <hadess@hadess.net>
-http://wiki.gnome.org/Apps/Videos
+http://www.gnome.org/projects/totem/

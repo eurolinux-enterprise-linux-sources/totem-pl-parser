@@ -196,7 +196,6 @@ static PlaylistTypes special_types[] = {
 	PLAYLIST_TYPE ("audio/x-scpls", totem_pl_parser_add_pls, NULL, FALSE),
 	PLAYLIST_TYPE ("application/x-smil", totem_pl_parser_add_smil, NULL, FALSE),
 	PLAYLIST_TYPE ("application/smil", totem_pl_parser_add_smil, NULL, FALSE),
-	PLAYLIST_TYPE ("application/smil+xml", totem_pl_parser_add_smil, NULL, FALSE),
 	PLAYLIST_TYPE ("application/vnd.ms-wpl", totem_pl_parser_add_smil, NULL, FALSE),
 	PLAYLIST_TYPE ("video/x-ms-wvx", totem_pl_parser_add_asx, NULL, FALSE),
 	PLAYLIST_TYPE ("audio/x-ms-wax", totem_pl_parser_add_asx, NULL, FALSE),
@@ -234,7 +233,6 @@ static PlaylistTypes dual_types[] = {
 	PLAYLIST_TYPE2 ("application/x-php", NULL, NULL),
 	PLAYLIST_TYPE2 ("audio/x-ms-asx", totem_pl_parser_add_asx, totem_pl_parser_is_asx),
 	PLAYLIST_TYPE2 ("video/x-ms-asf", totem_pl_parser_add_asf, totem_pl_parser_is_asf),
-	PLAYLIST_TYPE2 ("application/vnd.ms-asf", totem_pl_parser_add_asf, totem_pl_parser_is_asf),
 	PLAYLIST_TYPE2 ("video/x-ms-wmv", totem_pl_parser_add_asf, totem_pl_parser_is_asf),
 	PLAYLIST_TYPE2 ("audio/x-ms-wma", totem_pl_parser_add_asf, totem_pl_parser_is_asf),
 	PLAYLIST_TYPE2 ("video/quicktime", totem_pl_parser_add_quicktime, totem_pl_parser_is_quicktime),
@@ -258,8 +256,8 @@ static void totem_pl_parser_get_property (GObject *object,
 					  GParamSpec *pspec);
 
 struct TotemPlParserPrivate {
-	GHashTable *ignore_schemes; /* key = char *, value = boolean */
-	GHashTable *ignore_mimetypes; /*key = char *, value = boolean */
+	GList *ignore_schemes;
+	GList *ignore_mimetypes;
 	GMutex ignore_mutex;
 	GThread *main_thread; /* see CALL_ASYNC() in *-private.h */
 
@@ -570,10 +568,6 @@ totem_pl_parser_class_init (TotemPlParserClass *klass)
 	g_param_spec_pool_insert (totem_pl_parser_pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
 	pspec = g_param_spec_string ("playing", "playing",
 				     "Whether the track is playing", NULL,
-				     G_PARAM_READABLE & G_PARAM_WRITABLE);
-	g_param_spec_pool_insert (totem_pl_parser_pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
-	pspec = g_param_spec_string ("audio-track", "audio-track",
-				     "The default audio-track to play", NULL,
 				     G_PARAM_READABLE & G_PARAM_WRITABLE);
 	g_param_spec_pool_insert (totem_pl_parser_pspec_pool, pspec, TOTEM_TYPE_PL_PARSER);
 }
@@ -1282,8 +1276,6 @@ totem_pl_parser_init (TotemPlParser *parser)
 	parser->priv = G_TYPE_INSTANCE_GET_PRIVATE (parser, TOTEM_TYPE_PL_PARSER, TotemPlParserPrivate);
 	parser->priv->main_thread = g_thread_self ();
 	g_mutex_init (&parser->priv->ignore_mutex);
-	parser->priv->ignore_schemes = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
-	parser->priv->ignore_mimetypes = g_hash_table_new_full (g_str_hash, g_str_equal, g_free, NULL);
 }
 
 static void
@@ -1294,8 +1286,11 @@ totem_pl_parser_finalize (GObject *object)
 	g_return_if_fail (object != NULL);
 	g_return_if_fail (priv != NULL);
 
-	g_clear_pointer (&priv->ignore_schemes, g_hash_table_destroy);
-	g_clear_pointer (&priv->ignore_mimetypes, g_hash_table_destroy);
+	g_list_foreach (priv->ignore_schemes, (GFunc) g_free, NULL);
+	g_list_free (priv->ignore_schemes);
+
+	g_list_foreach (priv->ignore_mimetypes, (GFunc) g_free, NULL);
+	g_list_free (priv->ignore_mimetypes);
 
 	g_mutex_clear (&priv->ignore_mutex);
 
@@ -1321,60 +1316,6 @@ emit_entry_parsed_signal (EntryParsedSignalData *data)
 	g_free (data);
 
 	return FALSE;
-}
-
-gboolean
-totem_pl_parser_fix_string (const char  *name,
-			    const char  *value,
-			    char       **ret)
-{
-	char *fixed = NULL;
-
-	/* Check for UTF-8 or ISO8859-1 string */
-	if (g_utf8_validate (value, -1, NULL) == FALSE) {
-		fixed = g_convert (value, -1, "UTF-8", "ISO8859-1", NULL, NULL, NULL);
-		if (fixed == NULL) {
-			g_warning ("Ignored non-UTF-8 and non-ISO8859-1 string for field '%s'", name);
-			return FALSE;
-		}
-	}
-
-	/* Remove trailing spaces from titles */
-	if (g_str_equal (name, TOTEM_PL_PARSER_FIELD_TITLE)) {
-		if (fixed == NULL)
-			fixed = g_strchomp (g_strdup (value));
-		else
-			g_strchomp (fixed);
-	}
-
-	*ret = fixed;
-
-	return TRUE;
-}
-
-void
-totem_pl_parser_add_hash_table (TotemPlParser *parser,
-				GHashTable    *metadata,
-				const char    *uri,
-				gboolean       is_playlist)
-{
-	if (g_hash_table_size (metadata) > 0 || uri != NULL) {
-		EntryParsedSignalData *data;
-
-		/* Make sure to emit the signals asynchronously, as we could be in the main loop
-		 * *or* a worker thread at this point. */
-		data = g_new (EntryParsedSignalData, 1);
-		data->parser = g_object_ref (parser);
-		data->uri = g_strdup (uri);
-		data->metadata = g_hash_table_ref (metadata);
-
-		if (is_playlist == FALSE)
-			data->signal_id = totem_pl_parser_table_signals[ENTRY_PARSED];
-		else
-			data->signal_id = totem_pl_parser_table_signals[PLAYLIST_STARTED];
-
-		CALL_ASYNC (parser, emit_entry_parsed_signal, data);
-	}
 }
 
 static void
@@ -1457,10 +1398,21 @@ totem_pl_parser_add_uri_valist (TotemPlParser *parser,
 		if (string != NULL && string[0] != '\0') {
 			char *fixed = NULL;
 
-			if (!totem_pl_parser_fix_string (name, string, &fixed)) {
-				g_value_unset (&value);
-				name = va_arg (var_args, char*);
-				continue;
+			if (g_utf8_validate (string, -1, NULL) == FALSE) {
+				fixed = g_convert (string, -1, "UTF-8", "ISO8859-1", NULL, NULL, NULL);
+				if (fixed == NULL) {
+					g_value_unset (&value);
+					name = va_arg (var_args, char*);
+					continue;
+				}
+			}
+
+			/* Remove trailing spaces from titles */
+			if (strcmp (name, "title") == 0) {
+				if (fixed == NULL)
+					fixed = g_strchomp (g_strdup (string));
+				else
+					g_strchomp (fixed);
 			}
 
 			/* Add other values to the metadata hashtable */
@@ -1477,10 +1429,23 @@ totem_pl_parser_add_uri_valist (TotemPlParser *parser,
 		//FIXME fix this! 396710
 	}
 
-	totem_pl_parser_add_hash_table (parser,
-					metadata,
-					uri,
-					is_playlist);
+	if (g_hash_table_size (metadata) > 0 || uri != NULL) {
+		EntryParsedSignalData *data;
+
+		/* Make sure to emit the signals asynchronously, as we could be in the main loop
+		 * *or* a worker thread at this point. */
+		data = g_new (EntryParsedSignalData, 1);
+		data->parser = g_object_ref (parser);
+		data->uri = g_strdup (uri);
+		data->metadata = g_hash_table_ref (metadata);
+
+		if (is_playlist == FALSE)
+			data->signal_id = totem_pl_parser_table_signals[ENTRY_PARSED];
+		else
+			data->signal_id = totem_pl_parser_table_signals[PLAYLIST_STARTED];
+
+		CALL_ASYNC (parser, emit_entry_parsed_signal, data);
+	}
 
 	g_hash_table_unref (metadata);
 
@@ -1492,11 +1457,11 @@ totem_pl_parser_add_uri_valist (TotemPlParser *parser,
  * totem_pl_parser_add_uri:
  * @parser: a #TotemPlParser
  * @first_property_name: the first property name
- * @...: value for the first property, followed optionally by more
+ * @Varargs: value for the first property, followed optionally by more
  * name/value pairs, followed by %NULL
  *
  * Adds a URI to the playlist with the properties given in @first_property_name
- * and @....
+ * and @Varargs.
  **/
 void
 totem_pl_parser_add_uri (TotemPlParser *parser,
@@ -1556,35 +1521,53 @@ static PlaylistTypes ignore_types[] = {
 gboolean
 totem_pl_parser_scheme_is_ignored (TotemPlParser *parser, GFile *uri)
 {
-	char *scheme;
-	gboolean ret;
+	GList *l;
 
 	g_mutex_lock (&parser->priv->ignore_mutex);
 
-	scheme = g_file_get_uri_scheme (uri);
-	if (!scheme) {
+	if (parser->priv->ignore_schemes == NULL) {
 		g_mutex_unlock (&parser->priv->ignore_mutex);
-		return TRUE;
+		return FALSE;
 	}
-	ret = GPOINTER_TO_INT (g_hash_table_lookup (parser->priv->ignore_schemes, scheme));
-	g_free (scheme);
+
+	for (l = parser->priv->ignore_schemes; l != NULL; l = l->next) {
+		const char *scheme = l->data;
+		if (g_file_has_uri_scheme (uri, scheme) != FALSE) {
+			g_mutex_unlock (&parser->priv->ignore_mutex);
+			return TRUE;
+		}
+	}
 
 	g_mutex_unlock (&parser->priv->ignore_mutex);
 
-	return ret;
+	return FALSE;
 }
 
 static gboolean
 totem_pl_parser_mimetype_is_ignored (TotemPlParser *parser,
 				     const char *mimetype)
 {
-	gboolean ret;
+	GList *l;
 
 	g_mutex_lock (&parser->priv->ignore_mutex);
-	ret = GPOINTER_TO_INT (g_hash_table_lookup (parser->priv->ignore_mimetypes, mimetype));
+
+	if (parser->priv->ignore_mimetypes == NULL) {
+		g_mutex_unlock (&parser->priv->ignore_mutex);
+		return FALSE;
+	}
+
+	for (l = parser->priv->ignore_mimetypes; l != NULL; l = l->next)
+	{
+		const char *item = l->data;
+		if (strcmp (mimetype, item) == 0) {
+			g_mutex_unlock (&parser->priv->ignore_mutex);
+			return TRUE;
+		}
+	}
+
 	g_mutex_unlock (&parser->priv->ignore_mutex);
 
-	return ret;
+	return FALSE;
 }
 
 /**
@@ -1738,21 +1721,10 @@ totem_pl_parser_ignore_from_mimetype (TotemPlParser *parser, const char *mimetyp
 		return FALSE;
 
 	for (i = 0; i < G_N_ELEMENTS (ignore_types); i++) {
-		/* Up until we have a way to detect private inheritance
-		 * in shared-mime-info */
-		if (strcmp (mimetype, "application/vnd.apple.mpegurl") != 0 &&
-		    strcmp (mimetype, "audio/x-mpegurl") != 0 &&
-		    strcmp (mimetype, "video/x-mjpeg") != 0 &&
-		    g_content_type_is_a (mimetype, ignore_types[i].mimetype) != FALSE) {
-			if (parser->priv->debug)
-				g_print ("Ignoring %s because it's a %s\n", mimetype, ignore_types[i].mimetype);
+		if (g_content_type_is_a (mimetype, ignore_types[i].mimetype) != FALSE)
 			return TRUE;
-		}
-		if (g_content_type_equals (mimetype, ignore_types[i].mimetype) != FALSE) {
-			if (parser->priv->debug)
-				g_print ("Ignoring %s because it's equal to %s\n", mimetype, ignore_types[i].mimetype);
+		if (g_content_type_equals (mimetype, ignore_types[i].mimetype) != FALSE)
 			return TRUE;
-		}
 	}
 
 	return FALSE;
@@ -1823,19 +1795,19 @@ totem_pl_parser_parse_internal (TotemPlParser *parser,
 	if (!parse_data->recurse && parse_data->recurse_level > 0)
 		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
 
+#ifdef HAVE_QUVI
 	/* Should we try to parse it with quvi? */
 	if (g_file_has_uri_scheme (file, "http")) {
 		char *url;
 		url = g_file_get_uri (file);
 		if (url != NULL && totem_pl_parser_is_videosite (url, parser->priv->debug) != FALSE) {
 			ret = totem_pl_parser_add_videosite (parser, file, base_file, parse_data, NULL);
-			if (ret == TOTEM_PL_PARSER_RESULT_SUCCESS) {
-				g_free (url);
+			if (ret == TOTEM_PL_PARSER_RESULT_SUCCESS)
 				return ret;
-			}
 		}
 		g_free (url);
 	}
+#endif /* HAVE_QUVI */
 
 	/* In force mode we want to get the data */
 	if (parse_data->force != FALSE) {
@@ -1895,10 +1867,6 @@ totem_pl_parser_parse_internal (TotemPlParser *parser,
 		g_free (data);
 		g_free (mimetype);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
-	} else if (strcmp (mimetype, HLS_MIME_TYPE) == 0) {
-		g_free (data);
-		g_free (mimetype);
-		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	}
 
 	/* If we're at the top-level of the parsing, try to get more
@@ -2033,22 +2001,23 @@ parse_async_data_free (ParseAsyncData *data)
 }
 
 static void
-parse_thread (GTask *task, gpointer source_object, gpointer task_data, GCancellable *cancellable)
+parse_thread (GSimpleAsyncResult *result, GObject *object, GCancellable *cancellable)
 {
-	TotemPlParser *parser = TOTEM_PL_PARSER (source_object);
 	TotemPlParserResult parse_result;
 	GError *error = NULL;
-	ParseAsyncData *data = task_data;
+	ParseAsyncData *data = g_simple_async_result_get_op_res_gpointer (result);
 
 	/* Check to see if it's been cancelled already */
 	if (g_cancellable_set_error_if_cancelled (cancellable, &error) == TRUE) {
-		g_task_return_error (task, error);
+		g_simple_async_result_set_from_error (result, error);
+		g_simple_async_result_set_op_res_gpointer (result, GUINT_TO_POINTER (TOTEM_PL_PARSER_RESULT_CANCELLED), NULL);
+		g_error_free (error);
 		return;
 	}
 
 	/* Parse and return */
-	parse_result = totem_pl_parser_parse_with_base (parser, data->uri, data->base, data->fallback);
-	g_task_return_int (task, parse_result);
+	parse_result = totem_pl_parser_parse_with_base (TOTEM_PL_PARSER (object), data->uri, data->base, data->fallback);
+	g_simple_async_result_set_op_res_gpointer (result, GUINT_TO_POINTER (parse_result), NULL);
 }
 
 /**
@@ -2074,7 +2043,7 @@ void
 totem_pl_parser_parse_with_base_async (TotemPlParser *parser, const char *uri, const char *base, gboolean fallback,
 				       GCancellable *cancellable, GAsyncReadyCallback callback, gpointer user_data)
 {
-	GTask *task;
+	GSimpleAsyncResult *result;
 	ParseAsyncData *data;
 
 	g_return_if_fail (TOTEM_IS_PL_PARSER (parser));
@@ -2086,10 +2055,10 @@ totem_pl_parser_parse_with_base_async (TotemPlParser *parser, const char *uri, c
 	data->base = g_strdup (base);
 	data->fallback = fallback;
 
-	task = g_task_new (parser, cancellable, callback, user_data);
-	g_task_set_task_data (task, data, (GDestroyNotify) parse_async_data_free);
-	g_task_run_in_thread (task, parse_thread);
-	g_object_unref (task);
+	result = g_simple_async_result_new (G_OBJECT (parser), callback, user_data, totem_pl_parser_parse_with_base_async);
+	g_simple_async_result_set_op_res_gpointer (result, data, (GDestroyNotify) parse_async_data_free);
+	g_simple_async_result_run_in_thread (result, (GSimpleAsyncThreadFunc) parse_thread, G_PRIORITY_DEFAULT, cancellable);
+	g_object_unref (result);
 }
 
 /**
@@ -2186,13 +2155,16 @@ totem_pl_parser_parse_async (TotemPlParser *parser, const char *uri, gboolean fa
 TotemPlParserResult
 totem_pl_parser_parse_finish (TotemPlParser *parser, GAsyncResult *async_result, GError **error)
 {
-	GTask *task = G_TASK (async_result);
+	GSimpleAsyncResult *result = G_SIMPLE_ASYNC_RESULT (async_result);
 
 	g_return_val_if_fail (TOTEM_IS_PL_PARSER (parser), FALSE);
-	g_return_val_if_fail (g_task_is_valid (async_result, parser), FALSE);
+	g_return_val_if_fail (G_IS_ASYNC_RESULT (async_result), FALSE);
+
+	g_warn_if_fail (g_simple_async_result_get_source_tag (result) == totem_pl_parser_parse_with_base_async);
 
 	/* Propagate any errors which were caught and return the result; otherwise just return the result */
-	return g_task_propagate_int (task, error);
+	g_simple_async_result_propagate_error (result, error);
+	return GPOINTER_TO_UINT (g_simple_async_result_get_op_res_gpointer (result));
 }
 
 /**
@@ -2238,7 +2210,8 @@ totem_pl_parser_add_ignored_scheme (TotemPlParser *parser,
 	s = g_strdup (scheme);
 	if (s[strlen (s) - 1] == ':')
 		s[strlen (s) - 1] = '\0';
-	g_hash_table_insert (parser->priv->ignore_schemes, s, GINT_TO_POINTER (1));
+	parser->priv->ignore_schemes = g_list_prepend
+		(parser->priv->ignore_schemes, s);
 
 	g_mutex_unlock (&parser->priv->ignore_mutex);
 }
@@ -2258,7 +2231,10 @@ totem_pl_parser_add_ignored_mimetype (TotemPlParser *parser,
 	g_return_if_fail (TOTEM_IS_PL_PARSER (parser));
 
 	g_mutex_lock (&parser->priv->ignore_mutex);
-	g_hash_table_insert (parser->priv->ignore_mimetypes, g_strdup (mimetype), GINT_TO_POINTER (1));
+
+	parser->priv->ignore_mimetypes = g_list_prepend
+		(parser->priv->ignore_mimetypes, g_strdup (mimetype));
+
 	g_mutex_unlock (&parser->priv->ignore_mutex);
 }
 
@@ -2284,7 +2260,7 @@ totem_pl_parser_parse_duration (const char *duration, gboolean debug)
 
 	/* Formats used by both ASX and RAM files */
 	if (sscanf (duration, "%d:%d:%d.%d", &hours, &minutes, &seconds, &fractions) == 4) {
-		gint64 ret = (gint64) hours * 3600 + (gint64) minutes * 60 + seconds;
+		gint64 ret = hours * 3600 + minutes * 60 + seconds;
 		if (ret == 0 && fractions > 0) {
 			D(g_print ("Used 00:00:00.00 format, with fractions rounding\n"));
 			ret = 1;
@@ -2295,7 +2271,7 @@ totem_pl_parser_parse_duration (const char *duration, gboolean debug)
 	}
 	if (sscanf (duration, "%d:%d:%d", &hours, &minutes, &seconds) == 3) {
 		D(g_print ("Used 00:00:00 format\n"));
-		return (gint64) hours * 3600 + (gint64) minutes * 60 + seconds;
+		return hours * 3600 + minutes * 60 + seconds;
 	}
 	if (sscanf (duration, "%d:%d.%d", &minutes, &seconds, &fractions) == 3) {
 		gint64 ret = minutes * 60 + seconds;
@@ -2309,16 +2285,16 @@ totem_pl_parser_parse_duration (const char *duration, gboolean debug)
 	}
 	if (sscanf (duration, "%d:%d", &minutes, &seconds) == 2) {
 		D(g_print ("Used 00:00 format\n"));
-		return (gint64) minutes * 60 + seconds;
+		return minutes * 60 + seconds;
 	}
 	if (sscanf (duration, "%d.%d", &minutes, &seconds) == 2) {
 		D(g_print ("Used broken float format (00.00)\n"));
-		return (gint64) minutes * 60 + seconds;
+		return minutes * 60 + seconds;
 	}
 	/* YouTube format */
 	if (sscanf (duration, "%dm%ds", &minutes, &seconds) == 2) {
 		D(g_print ("Used YouTube format\n"));
-		return (gint64) minutes * 60 + seconds;
+		return minutes * 60 + seconds;
 	}
 	/* PLS files format */
 	if (sscanf (duration, "%d", &seconds) == 1) {
@@ -2358,19 +2334,7 @@ totem_pl_parser_parse_date (const char *date_str, gboolean debug)
 	}
 	D(g_message ("Failed to parse duration '%s' using the ISO8601 parser", date_str));
 	/* Fall back to RFC 2822 date parsing */
-#ifdef HAVE_GMIME3
-	{
-		g_autoptr(GDateTime) date = NULL;
-		date = g_mime_utils_header_decode_date (date_str);
-		if (!date || !g_date_time_to_timeval (date, &val)) {
-			D(g_message ("Failed to parse duration '%s' using the RFC 2822 parser", date_str));
-			return -1;
-		}
-		return val.tv_sec;
-	}
-#else
 	return g_mime_utils_header_decode_date (date_str, NULL);
-#endif /* HAVE_GMIME3 */
 #else
 	WARN_NO_GMIME;
 #endif /* HAVE_GMIME */

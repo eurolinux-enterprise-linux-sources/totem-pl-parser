@@ -5,61 +5,51 @@
 # Tuchinsky Artem <tuchinsky@gmail.com, 2006.
 #
 # This file is distributed under the same license as the "totem" package.
-# Stas Solovey <whats_up@tut.by>, 2016.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: totem trunk\n"
-"Report-Msgid-Bugs-To: http://bugzilla.gnome.org/enter_bug.cgi?product=totem-"
-"pl-parser&keywords=I18N+L10N&component=General\n"
-"POT-Creation-Date: 2016-10-11 14:10+0000\n"
-"PO-Revision-Date: 2016-11-24 00:26+0300\n"
-"Last-Translator: Stas Solovey <whats_up@tut.by>\n"
-"Language-Team: Русский <gnome-cyr@gnome.org>\n"
-"Language: ru\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-03-12 23:23+0300\n"
+"PO-Revision-Date: 2007-02-20 12:55+0200\n"
+"Last-Translator: Nickolay V. Shmyrev <nshmyrev@yandex.ru>\n"
+"Language-Team: Russian <gnome-cyr@gnome.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
-"X-Generator: Gtranslator 2.91.7\n"
+"Plural-Forms:  nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
 
-#: ../plparse/totem-disc.c:276 ../plparse/totem-disc.c:289
-#: ../plparse/totem-disc.c:533
+#: ../plparse/totem-disc.c:357 ../plparse/totem-disc.c:498
 #, c-format
 msgid "Failed to mount %s."
 msgstr "Не удалось подключить %s."
 
-#: ../plparse/totem-disc.c:418
+#: ../plparse/totem-disc.c:387
 #, c-format
-#| msgid "No media in drive for device '%s'."
-msgid "No media in drive for device “%s”."
-msgstr "Нет носителя в приводе устройства «%s»."
+msgid "No media in drive for device '%s'."
+msgstr "Не найден носитель в устройстве «%s»."
 
-#: ../plparse/totem-disc.c:476
+#: ../plparse/totem-disc.c:441
 #, c-format
 msgid "Please check that a disc is present in the drive."
 msgstr "Убедитесь, что диск вставлен в устройство."
 
-#: ../plparse/totem-disc.c:947
+#: ../plparse/totem-disc.c:880
 msgid "Audio CD"
 msgstr "Аудио CD"
 
-#: ../plparse/totem-disc.c:949
+#: ../plparse/totem-disc.c:882
 msgid "Video CD"
 msgstr "Видео CD"
 
-#: ../plparse/totem-disc.c:951
+#: ../plparse/totem-disc.c:884
 msgid "DVD"
 msgstr "DVD"
 
-#: ../plparse/totem-disc.c:953
+#: ../plparse/totem-disc.c:886
 msgid "Digital Television"
 msgstr "Цифровое телевидение"
-
-#: ../plparse/totem-disc.c:955
-msgid "Blu-ray"
-msgstr "Blu-ray"
 
 #~ msgid "Leave Fullscreen"
 #~ msgstr "Выйти из полноэкранного режима"
@@ -343,8 +333,8 @@ msgstr "Blu-ray"
 #~ "output, \"2\" for 5.0 channel output, \"3\" for 5.1 channel output, \"4\" "
 #~ "for AC3 Passthrough."
 #~ msgstr ""
-#~ "Тип используемого аудиовывода: «0» - стерео, «1» - выход на 4 канала, «2» "
-#~ "- выход 5.0, «3» - выход 5.1, «4» - пропускать AC3"
+#~ "Тип используемого аудиовывода: «0» - стерео, «1» - выход на 4 канала, «2» - "
+#~ "выход 5.0, «3» - выход 5.1, «4» - пропускать AC3"
 
 #~ msgid "UTF-8"
 #~ msgstr "UTF-8"

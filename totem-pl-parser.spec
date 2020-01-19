@@ -1,25 +1,26 @@
 Name:		totem-pl-parser
-Version:	3.26.1
+Version:	3.4.5
 Release:	1%{?dist}
 Summary:	Totem Playlist Parser library
 
+Group:		System Environment/Libraries
 License:	LGPLv2+
-Url:		https://wiki.gnome.org/Apps/Videos
-Source0:	https://download.gnome.org/sources/%{name}/3.26/%{name}-%{version}.tar.xz
+Url:		http://www.gnome.org/projects/totem/
+Source0:	http://download.gnome.org/sources/%{name}/3.4/%{name}-%{version}.tar.xz
+Obsoletes:	totem-plparser
 
 BuildRequires:	glib2-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	libsoup-devel
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	gettext
-BuildRequires:	libgcrypt-devel
 BuildRequires:	libquvi-devel
 BuildRequires:	libarchive-devel
 BuildRequires:	perl(XML::Parser) intltool
 
 # To remove the GMime dep
 Patch0: 0001-Remove-gmime-dependency.patch
-BuildRequires:	gtk-doc meson
+BuildRequires:	autoconf automake libtool gtk-doc gnome-common libgcrypt-devel
 
 %description
 A library to parse and save playlists, as used in music and movie players.
@@ -27,7 +28,11 @@ A library to parse and save playlists, as used in music and movie players.
 
 %package        devel
 Summary:        Development files for %{name}
-Requires:       %{name}%{?_isa} = %{version}-%{release}
+Group:          Development/Libraries
+Obsoletes:	totem-devel < 2.21.90
+Requires:       %{name} = %{version}-%{release}
+Requires:	pkgconfig
+Requires:	gobject-introspection-devel
 
 %description    devel
 The %{name}-devel package contains libraries and header files for
@@ -36,13 +41,16 @@ developing applications that use %{name}.
 %prep
 %setup -q
 %patch0 -p1 -b .gmime
+libtoolize -f -c
+autoreconf -f -i
 
 %build
-%meson -Denable-gtk-doc=true
-%meson_build
+%configure --enable-static=no
+make %{?_smp_mflags}
 
 %install
-LANG=en_GB.UTF-8 LC_ALL=en_GB.UTF-8 %meson_install
+make install DESTDIR=$RPM_BUILD_ROOT
+find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 %find_lang %{name} --with-gnome
 
@@ -51,47 +59,20 @@ LANG=en_GB.UTF-8 LC_ALL=en_GB.UTF-8 %meson_install
 %postun -p /sbin/ldconfig
 
 %files -f %{name}.lang
-%license COPYING.LIB
-%doc AUTHORS NEWS README
+%defattr(-,root,root,-)
+%doc AUTHORS COPYING.LIB NEWS README
 %{_libdir}/*.so.*
 %{_libdir}/girepository-1.0/*.typelib
-%if 0%{?fedora}
-%{_libexecdir}/totem-pl-parser/
-%endif
 
 %files devel
+%defattr(-,root,root,-)
 %{_includedir}/*
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
 %{_datadir}/gtk-doc/html/totem-pl-parser
-%dir %{_datadir}/gir-1.0
 %{_datadir}/gir-1.0/*.gir
 
 %changelog
-* Thu Jun 14 2018 Bastien Nocera <bnocera@redhat.com> - 3.26.1-1
-+ totem-pl-parser-3.26.1-1
-- Update to 3.26.1
-- Resolves: #1569789
-
-* Mon Jun 04 2018 Bastien Nocera <bnocera@redhat.com> - 3.26.0-1
-+ totem-pl-parser-3.26.0-1
-- Update to 3.26.0
-- Resolves: #1569789
-
-* Wed Sep 21 2016 Kalev Lember <klember@redhat.com> - 3.10.7-1
-- Update to 3.10.7
-- Resolves: #1387049
-
-* Thu Apr 30 2015 Bastien Nocera <bnocera@redhat.com> 3.10.5-1
-- Update to 3.10.5
-Resolves: #1174531
-
-* Fri Jan 24 2014 Daniel Mach <dmach@redhat.com> - 3.4.5-3
-- Mass rebuild 2014-01-24
-
-* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 3.4.5-2
-- Mass rebuild 2013-12-27
-
 * Tue May 14 2013 Richard Hughes <rhughes@redhat.com> - 3.4.5-1
 - Update to 3.4.5
 
