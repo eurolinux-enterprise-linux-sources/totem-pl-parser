@@ -15,8 +15,13 @@ See NEWS file
 Dependencies
 ============
 
-glib with GIO (glib 2.16)
-gmime 2.4
+glib >= 2.36
+gmime >= 2.6 or >= 3.0
+libxml2
+
+libquvi >= 0.9.1 (optional)
+libarchive >= 3.0 (optional)
+libgcrypt (optional)
 
 BUGS
 ====

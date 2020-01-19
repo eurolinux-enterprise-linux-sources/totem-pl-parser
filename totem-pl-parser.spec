@@ -1,24 +1,25 @@
 Name:		totem-pl-parser
-Version:	3.10.7
+Version:	3.26.1
 Release:	1%{?dist}
 Summary:	Totem Playlist Parser library
 
 License:	LGPLv2+
 Url:		https://wiki.gnome.org/Apps/Videos
-Source0:	https://download.gnome.org/sources/%{name}/3.10/%{name}-%{version}.tar.xz
+Source0:	https://download.gnome.org/sources/%{name}/3.26/%{name}-%{version}.tar.xz
 
 BuildRequires:	glib2-devel
 BuildRequires:	libxml2-devel
 BuildRequires:	libsoup-devel
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	gettext
+BuildRequires:	libgcrypt-devel
 BuildRequires:	libquvi-devel
 BuildRequires:	libarchive-devel
 BuildRequires:	perl(XML::Parser) intltool
 
 # To remove the GMime dep
 Patch0: 0001-Remove-gmime-dependency.patch
-BuildRequires:	autoconf automake libtool gtk-doc gnome-common libgcrypt-devel
+BuildRequires:	gtk-doc meson
 
 %description
 A library to parse and save playlists, as used in music and movie players.
@@ -35,16 +36,13 @@ developing applications that use %{name}.
 %prep
 %setup -q
 %patch0 -p1 -b .gmime
-libtoolize -f -c
-autoreconf -f -i
 
 %build
-%configure --enable-static=no
-make %{?_smp_mflags}
+%meson -Denable-gtk-doc=true
+%meson_build
 
 %install
-%make_install
-find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
+LANG=en_GB.UTF-8 LC_ALL=en_GB.UTF-8 %meson_install
 
 %find_lang %{name} --with-gnome
 
@@ -70,6 +68,16 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_datadir}/gir-1.0/*.gir
 
 %changelog
+* Thu Jun 14 2018 Bastien Nocera <bnocera@redhat.com> - 3.26.1-1
++ totem-pl-parser-3.26.1-1
+- Update to 3.26.1
+- Resolves: #1569789
+
+* Mon Jun 04 2018 Bastien Nocera <bnocera@redhat.com> - 3.26.0-1
++ totem-pl-parser-3.26.0-1
+- Update to 3.26.0
+- Resolves: #1569789
+
 * Wed Sep 21 2016 Kalev Lember <klember@redhat.com> - 3.10.7-1
 - Update to 3.10.7
 - Resolves: #1387049

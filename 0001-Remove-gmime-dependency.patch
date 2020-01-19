@@ -1,119 +1,69 @@
-From 270781537f0f3e2b6e6a1c7ac0e4e65e9150526e Mon Sep 17 00:00:00 2001
-From: Alex Larsson <alexl@redhat.com>
-Date: Tue, 1 Jun 2010 16:59:22 +0100
+From 27998dc1340a2879a619225bbe43e952c858ef7e Mon Sep 17 00:00:00 2001
+From: Bastien Nocera <hadess@hadess.net>
+Date: Mon, 4 Jun 2018 14:25:29 +0200
 Subject: [PATCH] Remove gmime dependency
 
 ---
- configure.ac                          |  71 ++--
- plparse/Makefile.am                   |   2 +
- plparse/totem-pl-parser-decode-date.c | 608 ++++++++++++++++++++++++++++++++++
+ meson.build                           |  21 +-
+ plparse/meson.build                   |   1 +
+ plparse/totem-pl-parser-decode-date.c | 608 ++++++++++++++++++++++++++
  plparse/totem-pl-parser-decode-date.h |  25 ++
- plparse/totem-pl-parser-podcast.c     |  28 --
- plparse/totem-pl-parser.c             |   9 +-
- totem-plparser.pc.in                  |   2 +-
- 7 files changed, 680 insertions(+), 65 deletions(-)
+ plparse/totem-pl-parser.c             |   5 +-
+ 5 files changed, 641 insertions(+), 19 deletions(-)
  create mode 100644 plparse/totem-pl-parser-decode-date.c
  create mode 100644 plparse/totem-pl-parser-decode-date.h
 
-diff --git a/configure.ac b/configure.ac
-index 11e5938..66b0d0e 100644
---- a/configure.ac
-+++ b/configure.ac
-@@ -71,35 +71,50 @@ pkg_modules="glib-2.0 >= $GLIB_REQS libxml-2.0 gthread-2.0 gio-2.0 >= $GIO_REQS
- ##################################
- # Checking libgmime dependency
- ##################################
--gmime_message=""
--
--AC_ARG_ENABLE(gmime-i-know-what-im-doing,
--	      AS_HELP_STRING([--disable-gmime-i-know-what-im-doing],
--			     [Disable libgmime (Unsupported, breaks Podcast support).]),
--			     [enable_gmime=no],
--			     [enable_gmime=yes])
--
--if test "x$enable_gmime" = "xyes" ; then
--   PKG_CHECK_MODULES(GMIME,  
--		       gmime-2.6,
--		       [have_gmime=yes GMIME=gmime-2.6], 
--		       [have_gmime=no])
--
--   if test "x$have_gmime" = "xyes" ; then
--      AC_SUBST(GMIME, $GMIME)
--      AC_SUBST(USEGMIME, yes)
--      AC_DEFINE(HAVE_GMIME, 1, [GMime available in the system])
--      pkg_modules="$pkg_modules $GMIME"
--   else
--      AC_MSG_ERROR([libgmime is required to compile totem-pl-parser.])
--   fi
-+AC_SUBST(USEGMIME, yes)
-+
-+dnl Timezone checks
-+AC_CACHE_CHECK(for tm_gmtoff in struct tm, ac_cv_struct_tm_gmtoff,
-+	AC_TRY_COMPILE([
-+		#include <time.h>
-+		], [
-+		struct tm tm;
-+		tm.tm_gmtoff = 1;
-+		return tm.tm_gmtoff;
-+		], ac_cv_struct_tm_gmtoff="yes", ac_cv_struct_tm_gmtoff="no"))
-+if test "$ac_cv_struct_tm_gmtoff" = "yes"; then
-+	AC_DEFINE(HAVE_TM_GMTOFF, 1, [Define if struct tm has a tm_gmtoff member])
- else
--   AC_SUBST(USEGMIME, no)
--   gmime_message="
-- **************************************************************
-- Compiling totem-pl-parser without libgmime.
-- This will break podcast support and is completely unsupported.
-- **************************************************************"
-+	AC_CACHE_CHECK(for timezone variable, ac_cv_var_timezone,
-+		AC_TRY_COMPILE([
-+			#include <time.h>
-+		], [
-+			timezone = 1;
-+		], ac_cv_var_timezone="yes", ac_cv_var_timezone="no"))
-+	if test "$ac_cv_var_timezone" = "yes"; then
-+		AC_DEFINE(HAVE_TIMEZONE, 1, [Define if libc defines a timezone variable])
-+		AC_CACHE_CHECK(for altzone variable, ac_cv_var_altzone,
-+			AC_TRY_COMPILE([
-+				#include <time.h>
-+			], [
-+				altzone = 1;
-+			], ac_cv_var_altzone="yes", ac_cv_var_altzone="no"))
-+		if test "$ac_cv_var_altzone" = "yes"; then
-+			AC_DEFINE(HAVE_ALTZONE, 1, [Define if libc defines an altzone variable])
-+		fi
-+	else
-+		AC_CACHE_CHECK(for _timezone variable, ac_cv_var__timezone,
-+			AC_TRY_COMPILE([
-+				#include <time.h>
-+			], [
-+				_timezone = 1;
-+			], ac_cv_var__timezone="yes", ac_cv_var__timezone="no"))
-+		if test "$ac_cv_var__timezone" = "yes"; then
-+			AC_DEFINE(HAVE__TIMEZONE, 1, [Define if libc defines a _timezone variable])
-+		else
-+			AC_ERROR(unable to find a way to determine timezone)
-+		fi
-+	fi
- fi
+diff --git a/meson.build b/meson.build
+index 1c126c5..bad7351 100644
+--- a/meson.build
++++ b/meson.build
+@@ -137,25 +137,16 @@ foreach cflag: test_cflags
+ endforeach
  
- ##################################
-diff --git a/plparse/Makefile.am b/plparse/Makefile.am
-index 688040e..6c6be4a 100644
---- a/plparse/Makefile.am
-+++ b/plparse/Makefile.am
-@@ -48,6 +48,8 @@ dist_libtotem_plparser_la_SOURCES =		\
- 	$(plparser_sources)			\
- 	totem-disc.h				\
- 	totem-pl-parser-features.h		\
-+	totem-pl-parser-decode-date.h		\
-+	totem-pl-parser-decode-date.c		\
- 	totem-pl-parser.h			\
- 	totem-pl-parser-lines.h			\
- 	totem-pl-parser-media.h			\
+ # gmime dependency
+-enable_gmime = not get_option('disable-gmime-i-know-what-im-doing')
++enable_gmime = true
+ if enable_gmime
+-   have_gmime3 = false
+-   gmime_dep = dependency('gmime-3.0', required : false)
+-   if gmime_dep.found()
+-     cdata.set('HAVE_GMIME3', true,
+-       description: 'GMime 3.0 available in the system')
+-     pkgconf.set('GMIME', 'gmime-3.0')
+-   else
+-     gmime_dep = dependency('gmime-2.6', required : false)
+-     if not gmime_dep.found()
+-       error('libgmime is required to compile totem-pl-parser.')
+-     endif
+-     pkgconf.set('GMIME', 'gmime-2.6')
+-   endif
+    pkgconf.set('USEGMIME', 'yes')
+    cdata.set('HAVE_GMIME', true,
+      description: 'GMime available in the system')
+-   totem_pl_parser_deps += [gmime_dep]
++   pkgconf.set('GMIME', '')
++   cdata.set('HAVE_TM_GMTOFF', true,
++     description: 'Whether struct tm has a tm_gmtoff member')
++   cdata.set('HAVE_TIMEZONE', true,
++     description: 'Whether libc defines a timezone variable')
+ else
+   message('''
+ **************************************************************
+diff --git a/plparse/meson.build b/plparse/meson.build
+index bbc3757..48b0556 100644
+--- a/plparse/meson.build
++++ b/plparse/meson.build
+@@ -34,6 +34,7 @@ plparser_sources = [
+   'totem-disc.c',
+   'totem-pl-parser.c',
+   'totem-pl-parser-amz.c',
++  'totem-pl-parser-decode-date.c',
+   'totem-pl-parser-lines.c',
+   'totem-pl-parser-media.c',
+   'totem-pl-parser-misc.c',
 diff --git a/plparse/totem-pl-parser-decode-date.c b/plparse/totem-pl-parser-decode-date.c
 new file mode 100644
-index 0000000..cf7b568
+index 0000000..aefefd1
 --- /dev/null
 +++ b/plparse/totem-pl-parser-decode-date.c
 @@ -0,0 +1,608 @@
@@ -492,7 +442,7 @@ index 0000000..cf7b568
 +#elif defined (HAVE__TIMEZONE)
 +	tz = _timezone;
 +#else
-+#error Neither HAVE_TIMEZONE nor HAVE_TM_GMTOFF defined. Rerun autoheader, autoconf, etc.
++#error Neither HAVE_TIMEZONE nor HAVE_TM_GMTOFF defined. Rerun meson.
 +#endif
 +	
 +	return tt - tz;
@@ -756,138 +706,8 @@ index 0000000..f1a7725
 +
 +time_t g_mime_utils_header_decode_date (const char *str, int *tz_offset);
 +
-diff --git a/plparse/totem-pl-parser-podcast.c b/plparse/totem-pl-parser-podcast.c
-index 263dccd..f64345f 100644
---- a/plparse/totem-pl-parser-podcast.c
-+++ b/plparse/totem-pl-parser-podcast.c
-@@ -289,9 +289,6 @@ totem_pl_parser_add_rss (TotemPlParser *parser,
- 			 TotemPlParseData *parse_data,
- 			 gpointer data)
- {
--#ifndef HAVE_GMIME
--	WARN_NO_GMIME;
--#else
- 	xml_node_t* doc, *channel;
- 	char *contents;
- 	gsize size;
-@@ -331,7 +328,6 @@ totem_pl_parser_add_rss (TotemPlParser *parser,
- 	xml_parser_free_tree (doc);
- 
- 	return TOTEM_PL_PARSER_RESULT_SUCCESS;
--#endif /* !HAVE_GMIME */
- }
- 
- /* http://www.apple.com/itunes/store/podcaststechspecs.html */
-@@ -342,9 +338,6 @@ totem_pl_parser_add_itpc (TotemPlParser *parser,
- 			  TotemPlParseData *parse_data,
- 			  gpointer data)
- {
--#ifndef HAVE_GMIME
--	WARN_NO_GMIME;
--#else
- 	TotemPlParserResult ret;
- 	char *uri, *new_uri, *uri_scheme;
- 	GFile *new_file;
-@@ -363,7 +356,6 @@ totem_pl_parser_add_itpc (TotemPlParser *parser,
- 	g_object_unref (new_file);
- 
- 	return ret;
--#endif /* !HAVE_GMIME */
- }
- 
- TotemPlParserResult
-@@ -373,9 +365,6 @@ totem_pl_parser_add_zune (TotemPlParser *parser,
- 			  TotemPlParseData *parse_data,
- 			  gpointer data)
- {
--#ifndef HAVE_GMIME
--	WARN_NO_GMIME;
--#else
- 	TotemPlParserResult ret;
- 	char *uri, *new_uri;
- 	GFile *new_file;
-@@ -402,7 +391,6 @@ totem_pl_parser_add_zune (TotemPlParser *parser,
- 	g_object_unref (new_file);
- 
- 	return ret;
--#endif /* !HAVE_GMIME */
- }
- 
- /* Atom docs:
-@@ -540,9 +528,6 @@ totem_pl_parser_add_atom (TotemPlParser *parser,
- 			  TotemPlParseData *parse_data,
- 			  gpointer data)
- {
--#ifndef HAVE_GMIME
--	WARN_NO_GMIME;
--#else
- 	xml_node_t* doc;
- 	char *contents, *uri;
- 	gsize size;
-@@ -572,7 +557,6 @@ totem_pl_parser_add_atom (TotemPlParser *parser,
- 	xml_parser_free_tree (doc);
- 
- 	return TOTEM_PL_PARSER_RESULT_SUCCESS;
--#endif /* !HAVE_GMIME */
- }
- 
- TotemPlParserResult
-@@ -582,9 +566,6 @@ totem_pl_parser_add_xml_feed (TotemPlParser *parser,
- 			      TotemPlParseData *parse_data,
- 			      gpointer data)
- {
--#ifndef HAVE_GMIME
--	WARN_NO_GMIME;
--#else
- 	guint len;
- 
- 	if (data == NULL)
-@@ -600,7 +581,6 @@ totem_pl_parser_add_xml_feed (TotemPlParser *parser,
- 		return totem_pl_parser_add_opml (parser, file, base_file, parse_data, data);
- 
- 	return TOTEM_PL_PARSER_RESULT_UNHANDLED;
--#endif /* !HAVE_GMIME */
- }
- 
- static char *
-@@ -656,9 +636,6 @@ totem_pl_parser_add_itms (TotemPlParser *parser,
- 			  TotemPlParseData *parse_data,
- 			  gpointer data)
- {
--#ifndef HAVE_GMIME
--	WARN_NO_GMIME;
--#else
- 	GFile *json_file, *feed_file;
- 	TotemPlParserResult ret;
- 	char *contents, *id, *json_uri, *feed_url;
-@@ -701,7 +678,6 @@ totem_pl_parser_add_itms (TotemPlParser *parser,
- 	g_object_unref (feed_file);
- 
- 	return ret;
--#endif /* !HAVE_GMIME */
- }
- 
- gboolean
-@@ -791,9 +767,6 @@ totem_pl_parser_add_opml (TotemPlParser *parser,
- 			  TotemPlParseData *parse_data,
- 			  gpointer data)
- {
--#ifndef HAVE_GMIME
--	WARN_NO_GMIME;
--#else
- 	xml_node_t* doc;
- 	char *contents, *uri;
- 	gsize size;
-@@ -823,7 +796,6 @@ totem_pl_parser_add_opml (TotemPlParser *parser,
- 	xml_parser_free_tree (doc);
- 
- 	return TOTEM_PL_PARSER_RESULT_SUCCESS;
--#endif /* !HAVE_GMIME */
- }
- 
- #endif /* !TOTEM_PL_PARSER_MINI */
 diff --git a/plparse/totem-pl-parser.c b/plparse/totem-pl-parser.c
-index 527cfb4..80309c9 100644
+index 505957a..83fafa1 100644
 --- a/plparse/totem-pl-parser.c
 +++ b/plparse/totem-pl-parser.c
 @@ -132,16 +132,13 @@
@@ -908,37 +728,6 @@ index 527cfb4..80309c9 100644
  #include "totem-pl-parser-wm.h"
  #include "totem-pl-parser-qt.h"
  #include "totem-pl-parser-pls.h"
-@@ -2348,7 +2345,6 @@ totem_pl_parser_parse_duration (const char *duration, gboolean debug)
- guint64
- totem_pl_parser_parse_date (const char *date_str, gboolean debug)
- {
--#ifdef HAVE_GMIME
- 	GTimeVal val;
- 
- 	g_return_val_if_fail (date_str != NULL, -1);
-@@ -2362,9 +2358,6 @@ totem_pl_parser_parse_date (const char *date_str, gboolean debug)
- 	D(g_message ("Failed to parse duration '%s' using the ISO8601 parser", date_str));
- 	/* Fall back to RFC 2822 date parsing */
- 	return g_mime_utils_header_decode_date (date_str, NULL);
--#else
--	WARN_NO_GMIME;
--#endif /* HAVE_GMIME */
- }
- #endif /* !TOTEM_PL_PARSER_MINI */
- 
-diff --git a/totem-plparser.pc.in b/totem-plparser.pc.in
-index 16f9240..0830b7e 100644
---- a/totem-plparser.pc.in
-+++ b/totem-plparser.pc.in
-@@ -7,7 +7,7 @@ Name: totem-plparser
- Description: Totem Playlist Parser library
- Version: @VERSION@
- Requires: glib-2.0 gobject-2.0 gio-2.0
--Requires.private: gthread-2.0 libxml-2.0 @GMIME@ @ARCHIVE@
-+Requires.private: gthread-2.0 libxml-2.0 @ARCHIVE@
- Libs: -L${libdir} -ltotem-plparser
- Libs.private: @LIBGCRYPT_LIBS@
- Cflags: -I${includedir}/totem-pl-parser/1/plparser @LIBGCRYPT_CFLAGS@
 -- 
-2.7.4
+2.17.0
 

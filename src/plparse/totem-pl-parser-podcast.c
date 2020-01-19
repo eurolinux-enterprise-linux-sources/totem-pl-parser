@@ -25,7 +25,6 @@
 #include <glib.h>
 
 #ifndef TOTEM_PL_PARSER_MINI
-#include <libsoup/soup.h>
 #include "xmlparser.h"
 #include "totem-pl-parser.h"
 #include "totem-disc.h"
@@ -148,6 +147,12 @@ parse_rss_item (TotemPlParser *parser, xml_node_t *parent)
 			filesize = node->data;
 		} else if (g_ascii_strcasecmp (node->name, "media:content") == 0) {
 			const char *tmp;
+
+			tmp = xml_parser_get_property (node, "medium");
+			if (tmp != NULL && g_str_equal (tmp, "image")) {
+				img = xml_parser_get_property (node, "url");
+				continue;
+			}
 
 			tmp = xml_parser_get_property (node, "type");
 			if (tmp != NULL &&

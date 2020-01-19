@@ -1742,6 +1742,7 @@ totem_pl_parser_ignore_from_mimetype (TotemPlParser *parser, const char *mimetyp
 		 * in shared-mime-info */
 		if (strcmp (mimetype, "application/vnd.apple.mpegurl") != 0 &&
 		    strcmp (mimetype, "audio/x-mpegurl") != 0 &&
+		    strcmp (mimetype, "video/x-mjpeg") != 0 &&
 		    g_content_type_is_a (mimetype, ignore_types[i].mimetype) != FALSE) {
 			if (parser->priv->debug)
 				g_print ("Ignoring %s because it's a %s\n", mimetype, ignore_types[i].mimetype);
@@ -1822,19 +1823,19 @@ totem_pl_parser_parse_internal (TotemPlParser *parser,
 	if (!parse_data->recurse && parse_data->recurse_level > 0)
 		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
 
-#ifdef HAVE_QUVI
 	/* Should we try to parse it with quvi? */
 	if (g_file_has_uri_scheme (file, "http")) {
 		char *url;
 		url = g_file_get_uri (file);
 		if (url != NULL && totem_pl_parser_is_videosite (url, parser->priv->debug) != FALSE) {
 			ret = totem_pl_parser_add_videosite (parser, file, base_file, parse_data, NULL);
-			if (ret == TOTEM_PL_PARSER_RESULT_SUCCESS)
+			if (ret == TOTEM_PL_PARSER_RESULT_SUCCESS) {
+				g_free (url);
 				return ret;
+			}
 		}
 		g_free (url);
 	}
-#endif /* HAVE_QUVI */
 
 	/* In force mode we want to get the data */
 	if (parse_data->force != FALSE) {
@@ -2032,23 +2033,22 @@ parse_async_data_free (ParseAsyncData *data)
 }
 
 static void
-parse_thread (GSimpleAsyncResult *result, GObject *object, GCancellable *cancellable)
+parse_thread (GTask *task, gpointer source_object, gpointer task_data, GCancellable *cancellable)
 {
+	TotemPlParser *parser = TOTEM_PL_PARSER (source_object);
 	TotemPlParserResult parse_result;
 	GError *error = NULL;
-	ParseAsyncData *data = g_simple_async_result_get_op_res_gpointer (result);
+	ParseAsyncData *data = task_data;
 
 	/* Check to see if it's been cancelled already */
 	if (g_cancellable_set_error_if_cancelled (cancellable, &error) == TRUE) {
-		g_simple_async_result_set_from_error (result, error);
-		g_simple_async_result_set_op_res_gpointer (result, GUINT_TO_POINTER (TOTEM_PL_PARSER_RESULT_CANCELLED), NULL);
-		g_error_free (error);
+		g_task_return_error (task, error);
 		return;
 	}
 
 	/* Parse and return */
-	parse_result = totem_pl_parser_parse_with_base (TOTEM_PL_PARSER (object), data->uri, data->base, data->fallback);
-	g_simple_async_result_set_op_res_gpointer (result, GUINT_TO_POINTER (parse_result), NULL);
+	parse_result = totem_pl_parser_parse_with_base (parser, data->uri, data->base, data->fallback);
+	g_task_return_int (task, parse_result);
 }
 
 /**
@@ -2074,7 +2074,7 @@ void
 totem_pl_parser_parse_with_base_async (TotemPlParser *parser, const char *uri, const char *base, gboolean fallback,
 				       GCancellable *cancellable, GAsyncReadyCallback callback, gpointer user_data)
 {
-	GSimpleAsyncResult *result;
+	GTask *task;
 	ParseAsyncData *data;
 
 	g_return_if_fail (TOTEM_IS_PL_PARSER (parser));
@@ -2086,10 +2086,10 @@ totem_pl_parser_parse_with_base_async (TotemPlParser *parser, const char *uri, c
 	data->base = g_strdup (base);
 	data->fallback = fallback;
 
-	result = g_simple_async_result_new (G_OBJECT (parser), callback, user_data, totem_pl_parser_parse_with_base_async);
-	g_simple_async_result_set_op_res_gpointer (result, data, (GDestroyNotify) parse_async_data_free);
-	g_simple_async_result_run_in_thread (result, (GSimpleAsyncThreadFunc) parse_thread, G_PRIORITY_DEFAULT, cancellable);
-	g_object_unref (result);
+	task = g_task_new (parser, cancellable, callback, user_data);
+	g_task_set_task_data (task, data, (GDestroyNotify) parse_async_data_free);
+	g_task_run_in_thread (task, parse_thread);
+	g_object_unref (task);
 }
 
 /**
@@ -2186,16 +2186,13 @@ totem_pl_parser_parse_async (TotemPlParser *parser, const char *uri, gboolean fa
 TotemPlParserResult
 totem_pl_parser_parse_finish (TotemPlParser *parser, GAsyncResult *async_result, GError **error)
 {
-	GSimpleAsyncResult *result = G_SIMPLE_ASYNC_RESULT (async_result);
+	GTask *task = G_TASK (async_result);
 
 	g_return_val_if_fail (TOTEM_IS_PL_PARSER (parser), FALSE);
-	g_return_val_if_fail (G_IS_ASYNC_RESULT (async_result), FALSE);
-
-	g_warn_if_fail (g_simple_async_result_get_source_tag (result) == totem_pl_parser_parse_with_base_async);
+	g_return_val_if_fail (g_task_is_valid (async_result, parser), FALSE);
 
 	/* Propagate any errors which were caught and return the result; otherwise just return the result */
-	g_simple_async_result_propagate_error (result, error);
-	return GPOINTER_TO_UINT (g_simple_async_result_get_op_res_gpointer (result));
+	return g_task_propagate_int (task, error);
 }
 
 /**
@@ -2361,7 +2358,19 @@ totem_pl_parser_parse_date (const char *date_str, gboolean debug)
 	}
 	D(g_message ("Failed to parse duration '%s' using the ISO8601 parser", date_str));
 	/* Fall back to RFC 2822 date parsing */
+#ifdef HAVE_GMIME3
+	{
+		g_autoptr(GDateTime) date = NULL;
+		date = g_mime_utils_header_decode_date (date_str);
+		if (!date || !g_date_time_to_timeval (date, &val)) {
+			D(g_message ("Failed to parse duration '%s' using the RFC 2822 parser", date_str));
+			return -1;
+		}
+		return val.tv_sec;
+	}
+#else
 	return g_mime_utils_header_decode_date (date_str, NULL);
+#endif /* HAVE_GMIME3 */
 #else
 	WARN_NO_GMIME;
 #endif /* HAVE_GMIME */

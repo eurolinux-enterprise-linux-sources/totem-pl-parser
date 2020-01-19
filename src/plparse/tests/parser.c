@@ -534,7 +534,7 @@ test_itms_parsing (void)
 
 	/* From https://itunes.apple.com/fr/podcast/chris-moyles-show-on-radio/id1042635536?mt=2&ign-mpt=uo=4 */
 	g_assert_cmpstr (parser_test_get_playlist_uri ("https://itunes.apple.com/fr/podcast/chris-moyles-show-on-radio/id1042635536?mt=2&ign-mpt=uo%3D4#"), ==, "http://ws.geronimo.thisisglobal.com/api/RssFeed/GetPodcasts?StationId=27f88187-4880-4e70-be90-1a7dad1beb5e&ShowId=999e3658-ae1a-400b-9697-5bc35d5aa411");
-	g_assert_cmpstr (parser_test_get_playlist_uri ("http://itunes.apple.com/gb/podcast/radio-1-mini-mix/id268491175?uo=4"), ==, "http://www.bbc.co.uk/programmes/p02nrtyg/episodes/downloads.rss");
+	g_assert_cmpstr (parser_test_get_playlist_uri ("http://itunes.apple.com/gb/podcast/radio-1-mini-mix/id268491175?uo=4"), ==, "https://podcasts.files.bbci.co.uk/p02nrtyg.rss");
 }
 
 static void
@@ -715,6 +715,15 @@ test_parsing_content_type (void)
 	char *uri;
 	uri = get_relative_uri (TEST_SRCDIR "HackerMedley");
 	g_assert_cmpstr (parser_test_get_entry_field (uri, TOTEM_PL_PARSER_FIELD_CONTENT_TYPE), ==, "audio/mpeg");
+	g_free (uri);
+}
+
+static void
+test_parsing_medium (void)
+{
+	char *uri;
+	uri = get_relative_uri (TEST_SRCDIR "791154-kqed.rss");
+	g_assert_cmpstr (parser_test_get_entry_field (uri, TOTEM_PL_PARSER_FIELD_URI), ==, "https://www.podtrac.com/pts/redirect.mp3/www.kqed.org/.stream/anon/radio/tcrmag/2017/12/TCRPodcastDec1.mp3");
 	g_free (uri);
 }
 
@@ -1253,7 +1262,6 @@ main (int argc, char *argv[])
 
 	setlocale (LC_ALL, "");
 
-	g_type_init ();
 	g_test_init (&argc, &argv, NULL);
 	g_test_bug_base ("http://bugzilla.gnome.org/show_bug.cgi?id=");
 
@@ -1300,6 +1308,7 @@ main (int argc, char *argv[])
 		g_test_add_func ("/parser/parsing/multi_line_rtsptext", test_parsing_rtsp_text_multi);
 		g_test_add_func ("/parser/parsing/single_line_rtsptext", test_parsing_rtsp_text);
 		g_test_add_func ("/parser/parsing/podcast_content_type", test_parsing_content_type);
+		g_test_add_func ("/parser/parsing/podcast_medium", test_parsing_medium);
 		g_test_add_func ("/parser/parsing/live_streaming", test_parsing_live_streaming);
 		g_test_add_func ("/parser/parsing/xml_mixed_cdata", test_parsing_xml_mixed_cdata);
 		g_test_add_func ("/parser/parsing/m3u_streaming", test_parsing_m3u_streaming);

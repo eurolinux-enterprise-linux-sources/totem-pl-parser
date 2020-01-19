@@ -28,18 +28,52 @@
 #include "totem-pl-parser-videosite.h"
 #include "totem-pl-parser-private.h"
 
-/* The helper script will be either the one shipped in totem-pl-parser,
- * when running tests, or the first non-hidden file in the totem-pl-parser
- * libexec directory, when sorted by lexicographic ordering (through strcmp) */
+#define SCRIPT_ENVVAR "TOTEM_PL_PARSER_VIDEOSITE_SCRIPT"
+
+/* totem-pl-parser can "parse" pages from certain websites into a single
+ * video playback URL. This is particularly useful for websites which
+ * show a unique video on a web page, and use one-time URLs to prevent direct
+ * linking.
+ *
+ * This feature is implemented in a helper binary, either the one shipped
+ * in totem-pl-parser (which uses libquvi), or the first non-hidden file in
+ * the totem-pl-parser libexec directory, when sorted by lexicographic
+ * ordering (through strcmp).
+ *
+ * The API to implement is straight-forward. For each URL that needs to
+ * be checked, the script will be called with the command-line arguments
+ * "--check --url" followed by the URL. The script should return the
+ * string "TRUE" if the script knows how to handle video pages from
+ * this site. This call should not making any network calls, and should
+ * be fast.
+ *
+ * If the video site is handled by the script, then the script can be
+ * called with "--url" followed by the URL. The script can return the
+ * strings "TOTEM_PL_PARSER_RESULT_ERROR" or
+ * "TOTEM_PL_PARSER_RESULT_UNHANDLED" to indicate an error (see the
+ * meaning of those values in the totem-pl-parser API documentation), or
+ * a list of "<key>=<value>" pairs separated by newlines characters (\n)
+ * The keys are "metadata fields" in the API documentation, such as:
+ * url=https://www.videosite.com/unique-link-to.mp4
+ * title=Unique Link to MP4
+ * author=Well-known creator
+ *
+ * Integrators should make sure that totem-pl-parser is shipped with at
+ * least one video site parser, either the quvi one offered by
+ * totem-pl-parser itself, or, in a separate package, a third-party parser
+ * that implements a compatible API as explained above. Do *NOT* ship
+ * third-party parsers in the same package as totem itself.
+ */
+
 static char *
 find_helper_script (void)
 {
-#ifdef UNINSTALLED_TESTS
-	return g_strdup ("../99-totem-pl-parser-videosite");
-#else
 	GDir *dir;
 	const char *name;
 	char *script_name = NULL;
+
+	if (g_getenv (SCRIPT_ENVVAR) != NULL)
+		return g_strdup (g_getenv (SCRIPT_ENVVAR));
 
 	dir = g_dir_open (LIBEXECDIR "/totem-pl-parser", 0, NULL);
 	if (!dir)
@@ -64,14 +98,12 @@ find_helper_script (void)
 	}
 
 bail:
-	return g_strdup (LIBEXECDIR "/totem-pl-parser/99-totem-pl-parser-videosite");
-#endif
+	return NULL;
 }
 
 gboolean
 totem_pl_parser_is_videosite (const char *uri, gboolean debug)
 {
-#ifdef HAVE_QUVI
 	const char *args[] = {
 		NULL,
 		"--check",
@@ -81,8 +113,14 @@ totem_pl_parser_is_videosite (const char *uri, gboolean debug)
 	};
 	char *out;
 	char *script;
+	gboolean ret = FALSE;
 
 	script = find_helper_script ();
+	if (script == NULL) {
+		if (debug)
+			g_print ("Did not find a script to check whether '%s' is a videosite\n", uri);
+		return ret;
+	}
 
 	args[0] = script;
 	args[3] = uri;
@@ -96,16 +134,16 @@ totem_pl_parser_is_videosite (const char *uri, gboolean debug)
 		      NULL,
 		      NULL,
 		      NULL);
+
+	ret = g_strcmp0 (out, "TRUE") == 0;
 	if (debug)
 		g_print ("Checking videosite with script '%s' for URI '%s' returned '%s' (%s)\n",
-			 script, uri, out, g_strcmp0 (out, "TRUE") == 0 ? "true" : "false");
+			 script, uri, out, ret ? "true" : "false");
 
 	g_free (script);
+	g_free (out);
 
-	return (g_strcmp0 (out, "TRUE") == 0);
-#else
-	return FALSE;
-#endif /* HAVE_QUVI */
+	return ret;
 }
 
 #ifndef TOTEM_PL_PARSER_MINI
@@ -117,14 +155,13 @@ totem_pl_parser_add_videosite (TotemPlParser *parser,
 			       TotemPlParseData *parse_data,
 			       gpointer data)
 {
-#ifdef HAVE_QUVI
 	const char *args[] = {
 		NULL,
 		"--url",
 		NULL,
 		NULL
 	};
-	char *uri;
+	char *_uri;
 	char *out = NULL;
 	char **lines;
 	guint i;
@@ -133,11 +170,15 @@ totem_pl_parser_add_videosite (TotemPlParser *parser,
 	char *script;
 	TotemPlParserResult ret;
 
-	uri = g_file_get_uri (file);
 	script = find_helper_script ();
+	if (script == NULL) {
+		DEBUG (file, g_print ("Did not find a script to check whether '%s' is a videosite\n", uri));
+		return FALSE;
+	}
 
+	_uri = g_file_get_uri (file);
 	args[0] = script;
-	args[2] = uri;
+	args[2] = _uri;
 	g_spawn_sync (NULL,
 		      (char **) args,
 		      NULL,
@@ -149,7 +190,7 @@ totem_pl_parser_add_videosite (TotemPlParser *parser,
 		      NULL,
 		      NULL);
 	if (totem_pl_parser_is_debugging_enabled (parser))
-		g_print ("Parsing videosite for URI '%s' returned '%s'\n", uri, out);
+		g_print ("Parsing videosite for URI '%s' returned '%s'\n", _uri, out);
 
 	if (out != NULL) {
 		if (g_str_equal (out, "TOTEM_PL_PARSER_RESULT_ERROR")) {
@@ -184,17 +225,15 @@ totem_pl_parser_add_videosite (TotemPlParser *parser,
 	g_strfreev (lines);
 
 	totem_pl_parser_add_hash_table (parser, ht, new_uri, FALSE);
+	g_hash_table_unref (ht);
 	g_free (new_uri);
 
 	ret = TOTEM_PL_PARSER_RESULT_SUCCESS;
 
 out:
 	g_free (script);
-	g_free (uri);
+	g_free (_uri);
 	return ret;
-#else
-	return TOTEM_PL_PARSER_RESULT_UNHANDLED;
-#endif /* !HAVE_QUVI */
 }
 
 #endif /* !TOTEM_PL_PARSER_MINI */
