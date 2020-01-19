@@ -1,6 +1,5 @@
 include $(top_srcdir)/Makefile.decl
 
-pwd=`pwd`
 INCLUDES = \
 	-I$(top_srcdir)/plparse	\
 	-DTEST_SRCDIR=\""$(srcdir)/"\"
@@ -75,6 +74,7 @@ EXTRA_DIST =			\
 	no-url-podcast.xml	\
 	xml-base.xspf		\
 	radioclasica.mp3.m3u    \
-	radios-freebox.m3u
+	radios-freebox.m3u	\
+	relative.m3u
 
 -include $(top_srcdir)/git.mk

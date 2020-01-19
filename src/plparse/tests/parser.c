@@ -39,7 +39,7 @@ get_relative_uri (const char *rel)
 	file = g_file_new_for_commandline_arg (rel);
 	uri = g_file_get_uri (file);
 	g_object_unref (file);
-	g_assert (uri != NULL);
+	g_assert_nonnull (uri);
 
 	return uri;
 }
@@ -200,7 +200,7 @@ test_videosite (void)
 	const char *uri = "http://www.youtube.com/watch?v=oMLCrzy9TEs";
 
 	g_test_message ("Testing data parsing \"%s\"...", uri);
-	g_assert (totem_pl_parser_can_parse_from_uri (uri, TRUE));
+	g_assert_true (totem_pl_parser_can_parse_from_uri (uri, TRUE));
 }
 #endif
 
@@ -273,7 +273,7 @@ test_parsability (void)
 		}
 
 		g_test_message ("Testing filename parsing \"%s\"...", files[i].uri);
-		g_assert (totem_pl_parser_can_parse_from_filename (files[i].uri, TRUE) == files[i].parsable);
+		g_assert_cmpint (totem_pl_parser_can_parse_from_filename (files[i].uri, TRUE), ==, files[i].parsable);
 	}
 }
 
@@ -283,8 +283,12 @@ entry_parsed_cb (TotemPlParser *parser,
 		 GHashTable *metadata,
 		 ParserResult *res)
 {
-	if (res->ret == NULL)
-		res->ret = g_strdup (g_hash_table_lookup (metadata, res->field));
+	if (res->ret == NULL) {
+		if (g_strcmp0 (res->field, TOTEM_PL_PARSER_FIELD_URI) == 0)
+			res->ret = g_strdup (uri);
+		else
+			res->ret = g_strdup (g_hash_table_lookup (metadata, res->field));
+	}
 }
 
 static void
@@ -338,8 +342,8 @@ playlist_ended_order (TotemPlParser *parser,
 		      const char *uri,
 		      PlOrderingData *data)
 {
-	g_assert (data->pl_started != FALSE);
-	g_assert (data->parsed_item != FALSE);
+	g_assert_true (data->pl_started);
+	g_assert_true (data->parsed_item);
 	data->pl_ended = TRUE;
 }
 
@@ -350,7 +354,7 @@ entry_parsed_cb_order (TotemPlParser *parser,
 		       PlOrderingData *data)
 {
 	/* Check that the playlist started happened before the entry appeared */
-	g_assert (data->pl_started != FALSE);
+	g_assert_true (data->pl_started);
 	data->parsed_item = TRUE;
 }
 
@@ -379,7 +383,7 @@ parser_test_get_order_result (const char *uri)
 	data.pl_ended = FALSE;
 	data.parsed_item = FALSE;
 	retval = totem_pl_parser_parse_with_base (pl, uri, option_base_uri, FALSE);
-	g_assert (data.pl_ended != FALSE);
+	g_assert_true (data.pl_ended);
 	g_test_message ("Got retval %d for uri '%s'", retval, uri);
 	g_object_unref (pl);
 
@@ -528,10 +532,9 @@ test_itms_parsing (void)
 		return;
 	}
 
-	/* From https://itunes.apple.com/us/podcast/best-of-chris-moyles/id77318908 */
-	g_assert_cmpstr (parser_test_get_playlist_uri ("itmss://itunes.apple.com/us/podcast/best-of-chris-moyles/id77318908?ign-msr=https%3A%2F%2Fwww.google.com%2Furl%3Fsa%3Dt%26rct%3Dj%26q%3D%26esrc%3Ds%26source%3Dweb%26cd%3D3%26ved%3D0CEEQFjAC%26url%3Dhttps%253A%252F%252Fitunes.apple.com%252Fus%252Fpodcast%252Fbest-of-chris-moyles%252Fid77318908%26ei%3DiMeaUO_ZIsfCtAbvk4DADA%26usg%3DAFQjCNE5YyukECjJE3fmrLIJICX5dMSyyg%26sig2%3DGM631xTbZq7E6m-eaGc3HA"), ==, "http://downloads.bbc.co.uk/podcasts/radio1/moyles/rss.xml");
-	g_assert_cmpstr (parser_test_get_playlist_uri ("itms://itunes.apple.com/gb/podcast/best-of-chris-moyles-enhanced/id142102961?ign-mpt=uo%3D4"), ==, "http://downloads.bbc.co.uk/podcasts/radio1/moylesen/rss.xml");
-	g_assert_cmpstr (parser_test_get_playlist_uri ("http://itunes.apple.com/gb/podcast/radio-1-mini-mix/id268491175?uo=4"), ==, "http://downloads.bbc.co.uk/podcasts/radio1/r1mix/rss.xml");
+	/* From https://itunes.apple.com/fr/podcast/chris-moyles-show-on-radio/id1042635536?mt=2&ign-mpt=uo=4 */
+	g_assert_cmpstr (parser_test_get_playlist_uri ("https://itunes.apple.com/fr/podcast/chris-moyles-show-on-radio/id1042635536?mt=2&ign-mpt=uo%3D4#"), ==, "http://ws.geronimo.thisisglobal.com/api/RssFeed/GetPodcasts?StationId=27f88187-4880-4e70-be90-1a7dad1beb5e&ShowId=999e3658-ae1a-400b-9697-5bc35d5aa411");
+	g_assert_cmpstr (parser_test_get_playlist_uri ("http://itunes.apple.com/gb/podcast/radio-1-mini-mix/id268491175?uo=4"), ==, "http://www.bbc.co.uk/programmes/p02nrtyg/episodes/downloads.rss");
 }
 
 static void
@@ -542,6 +545,18 @@ test_m3u_audio_track (void)
 	uri = get_relative_uri (TEST_SRCDIR "radios-freebox.m3u");
 	g_assert_cmpstr (parser_test_get_entry_field (uri, TOTEM_PL_PARSER_FIELD_AUDIO_TRACK), ==, "1");
 	g_free (uri);
+}
+
+static void
+test_m3u_relative (void)
+{
+	char *uri, *file_uri;
+
+	uri = get_relative_uri (TEST_SRCDIR "relative.m3u");
+	file_uri = get_relative_uri (TEST_SRCDIR "3gpp-file.mp4");
+	g_assert_cmpstr (parser_test_get_entry_field (uri, TOTEM_PL_PARSER_FIELD_URI), ==, file_uri);
+	g_free (uri);
+	g_free (file_uri);
 }
 
 static void
@@ -651,7 +666,7 @@ test_directory_recurse (void)
 		/* The file inside the directory will be ignored */
 		g_assert_cmpstr (parser_test_get_entry_field (uri, TOTEM_PL_PARSER_FIELD_TITLE), ==, NULL);
 		/* But the parsing will succeed */
-		g_assert (simple_parser_test (uri) == TOTEM_PL_PARSER_RESULT_SUCCESS);
+		g_assert_cmpint (simple_parser_test (uri), ==, TOTEM_PL_PARSER_RESULT_SUCCESS);
 	}
 	g_free (path);
 	g_free (uri);
@@ -662,7 +677,7 @@ test_empty_asx (void)
 {
 	char *uri;
 	uri = get_relative_uri (TEST_SRCDIR "empty-asx.asx");
-	g_assert (simple_parser_test (uri) == TOTEM_PL_PARSER_RESULT_SUCCESS);
+	g_assert_cmpint (simple_parser_test (uri), ==, TOTEM_PL_PARSER_RESULT_SUCCESS);
 	g_free (uri);
 }
 
@@ -671,7 +686,7 @@ test_empty_pls (void)
 {
 	char *uri;
 	uri = get_relative_uri (TEST_SRCDIR "emptyplaylist.pls");
-	g_assert (simple_parser_test (uri) == TOTEM_PL_PARSER_RESULT_UNHANDLED);
+	g_assert_cmpint (simple_parser_test (uri), ==, TOTEM_PL_PARSER_RESULT_UNHANDLED);
 	g_free (uri);
 }
 
@@ -707,14 +722,14 @@ static void
 test_parsing_hadess (void)
 {
 	if (g_strcmp0 (g_get_user_name (), "hadess") == 0)
-		g_assert (simple_parser_test ("file:///home/hadess/Videos") == TOTEM_PL_PARSER_RESULT_SUCCESS);
+		g_assert_cmpint (simple_parser_test ("file:///home/hadess/Videos"), ==, TOTEM_PL_PARSER_RESULT_SUCCESS);
 }
 
 static void
 test_parsing_nonexistent_files (void)
 {
 	g_test_bug ("330120");
-	g_assert (simple_parser_test ("file:///tmp/file_doesnt_exist.wmv") == TOTEM_PL_PARSER_RESULT_SUCCESS);
+	g_assert_cmpint (simple_parser_test ("file:///tmp/file_doesnt_exist.wmv"), ==, TOTEM_PL_PARSER_RESULT_SUCCESS);
 }
 
 static void
@@ -737,7 +752,7 @@ test_parsing_broken_asx (void)
 
 	g_test_bug ("323683");
 	result = simple_parser_test ("http://www.comedycentral.com/sitewide/media_player/videoswitcher.jhtml?showid=934&category=/shows/the_daily_show/videos/headlines&sec=videoId%3D36032%3BvideoFeatureId%3D%3BpoppedFrom%3D_shows_the_daily_show_index.jhtml%3BisIE%3Dfalse%3BisPC%3Dtrue%3Bpagename%3Dmedia_player%3Bzyg%3D%27%2Bif_nt_zyg%2B%27%3Bspan%3D%27%2Bif_nt_span%2B%27%3Bdemo%3D%27%2Bif_nt_demo%2B%27%3Bbps%3D%27%2Bif_nt_bandwidth%2B%27%3Bgateway%3Dshows%3Bsection_1%3Dthe_daily_show%3Bsection_2%3Dvideos%3Bsection_3%3Dheadlines%3Bzyg%3D%27%2Bif_nt_zyg%2B%27%3Bspan%3D%27%2Bif_nt_span%2B%27%3Bdemo%3D%27%2Bif_nt_demo%2B%27%3Bera%3D%27%2Bif_nt_era%2B%27%3Bbps%3D%27%2Bif_nt_bandwidth%2B%27%3Bfla%3D%27%2Bif_nt_Flash%2B%27&itemid=36032&clip=com/dailyshow/headlines/10156_headline.wmv&mswmext=.asx");
-	g_assert (result != TOTEM_PL_PARSER_RESULT_ERROR);
+	g_assert_cmpint (result, !=, TOTEM_PL_PARSER_RESULT_ERROR);
 }
 
 static void
@@ -752,7 +767,7 @@ test_xml_is_text_plain (void)
 
 	g_test_bug ("655378");
 	result = simple_parser_test ("http://leoville.tv/podcasts/floss.xml");
-	g_assert (result == TOTEM_PL_PARSER_RESULT_SUCCESS);
+	g_assert_cmpint (result, ==, TOTEM_PL_PARSER_RESULT_SUCCESS);
 }
 
 static void
@@ -769,7 +784,7 @@ test_compressed_content_encoding (void)
 	 * http://git.gnome.org/browse/gvfs/commit/?id=6929e9f9661b4d1e68f8912d8e60107366255a47
 	 * http://thread.gmane.org/gmane.comp.gnome.apps.rhythmbox.devel/11887 */
 	result = simple_parser_test ("http://escapepod.org/podcast.xml");
-	g_assert (result == TOTEM_PL_PARSER_RESULT_SUCCESS);
+	g_assert_cmpint (result, ==, TOTEM_PL_PARSER_RESULT_SUCCESS);
 }
 
 static void
@@ -782,7 +797,7 @@ test_parsing_out_of_order_asx (void)
 	uri = get_relative_uri (TEST_SRCDIR "pukas.wax");
 	result = parser_test_get_order_result (uri);
 	g_free (uri);
-	g_assert (result != FALSE);
+	g_assert_true (result);
 }
 
 static void
@@ -794,7 +809,7 @@ test_parsing_out_of_order_xspf (void)
 	uri = get_relative_uri (TEST_SRCDIR "new-lastfm-output.xspf");
 	result = parser_test_get_order_result (uri);
 	g_free (uri);
-	g_assert (result != FALSE);
+	g_assert_true (result);
 }
 
 static void
@@ -806,9 +821,10 @@ test_parsing_num_entries (void)
 	uri = get_relative_uri (TEST_SRCDIR "missing-items.pls");
 	num = parser_test_get_num_entries (uri);
 	g_free (uri);
-	g_assert (num == 19);
+	g_assert_cmpint (num, ==, 19);
 }
 
+/*
 static void
 test_parsing_404_error (void)
 {
@@ -818,8 +834,9 @@ test_parsing_404_error (void)
 	}
 
 	g_test_bug ("158052");
-	g_assert (simple_parser_test ("http://live.hujjat.org:7860/main") == TOTEM_PL_PARSER_RESULT_UNHANDLED);
+	g_assert_cmpint (simple_parser_test ("http://live.hujjat.org:7860/main"), ==, TOTEM_PL_PARSER_RESULT_UNHANDLED);
 }
+*/
 
 static void
 test_parsing_3gpp_not_ignored (void)
@@ -828,7 +845,7 @@ test_parsing_3gpp_not_ignored (void)
 
 	uri = get_relative_uri (TEST_SRCDIR "3gpp-file.mp4");
 	g_test_bug ("594359@bugs.debian.org");
-	g_assert (simple_parser_test (uri) == TOTEM_PL_PARSER_RESULT_UNHANDLED);
+	g_assert_cmpint (simple_parser_test (uri), ==, TOTEM_PL_PARSER_RESULT_UNHANDLED);
 	g_free (uri);
 }
 
@@ -839,7 +856,7 @@ test_parsing_ts_not_ignored (void)
 
 	uri = get_relative_uri (TEST_SRCDIR "dont-ignore-mp2t.ts");
 	g_test_bug ("678163");
-	g_assert (simple_parser_test (uri) == TOTEM_PL_PARSER_RESULT_UNHANDLED);
+	g_assert_cmpint (simple_parser_test (uri), ==, TOTEM_PL_PARSER_RESULT_UNHANDLED);
 	g_free (uri);
 }
 
@@ -850,7 +867,7 @@ test_parsing_mp4_is_flv (void)
 
 	uri = get_relative_uri (TEST_SRCDIR "really-flv.mp4");
 	g_test_bug ("620039");
-	g_assert (simple_parser_test (uri) == TOTEM_PL_PARSER_RESULT_UNHANDLED);
+	g_assert_cmpint (simple_parser_test (uri), ==, TOTEM_PL_PARSER_RESULT_UNHANDLED);
 	g_free (uri);
 }
 
@@ -860,7 +877,7 @@ test_parsing_xml_head_comments (void)
 	char *uri;
 	g_test_bug ("560051");
 	uri = get_relative_uri (TEST_SRCDIR "560051.xml");
-	g_assert (simple_parser_test (uri) == TOTEM_PL_PARSER_RESULT_SUCCESS);
+	g_assert_cmpint (simple_parser_test (uri), ==, TOTEM_PL_PARSER_RESULT_SUCCESS);
 	g_free (uri);
 }
 
@@ -870,7 +887,7 @@ test_parsing_xml_comment_whitespace (void)
 	char *uri;
 	g_test_bug ("541405");
 	uri = get_relative_uri (TEST_SRCDIR "541405.xml");
-	g_assert (simple_parser_test (uri) == TOTEM_PL_PARSER_RESULT_SUCCESS);
+	g_assert_cmpint (simple_parser_test (uri), ==, TOTEM_PL_PARSER_RESULT_SUCCESS);
 	g_free (uri);
 }
 
@@ -881,7 +898,7 @@ test_parsing_live_streaming (void)
 	g_test_bug ("594036");
 	/* File from http://tools.ietf.org/html/draft-pantos-http-live-streaming-02#section-7.1 */
 	uri = get_relative_uri (TEST_SRCDIR "live-streaming.m3u");
-	g_assert (simple_parser_test (uri) == TOTEM_PL_PARSER_RESULT_UNHANDLED);
+	g_assert_cmpint (simple_parser_test (uri), ==, TOTEM_PL_PARSER_RESULT_UNHANDLED);
 	g_free (uri);
 }
 
@@ -892,7 +909,7 @@ test_parsing_xml_mixed_cdata (void)
 	g_test_bug ("585407");
 	/* File from http://www.davidco.com/podcast.php */
 	uri = get_relative_uri (TEST_SRCDIR "585407.rss");
-	g_assert (simple_parser_test (uri) == TOTEM_PL_PARSER_RESULT_SUCCESS);
+	g_assert_cmpint (simple_parser_test (uri), ==, TOTEM_PL_PARSER_RESULT_SUCCESS);
 	g_free (uri);
 }
 
@@ -904,7 +921,7 @@ test_parsing_m3u_streaming (void)
 
 	/* File from http://radioclasica.rtve.stream.flumotion.com/rtve/radioclasica.mp3.m3u */
 	uri = get_relative_uri (TEST_SRCDIR "radioclasica.mp3.m3u");
-	g_assert (simple_parser_test (uri) == TOTEM_PL_PARSER_RESULT_SUCCESS);
+	g_assert_cmpint (simple_parser_test (uri), ==, TOTEM_PL_PARSER_RESULT_SUCCESS);
 	g_free (uri);
 }
 
@@ -935,7 +952,7 @@ test_parsing_not_asx_playlist (void)
 	g_test_bug ("610471");
 	/* File from https://bugzilla.gnome.org/show_bug.cgi?id=610471#c0 */
 	uri = get_relative_uri (TEST_SRCDIR "asf-with-asx-suffix.asx");
-	g_assert (simple_parser_test (uri) == TOTEM_PL_PARSER_RESULT_SUCCESS);
+	g_assert_cmpint (simple_parser_test (uri), ==, TOTEM_PL_PARSER_RESULT_SUCCESS);
 	g_free (uri);
 }
 
@@ -946,7 +963,7 @@ test_parsing_wma_asf (void)
 	g_test_bug ("639958");
 	/* File from https://bugzilla.gnome.org/show_bug.cgi?id=639958#c5 */
 	uri = get_relative_uri (TEST_SRCDIR "WMA9.1_98_quality_48khz_vbr_s.wma");
-	g_assert (simple_parser_test (uri) == TOTEM_PL_PARSER_RESULT_SUCCESS);
+	g_assert_cmpint (simple_parser_test (uri), ==, TOTEM_PL_PARSER_RESULT_SUCCESS);
 	g_assert_cmpstr (parser_test_get_entry_field (uri, TOTEM_PL_PARSER_FIELD_URI), ==, "mmsh://195.134.224.231/wma/WMA9.1_98_quality_48khz_vbr_s.wma?MSWMExt=.asf");
 	g_free (uri);
 }
@@ -958,7 +975,7 @@ test_parsing_not_really_php (void)
 	g_test_bug ("590722");
 	/* File from http://startwars.org/dump/remote_xspf.php */
 	uri = get_relative_uri (TEST_SRCDIR "remote_xspf.php");
-	g_assert (simple_parser_test (uri) == TOTEM_PL_PARSER_RESULT_SUCCESS);
+	g_assert_cmpint (simple_parser_test (uri), ==, TOTEM_PL_PARSER_RESULT_SUCCESS);
 	g_free (uri);
 }
 
@@ -969,7 +986,7 @@ test_parsing_not_really_php_but_html_instead (void)
 	g_test_bug ("624341");
 	/* File from http://www.novabrasilfm.com.br/ao-vivo/audio.php */
 	uri = get_relative_uri (TEST_SRCDIR "audio.php");
-	g_assert (simple_parser_test (uri) == TOTEM_PL_PARSER_RESULT_IGNORED);
+	g_assert_cmpint (simple_parser_test (uri), ==, TOTEM_PL_PARSER_RESULT_IGNORED);
 	g_free (uri);
 }
 
@@ -990,7 +1007,7 @@ parse_async_ready (GObject *pl, GAsyncResult *result, gpointer userdata)
 	g_test_message ("Got retval %d for uri '%s'", retval, data->uri);
 	g_test_message ("Parsed entry count is %d for uri '%s'", data->count, data->uri);
 
-	g_assert (data->count > 0);
+	g_assert_cmpint (data->count, >, 0);
 
 	g_main_loop_quit (data->mainloop);
 	g_object_unref (pl);
@@ -1263,6 +1280,7 @@ main (int argc, char *argv[])
 		g_test_add_func ("/parser/resolution", test_resolution);
 		g_test_add_func ("/parser/parsability", test_parsability);
 		g_test_add_func ("/parser/image_link", test_image_link);
+		g_test_add_func ("/parser/m3u_relative", test_m3u_relative);
 		g_test_add_func ("/parser/m3u_audio_track", test_m3u_audio_track);
 		g_test_add_func ("/parser/no_url_podcast", test_no_url_podcast);
 		g_test_add_func ("/parser/xml_is_text_plain", test_xml_is_text_plain);
@@ -1270,7 +1288,8 @@ main (int argc, char *argv[])
 		g_test_add_func ("/parser/parsing/hadess", test_parsing_hadess);
 		g_test_add_func ("/parser/parsing/nonexistent_files", test_parsing_nonexistent_files);
 		g_test_add_func ("/parser/parsing/broken_asx", test_parsing_broken_asx);
-		g_test_add_func ("/parser/parsing/404_error", test_parsing_404_error);
+		/* Disabled, as the host is unavailable most of the time
+		 * g_test_add_func ("/parser/parsing/404_error", test_parsing_404_error); */
 		g_test_add_func ("/parser/parsing/3gpp_not_ignored", test_parsing_3gpp_not_ignored);
 		g_test_add_func ("/parser/parsing/parsing_ts_not_ignored", test_parsing_ts_not_ignored);
 		g_test_add_func ("/parser/parsing/mp4_is_flv", test_parsing_mp4_is_flv);

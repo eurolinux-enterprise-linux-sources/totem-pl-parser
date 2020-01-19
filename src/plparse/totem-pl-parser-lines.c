@@ -392,14 +392,24 @@ totem_pl_parser_add_m3u (TotemPlParser *parser,
 	const char *extinfo, *extvlcopt_audiotrack;
 	char *pl_uri;
 
-	if (g_file_load_contents (file, NULL, &contents, &size, NULL, NULL) == FALSE)
+	if (g_file_load_contents (file, NULL, &contents, &size, NULL, NULL) == FALSE) {
+		DEBUG (file, g_print ("Failed to load '%s'\n", uri));
 		return TOTEM_PL_PARSER_RESULT_ERROR;
+	}
 
 	/* .pls files with a .m3u extension, the nasties */
 	if (g_str_has_prefix (contents, "[playlist]") != FALSE
 			|| g_str_has_prefix (contents, "[Playlist]") != FALSE
 			|| g_str_has_prefix (contents, "[PLAYLIST]") != FALSE) {
+		DEBUG (file, g_print ("Parsing '%s' playlist as PLS\n", uri));
 		retval = totem_pl_parser_add_pls_with_contents (parser, file, base_file, contents, parse_data);
+		g_free (contents);
+		return retval;
+	}
+
+	if (strstr (contents, EXTINF_HLS) ||
+	    strstr (contents, EXTINF_HLS2)) {
+		DEBUG (file, g_print ("Unhandled HLS playlist '%s', should be passed to player\n", uri));
 		g_free (contents);
 		return retval;
 	}
@@ -413,12 +423,6 @@ totem_pl_parser_add_m3u (TotemPlParser *parser,
 			g_free (contents);
 			contents = fixed;
 		}
-	}
-
-	if (strstr (contents, EXTINF_HLS) ||
-	    strstr (contents, EXTINF_HLS2)) {
-		g_free (contents);
-		return retval;
 	}
 
 	/* is non-NULL if there's an EXTINF on a preceding line */
@@ -502,7 +506,7 @@ totem_pl_parser_add_m3u (TotemPlParser *parser,
 			/* + 2, skip drive letter */
 			uri = g_file_get_child (base_file, line + 2);
 			totem_pl_parser_add_uri (parser,
-						 TOTEM_PL_PARSER_FIELD_URI, uri,
+						 TOTEM_PL_PARSER_FIELD_FILE, uri,
 						 TOTEM_PL_PARSER_FIELD_TITLE, totem_pl_parser_get_extinfo_title (extinfo),
 						 TOTEM_PL_PARSER_FIELD_AUDIO_TRACK, audio_track,
 						 NULL);
@@ -536,7 +540,7 @@ totem_pl_parser_add_m3u (TotemPlParser *parser,
 			uri = g_file_get_child (_base_file, line);
 			g_object_unref (_base_file);
 			totem_pl_parser_add_uri (parser,
-						 TOTEM_PL_PARSER_FIELD_URI, uri,
+						 TOTEM_PL_PARSER_FIELD_FILE, uri,
 						 TOTEM_PL_PARSER_FIELD_TITLE, totem_pl_parser_get_extinfo_title (extinfo),
 						 TOTEM_PL_PARSER_FIELD_AUDIO_TRACK, audio_track,
 						 NULL);

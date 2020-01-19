@@ -1562,8 +1562,10 @@ totem_pl_parser_scheme_is_ignored (TotemPlParser *parser, GFile *uri)
 	g_mutex_lock (&parser->priv->ignore_mutex);
 
 	scheme = g_file_get_uri_scheme (uri);
-	if (!scheme)
+	if (!scheme) {
+		g_mutex_unlock (&parser->priv->ignore_mutex);
 		return TRUE;
+	}
 	ret = GPOINTER_TO_INT (g_hash_table_lookup (parser->priv->ignore_schemes, scheme));
 	g_free (scheme);
 
@@ -1736,10 +1738,20 @@ totem_pl_parser_ignore_from_mimetype (TotemPlParser *parser, const char *mimetyp
 		return FALSE;
 
 	for (i = 0; i < G_N_ELEMENTS (ignore_types); i++) {
-		if (g_content_type_is_a (mimetype, ignore_types[i].mimetype) != FALSE)
+		/* Up until we have a way to detect private inheritance
+		 * in shared-mime-info */
+		if (strcmp (mimetype, "application/vnd.apple.mpegurl") != 0 &&
+		    strcmp (mimetype, "audio/x-mpegurl") != 0 &&
+		    g_content_type_is_a (mimetype, ignore_types[i].mimetype) != FALSE) {
+			if (parser->priv->debug)
+				g_print ("Ignoring %s because it's a %s\n", mimetype, ignore_types[i].mimetype);
 			return TRUE;
-		if (g_content_type_equals (mimetype, ignore_types[i].mimetype) != FALSE)
+		}
+		if (g_content_type_equals (mimetype, ignore_types[i].mimetype) != FALSE) {
+			if (parser->priv->debug)
+				g_print ("Ignoring %s because it's equal to %s\n", mimetype, ignore_types[i].mimetype);
 			return TRUE;
+		}
 	}
 
 	return FALSE;
@@ -1882,6 +1894,10 @@ totem_pl_parser_parse_internal (TotemPlParser *parser,
 		g_free (data);
 		g_free (mimetype);
 		return TOTEM_PL_PARSER_RESULT_SUCCESS;
+	} else if (strcmp (mimetype, HLS_MIME_TYPE) == 0) {
+		g_free (data);
+		g_free (mimetype);
+		return TOTEM_PL_PARSER_RESULT_UNHANDLED;
 	}
 
 	/* If we're at the top-level of the parsing, try to get more

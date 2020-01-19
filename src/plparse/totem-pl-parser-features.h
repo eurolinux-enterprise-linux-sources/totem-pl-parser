@@ -27,7 +27,7 @@
  */
 #define TOTEM_PL_PARSER_VERSION_MAJOR	(3)
 #define TOTEM_PL_PARSER_VERSION_MINOR	(10)
-#define TOTEM_PL_PARSER_VERSION_MICRO	(5)
+#define TOTEM_PL_PARSER_VERSION_MICRO	(7)
 
 /* check whether a version equal to or greater than
  * major.minor.micro is present.

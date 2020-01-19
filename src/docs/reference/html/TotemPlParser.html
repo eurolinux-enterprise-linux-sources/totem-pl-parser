@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Totem Playlist Parser Reference Manual: TotemPlParser</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<title>TotemPlParser: Totem Playlist Parser Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Totem Playlist Parser Reference Manual">
 <link rel="up" href="api-reference.html" title="API Reference">
 <link rel="prev" href="api-reference.html" title="API Reference">
 <link rel="next" href="TotemPlPlaylist.html" title="TotemPlPlaylist">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.25.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -46,7 +46,7 @@ justifications.
 </div>
 <div class="refsect1">
 <a name="TotemPlParser.functions"></a><h2>Functions</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="functions_return">
 <col class="functions_name">
@@ -169,7 +169,7 @@ justifications.
 </div>
 <div class="refsect1">
 <a name="TotemPlParser.properties"></a><h2>Properties</h2>
-<div class="informaltable"><table border="0">
+<div class="informaltable"><table class="informaltable" border="0">
 <colgroup>
 <col width="150px" class="properties_type">
 <col width="300px" class="properties_name">
@@ -201,7 +201,7 @@ justifications.
 </div>
 <div class="refsect1">
 <a name="TotemPlParser.signals"></a><h2>Signals</h2>
-<div class="informaltable"><table border="0">
+<div class="informaltable"><table class="informaltable" border="0">
 <colgroup>
 <col width="150px" class="signals_return">
 <col width="300px" class="signals_name">
@@ -211,24 +211,24 @@ justifications.
 <tr>
 <td class="signal_type"><span class="returnvalue">void</span></td>
 <td class="signal_name"><a class="link" href="TotemPlParser.html#TotemPlParser-entry-parsed" title="The “entry-parsed” signal">entry-parsed</a></td>
-<td class="signal_flags">Run Last</td>
+<td class="signal_flags"><a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
 </tr>
 <tr>
 <td class="signal_type"><span class="returnvalue">void</span></td>
 <td class="signal_name"><a class="link" href="TotemPlParser.html#TotemPlParser-playlist-ended" title="The “playlist-ended” signal">playlist-ended</a></td>
-<td class="signal_flags">Run Last</td>
+<td class="signal_flags"><a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
 </tr>
 <tr>
 <td class="signal_type"><span class="returnvalue">void</span></td>
 <td class="signal_name"><a class="link" href="TotemPlParser.html#TotemPlParser-playlist-started" title="The “playlist-started” signal">playlist-started</a></td>
-<td class="signal_flags">Run Last</td>
+<td class="signal_flags"><a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></td>
 </tr>
 </tbody>
 </table></div>
 </div>
 <a name="TotemPlParserMetadata"></a><div class="refsect1">
 <a name="TotemPlParser.other"></a><h2>Types and Values</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="name">
 <col class="description">
@@ -379,9 +379,9 @@ justifications.
 </div>
 <div class="refsect1">
 <a name="TotemPlParser.object-hierarchy"></a><h2>Object Hierarchy</h2>
-<pre class="screen">    GBoxed
+<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-Boxed-Types.html">GBoxed</a>
     <span class="lineart">╰──</span> TotemPlParserMetadata
-    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
     <span class="lineart">╰──</span> TotemPlParser
 </pre>
 </div>
@@ -415,7 +415,7 @@ to operate properly (e.g. for the <a class="link" href="TotemPlParser.html#Totem
 <span class="function"><a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#g-signal-connect">g_signal_connect</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function"><a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#G-OBJECT:CAPS">G_OBJECT</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">pl</span><span class="symbol">),</span><span class="normal"> </span><span class="string">"playlist-started"</span><span class="symbol">,</span><span class="normal"> </span><span class="function"><a href="https://developer.gnome.org/gobject/unstable/gobject-Closures.html#G-CALLBACK:CAPS">G_CALLBACK</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">playlist_started</span><span class="symbol">),</span><span class="normal"> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">);</span>
 <span class="function"><a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#g-signal-connect">g_signal_connect</a></span><span class="normal"> </span><span class="symbol">(</span><span class="function"><a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#G-OBJECT:CAPS">G_OBJECT</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">pl</span><span class="symbol">),</span><span class="normal"> </span><span class="string">"entry-parsed"</span><span class="symbol">,</span><span class="normal"> </span><span class="function"><a href="https://developer.gnome.org/gobject/unstable/gobject-Closures.html#G-CALLBACK:CAPS">G_CALLBACK</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">entry_parsed</span><span class="symbol">),</span><span class="normal"> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">);</span>
 
-<span class="keyword">if</span><span class="normal"> </span><span class="symbol">(</span><span class="function"><a href="TotemPlParser.html#totem-pl-parser-parse">totem_pl_parser_parse</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">pl</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"http://example.com/playlist.pls"</span><span class="symbol">,</span><span class="normal"> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS">FALSE</a></span><span class="symbol">)</span><span class="normal"> </span><span class="symbol">!=</span><span class="normal"> TOTEM_PL_PARSER_RESULT_SUCCESS</span><span class="symbol">)</span>
+<span class="keyword">if</span><span class="normal"> </span><span class="symbol">(</span><span class="function"><a href="TotemPlParser.html#totem-pl-parser-parse">totem_pl_parser_parse</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">pl</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"http://example.com/playlist.pls"</span><span class="symbol">,</span><span class="normal"> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#FALSE:CAPS">FALSE</a></span><span class="symbol">)</span><span class="normal"> </span><span class="symbol">!=</span><span class="normal"> <a href="TotemPlParser.html#TOTEM-PL-PARSER-RESULT-SUCCESS:CAPS">TOTEM_PL_PARSER_RESULT_SUCCESS</a></span><span class="symbol">)</span>
 <span class="normal">    </span><span class="function"><a href="https://developer.gnome.org/glib/unstable/glib-Message-Logging.html#g-error">g_error</a></span><span class="normal"> </span><span class="symbol">(</span><span class="string">"Playlist parsing failed."</span><span class="symbol">);</span>
 
 <span class="function"><a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#g-object-unref">g_object_unref</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">pl</span><span class="symbol">);</span></pre></td>
@@ -460,7 +460,7 @@ to operate properly (e.g. for the <a class="link" href="TotemPlParser.html#Totem
 <span class="function">parse_cb</span><span class="normal"> </span><span class="symbol">(</span><span class="usertype">TotemPlParser</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">parser</span><span class="symbol">,</span><span class="normal"> </span><span class="usertype">GAsyncResult</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">result</span><span class="symbol">,</span><span class="normal"> </span><span class="usertype">gpointer</span><span class="normal"> user_data</span><span class="symbol">)</span>
 <span class="cbracket">{</span>
 <span class="usertype">GError</span><span class="normal"> </span><span class="symbol">*</span><span class="normal">error </span><span class="symbol">=</span><span class="normal"> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">;</span>
-<span class="normal">    </span><span class="keyword">if</span><span class="normal"> </span><span class="symbol">(</span><span class="function"><a href="TotemPlParser.html#totem-pl-parser-parse-finish">totem_pl_parser_parse_finish</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">parser</span><span class="symbol">,</span><span class="normal"> result</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">error</span><span class="symbol">)</span><span class="normal"> </span><span class="symbol">!=</span><span class="normal"> TOTEM_PL_PARSER_RESULT_SUCCESS</span><span class="symbol">)</span><span class="normal"> </span><span class="cbracket">{</span>
+<span class="normal">    </span><span class="keyword">if</span><span class="normal"> </span><span class="symbol">(</span><span class="function"><a href="TotemPlParser.html#totem-pl-parser-parse-finish">totem_pl_parser_parse_finish</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">parser</span><span class="symbol">,</span><span class="normal"> result</span><span class="symbol">,</span><span class="normal"> </span><span class="symbol">&amp;</span><span class="normal">error</span><span class="symbol">)</span><span class="normal"> </span><span class="symbol">!=</span><span class="normal"> <a href="TotemPlParser.html#TOTEM-PL-PARSER-RESULT-SUCCESS:CAPS">TOTEM_PL_PARSER_RESULT_SUCCESS</a></span><span class="symbol">)</span><span class="normal"> </span><span class="cbracket">{</span>
 <span class="normal">        </span><span class="function"><a href="https://developer.gnome.org/glib/unstable/glib-Message-Logging.html#g-error">g_error</a></span><span class="normal"> </span><span class="symbol">(</span><span class="string">"Playlist parsing failed: %s"</span><span class="symbol">,</span><span class="normal"> error</span><span class="symbol">-&gt;</span><span class="normal">message</span><span class="symbol">);</span>
 <span class="normal">        </span><span class="function"><a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#g-error-free">g_error_free</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">error</span><span class="symbol">);</span>
 <span class="normal">    </span><span class="cbracket">}</span>
@@ -559,7 +559,7 @@ to operate properly (e.g. for the <a class="link" href="TotemPlParser.html#Totem
 <span class="normal">                   <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">);</span>
 
 <span class="normal">    </span><span class="keyword">if</span><span class="normal"> </span><span class="symbol">(</span><span class="function"><a href="TotemPlParser.html#totem-pl-parser-save">totem_pl_parser_save</a></span><span class="normal"> </span><span class="symbol">(</span><span class="normal">pl</span><span class="symbol">,</span><span class="normal"> playlist</span><span class="symbol">,</span><span class="normal"> file</span><span class="symbol">,</span><span class="normal"> </span><span class="string">"Title"</span><span class="symbol">,</span>
-<span class="normal">                  TOTEM_PL_PARSER_PLS</span><span class="symbol">,</span><span class="normal"> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">)</span><span class="normal"> </span><span class="symbol">!=</span><span class="normal"> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS">TRUE</a></span><span class="symbol">)</span><span class="normal"> </span><span class="cbracket">{</span>
+<span class="normal">                  <a href="TotemPlParser.html#TOTEM-PL-PARSER-PLS:CAPS">TOTEM_PL_PARSER_PLS</a></span><span class="symbol">,</span><span class="normal"> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS">NULL</a></span><span class="symbol">)</span><span class="normal"> </span><span class="symbol">!=</span><span class="normal"> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS">TRUE</a></span><span class="symbol">)</span><span class="normal"> </span><span class="cbracket">{</span>
 <span class="normal">        </span><span class="function"><a href="https://developer.gnome.org/glib/unstable/glib-Message-Logging.html#g-error">g_error</a></span><span class="normal"> </span><span class="symbol">(</span><span class="string">"Playlist writing failed."</span><span class="symbol">);</span>
 <span class="normal">    </span><span class="cbracket">}</span>
 
@@ -583,9 +583,8 @@ to operate properly (e.g. for the <a class="link" href="TotemPlParser.html#Totem
 totem_pl_parser_new (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>Creates a <a class="link" href="TotemPlParser.html" title="TotemPlParser"><span class="type">TotemPlParser</span></a> object.</p>
 <div class="refsect3">
-<a name="id-1.2.2.12.2.5"></a><h4>Returns</h4>
+<a name="totem-pl-parser-new.returns"></a><h4>Returns</h4>
 <p> a new <a class="link" href="TotemPlParser.html" title="TotemPlParser"><span class="type">TotemPlParser</span></a></p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -601,8 +600,8 @@ synchronous, and will block on (e.g.) network requests to slow
 servers. <a class="link" href="TotemPlParser.html#totem-pl-parser-parse-async" title="totem_pl_parser_parse_async ()"><code class="function">totem_pl_parser_parse_async()</code></a> is recommended instead.</p>
 <p>Return values are as <a class="link" href="TotemPlParser.html#totem-pl-parser-parse-with-base" title="totem_pl_parser_parse_with_base ()"><code class="function">totem_pl_parser_parse_with_base()</code></a>.</p>
 <div class="refsect3">
-<a name="id-1.2.2.12.3.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-parser-parse.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -629,9 +628,8 @@ end of the playlist on parse failure</p></td>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.2.12.3.7"></a><h4>Returns</h4>
+<a name="totem-pl-parser-parse.returns"></a><h4>Returns</h4>
 <p> a <a class="link" href="TotemPlParser.html#TotemPlParserResult" title="enum TotemPlParserResult"><span class="type">TotemPlParserResult</span></a></p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -641,7 +639,7 @@ end of the playlist on parse failure</p></td>
 totem_pl_parser_parse_async (<em class="parameter"><code><a class="link" href="TotemPlParser.html" title="TotemPlParser"><span class="type">TotemPlParser</span></a> *parser</code></em>,
                              <em class="parameter"><code>const <span class="type">char</span> *uri</code></em>,
                              <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> fallback</code></em>,
-                             <em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                             <em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
                              <em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
                              <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
 <p>Starts asynchronous parsing of a playlist given by the absolute URI <em class="parameter"><code>uri</code></em>
@@ -654,8 +652,8 @@ when this function is called, so can safely be freed after this function returns
  will be called. You can then call <a class="link" href="TotemPlParser.html#totem-pl-parser-parse-finish" title="totem_pl_parser_parse_finish ()"><code class="function">totem_pl_parser_parse_finish()</code></a>
 to get the results of the operation.</p>
 <div class="refsect3">
-<a name="id-1.2.2.12.4.7"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-parser-parse-async.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -680,7 +678,7 @@ end of the playlist on parse failure</p></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>cancellable</p></td>
-<td class="parameter_description"><p> optional <a href="https://developer.gnome.org/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> object, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_description"><p> optional <a href="https://developer.gnome.org/gio/unstable/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> object, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
@@ -703,15 +701,15 @@ function</p></td>
 <a name="totem-pl-parser-parse-finish"></a><h3>totem_pl_parser_parse_finish ()</h3>
 <pre class="programlisting"><a class="link" href="TotemPlParser.html#TotemPlParserResult" title="enum TotemPlParserResult"><span class="returnvalue">TotemPlParserResult</span></a>
 totem_pl_parser_parse_finish (<em class="parameter"><code><a class="link" href="TotemPlParser.html" title="TotemPlParser"><span class="type">TotemPlParser</span></a> *parser</code></em>,
-                              <em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a> *async_result</code></em>,
+                              <em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a> *async_result</code></em>,
                               <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
 <p>Finishes an asynchronous playlist parsing operation started with <a class="link" href="TotemPlParser.html#totem-pl-parser-parse-async" title="totem_pl_parser_parse_async ()"><code class="function">totem_pl_parser_parse_async()</code></a>
 or <a class="link" href="TotemPlParser.html#totem-pl-parser-parse-with-base-async" title="totem_pl_parser_parse_with_base_async ()"><code class="function">totem_pl_parser_parse_with_base_async()</code></a>.</p>
 <p>If parsing of the playlist is cancelled part-way through, <a class="link" href="TotemPlParser.html#TOTEM-PL-PARSER-RESULT-CANCELLED:CAPS"><code class="literal">TOTEM_PL_PARSER_RESULT_CANCELLED</code></a> is returned when
 this function is called.</p>
 <div class="refsect3">
-<a name="id-1.2.2.12.5.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-parser-parse-finish.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -725,7 +723,7 @@ this function is called.</p>
 </tr>
 <tr>
 <td class="parameter_name"><p>async_result</p></td>
-<td class="parameter_description"><p>a <a href="https://developer.gnome.org/gio/unstable/GAsyncResult.html"><span class="type">GAsyncResult</span></a></p></td>
+<td class="parameter_description"><p>a <a href="https://developer.gnome.org/gio/unstable/GAsyncResult.html#GAsyncResult-struct"><span class="type">GAsyncResult</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -737,9 +735,8 @@ this function is called.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.2.12.5.7"></a><h4>Returns</h4>
+<a name="totem-pl-parser-parse-finish.returns"></a><h4>Returns</h4>
 <p> a <a class="link" href="TotemPlParser.html#TotemPlParserResult" title="enum TotemPlParserResult"><span class="type">TotemPlParserResult</span></a></p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -755,8 +752,8 @@ totem_pl_parser_parse_with_base (<em class="parameter"><code><a class="link" hre
 <em class="parameter"><code>base</code></em>
  to resolve relative paths where appropriate.</p>
 <div class="refsect3">
-<a name="id-1.2.2.12.6.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-parser-parse-with-base.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -788,9 +785,8 @@ end of the playlist on parse failure</p></td>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.2.12.6.6"></a><h4>Returns</h4>
+<a name="totem-pl-parser-parse-with-base.returns"></a><h4>Returns</h4>
 <p> a <a class="link" href="TotemPlParser.html#TotemPlParserResult" title="enum TotemPlParserResult"><span class="type">TotemPlParserResult</span></a></p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -801,7 +797,7 @@ totem_pl_parser_parse_with_base_async (<em class="parameter"><code><a class="lin
                                        <em class="parameter"><code>const <span class="type">char</span> *uri</code></em>,
                                        <em class="parameter"><code>const <span class="type">char</span> *base</code></em>,
                                        <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="type">gboolean</span></a> fallback</code></em>,
-                                       <em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> *cancellable</code></em>,
+                                       <em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> *cancellable</code></em>,
                                        <em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GAsyncResult.html#GAsyncReadyCallback"><span class="type">GAsyncReadyCallback</span></a> callback</code></em>,
                                        <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a> user_data</code></em>);</pre>
 <p>Starts asynchronous parsing of a playlist given by the absolute URI <em class="parameter"><code>uri</code></em>
@@ -815,8 +811,8 @@ totem_pl_parser_parse_with_base_async (<em class="parameter"><code><a class="lin
  will be called. You can then call <a class="link" href="TotemPlParser.html#totem-pl-parser-parse-finish" title="totem_pl_parser_parse_finish ()"><code class="function">totem_pl_parser_parse_finish()</code></a>
 to get the results of the operation.</p>
 <div class="refsect3">
-<a name="id-1.2.2.12.7.7"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-parser-parse-with-base-async.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -846,7 +842,7 @@ end of the playlist on parse failure</p></td>
 </tr>
 <tr>
 <td class="parameter_name"><p>cancellable</p></td>
-<td class="parameter_description"><p> optional <a href="https://developer.gnome.org/gio/unstable/GCancellable.html"><span class="type">GCancellable</span></a> object, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
+<td class="parameter_description"><p> optional <a href="https://developer.gnome.org/gio/unstable/GCancellable.html#GCancellable-struct"><span class="type">GCancellable</span></a> object, or <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#NULL:CAPS"><code class="literal">NULL</code></a>. </p></td>
 <td class="parameter_annotations"><span class="annotation">[<acronym title="NULL is OK, both for passing and for returning."><span class="acronym">allow-none</span></acronym>]</span></td>
 </tr>
 <tr>
@@ -870,7 +866,7 @@ function</p></td>
 <pre class="programlisting"><a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gboolean"><span class="returnvalue">gboolean</span></a>
 totem_pl_parser_save (<em class="parameter"><code><a class="link" href="TotemPlParser.html" title="TotemPlParser"><span class="type">TotemPlParser</span></a> *parser</code></em>,
                       <em class="parameter"><code><a class="link" href="TotemPlPlaylist.html" title="TotemPlPlaylist"><span class="type">TotemPlPlaylist</span></a> *playlist</code></em>,
-                      <em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GFile.html"><span class="type">GFile</span></a> *dest</code></em>,
+                      <em class="parameter"><code><a href="https://developer.gnome.org/gio/unstable/GFile.html#GFile-struct"><span class="type">GFile</span></a> *dest</code></em>,
                       <em class="parameter"><code>const <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gchar"><span class="type">gchar</span></a> *title</code></em>,
                       <em class="parameter"><code><a class="link" href="TotemPlParser.html#TotemPlParserType" title="enum TotemPlParserType"><span class="type">TotemPlParserType</span></a> type</code></em>,
                       <em class="parameter"><code><a href="https://developer.gnome.org/glib/unstable/glib-Error-Reporting.html#GError"><span class="type">GError</span></a> **error</code></em>);</pre>
@@ -883,20 +879,20 @@ pointed by <em class="parameter"><code>dest</code></em>
 given the title <em class="parameter"><code>title</code></em>
 .</p>
 <p>If the <em class="parameter"><code>output</code></em>
- file is a directory the <span class="type">G_IO_ERROR_IS_DIRECTORY</span> error
+ file is a directory the <a href="https://developer.gnome.org/gio/unstable/gio-GIOError.html#G-IO-ERROR-IS-DIRECTORY:CAPS"><span class="type">G_IO_ERROR_IS_DIRECTORY</span></a> error
 will be returned, and if the file is some other form of non-regular file
-then a <span class="type">G_IO_ERROR_NOT_REGULAR_FILE</span> error will be returned. Some file
+then a <a href="https://developer.gnome.org/gio/unstable/gio-GIOError.html#G-IO-ERROR-NOT-REGULAR-FILE:CAPS"><span class="type">G_IO_ERROR_NOT_REGULAR_FILE</span></a> error will be returned. Some file
 systems don't allow all file names, and may return a
-<span class="type">G_IO_ERROR_INVALID_FILENAME</span> error, and if the name is too long,
-<span class="type">G_IO_ERROR_FILENAME_TOO_LONG</span> will be returned. Other errors are possible
+<a href="https://developer.gnome.org/gio/unstable/gio-GIOError.html#G-IO-ERROR-INVALID-FILENAME:CAPS"><span class="type">G_IO_ERROR_INVALID_FILENAME</span></a> error, and if the name is too long,
+<a href="https://developer.gnome.org/gio/unstable/gio-GIOError.html#G-IO-ERROR-FILENAME-TOO-LONG:CAPS"><span class="type">G_IO_ERROR_FILENAME_TOO_LONG</span></a> will be returned. Other errors are possible
 too, and depend on what kind of filesystem the file is on.</p>
-<p>In extreme cases, a <span class="type">G_IO_ERROR_INVALID_ARGUMENT</span> error can be returned, if
+<p>In extreme cases, a <a href="https://developer.gnome.org/gio/unstable/gio-GIOError.html#G-IO-ERROR-INVALID-ARGUMENT:CAPS"><span class="type">G_IO_ERROR_INVALID_ARGUMENT</span></a> error can be returned, if
 parts of the playlist to be written are too long.</p>
 <p>If writing a PLA playlist and there is an error converting a URI's encoding,
 a code from <a href="https://developer.gnome.org/glib/unstable/glib-Character-Set-Conversion.html#GConvertError"><span class="type">GConvertError</span></a> will be returned.</p>
 <div class="refsect3">
-<a name="id-1.2.2.12.8.8"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-parser-save.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -915,7 +911,7 @@ a code from <a href="https://developer.gnome.org/glib/unstable/glib-Character-Se
 </tr>
 <tr>
 <td class="parameter_name"><p>dest</p></td>
-<td class="parameter_description"><p>output <a href="https://developer.gnome.org/gio/unstable/GFile.html"><span class="type">GFile</span></a></p></td>
+<td class="parameter_description"><p>output <a href="https://developer.gnome.org/gio/unstable/GFile.html#GFile-struct"><span class="type">GFile</span></a></p></td>
 <td class="parameter_annotations"> </td>
 </tr>
 <tr>
@@ -937,9 +933,8 @@ a code from <a href="https://developer.gnome.org/glib/unstable/glib-Character-Se
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.2.12.8.9"></a><h4>Returns</h4>
+<a name="totem-pl-parser-save.returns"></a><h4>Returns</h4>
 <p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> on success</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -951,8 +946,8 @@ totem_pl_parser_parse_duration (<em class="parameter"><code>const <span class="t
 <p>Parses the given duration string and returns it as a <span class="type">gint64</span>
 denoting the duration in seconds.</p>
 <div class="refsect3">
-<a name="id-1.2.2.12.9.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-parser-parse-duration.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -973,9 +968,8 @@ denoting the duration in seconds.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.2.12.9.6"></a><h4>Returns</h4>
+<a name="totem-pl-parser-parse-duration.returns"></a><h4>Returns</h4>
 <p> the duration in seconds, or -1 on error</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -987,8 +981,8 @@ totem_pl_parser_parse_date (<em class="parameter"><code>const <span class="type"
 <p>Parses the given date string and returns it as a <span class="type">gint64</span>
 denoting the date in seconds since the UNIX Epoch.</p>
 <div class="refsect3">
-<a name="id-1.2.2.12.10.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-parser-parse-date.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1009,9 +1003,8 @@ denoting the date in seconds since the UNIX Epoch.</p>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.2.12.10.6"></a><h4>Returns</h4>
+<a name="totem-pl-parser-parse-date.returns"></a><h4>Returns</h4>
 <p> the date in seconds, or -1 on error</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -1023,8 +1016,8 @@ totem_pl_parser_add_ignored_scheme (<em class="parameter"><code><a class="link" 
 <p>Adds a scheme to the list of schemes to ignore, so that
 any URI using that scheme is ignored during playlist parsing.</p>
 <div class="refsect3">
-<a name="id-1.2.2.12.11.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-parser-add-ignored-scheme.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1054,8 +1047,8 @@ totem_pl_parser_add_ignored_mimetype (<em class="parameter"><code><a class="link
 <p>Adds a mimetype to the list of mimetypes to ignore, so that
 any URI of that mimetype is ignored during playlist parsing.</p>
 <div class="refsect3">
-<a name="id-1.2.2.12.12.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-parser-add-ignored-mimetype.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1126,19 +1119,14 @@ totem_pl_parser_can_parse_from_uri (<em class="parameter"><code>const <span clas
 </pre>
 <p>The class structure for the <a class="link" href="TotemPlParser.html" title="TotemPlParser"><span class="type">TotemPlParser</span></a> type.</p>
 <div class="refsect3">
-<a name="id-1.2.2.13.3.5"></a><h4>Members</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="TotemPlParserClass.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="300px" class="struct_members_name">
 <col class="struct_members_description">
 <col width="200px" class="struct_members_annotations">
 </colgroup>
 <tbody>
-<tr>
-<td class="struct_member_name"><p><a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> <em class="structfield"><code><a name="TotemPlParserClass.parent-class"></a>parent_class</code></em>;</p></td>
-<td class="struct_member_description"><p>the parent class</p></td>
-<td class="struct_member_annotations"> </td>
-</tr>
 <tr>
 <td class="struct_member_name"><p><em class="structfield"><code><a name="TotemPlParserClass.entry-parsed"></a>entry_parsed</code></em> ()</p></td>
 <td class="struct_member_description"><p>the generic signal handler for the <a class="link" href="TotemPlParser.html#TotemPlParser-entry-parsed" title="The “entry-parsed” signal"><span class="type">“entry-parsed”</span></a> signal,
@@ -1166,8 +1154,8 @@ which can be overridden by inheriting classes</p></td>
 <a name="TotemPlParserResult"></a><h3>enum TotemPlParserResult</h3>
 <p>Gives the result of parsing a playlist.</p>
 <div class="refsect3">
-<a name="id-1.2.2.13.4.4"></a><h4>Members</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="TotemPlParserResult.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="300px" class="enum_members_name">
 <col class="enum_members_description">
@@ -1219,8 +1207,8 @@ and <a class="link" href="TotemPlParser.html#totem-pl-parser-add-ignored-mimetyp
 <a name="TotemPlParserType"></a><h3>enum TotemPlParserType</h3>
 <p>The type of playlist a <a class="link" href="TotemPlParser.html" title="TotemPlParser"><span class="type">TotemPlParser</span></a> will parse.</p>
 <div class="refsect3">
-<a name="id-1.2.2.13.5.4"></a><h4>Members</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="TotemPlParserType.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="300px" class="enum_members_name">
 <col class="enum_members_description">
@@ -1272,8 +1260,8 @@ and <a class="link" href="TotemPlParser.html#totem-pl-parser-add-ignored-mimetyp
 <p>Allows you to differentiate between different
 errors occurring during file operations in a <a class="link" href="TotemPlParser.html" title="TotemPlParser"><span class="type">TotemPlParser</span></a>.</p>
 <div class="refsect3">
-<a name="id-1.2.2.13.6.4"></a><h4>Members</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="TotemPlParserError.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="300px" class="enum_members_name">
 <col class="enum_members_description">
@@ -1317,7 +1305,7 @@ errors occurring during file operations in a <a class="link" href="TotemPlParser
 <pre class="programlisting">#define TOTEM_PL_PARSER_FIELD_URI		"url"
 </pre>
 <p>Metadata field for an entry's URI.</p>
-<p class="since">Since 2.26</p>
+<p class="since">Since: <a class="link" href="ix02.html#api-index-2.26">2.26</a></p>
 </div>
 <hr>
 <div class="refsect2">
@@ -1481,7 +1469,7 @@ or <a class="link" href="TotemPlParser.html#TOTEM-PL-PARSER-FIELD-DURATION-MS:CA
 <pre class="programlisting">#define TOTEM_PL_PARSER_FIELD_IMAGE_URI		"image-url"
 </pre>
 <p>Metadata field for an entry's thumbnail image URI.</p>
-<p class="since">Since 2.26</p>
+<p class="since">Since: <a class="link" href="ix02.html#api-index-2.26">2.26</a></p>
 </div>
 <hr>
 <div class="refsect2">
@@ -1490,7 +1478,7 @@ or <a class="link" href="TotemPlParser.html#TOTEM-PL-PARSER-FIELD-DURATION-MS:CA
 </pre>
 <p>Metadata field for an entry's download URI. Only used if an alternate download
 location is available for the entry.</p>
-<p class="since">Since 2.26</p>
+<p class="since">Since: <a class="link" href="ix02.html#api-index-2.26">2.26</a></p>
 </div>
 <hr>
 <div class="refsect2">
@@ -1572,8 +1560,8 @@ user_function (<a class="link" href="TotemPlParser.html" title="TotemPlParser"><
                <a href="https://developer.gnome.org/glib/unstable/glib-Basic-Types.html#gpointer"><span class="type">gpointer</span></a>               user_data)</pre>
 <p>The ::entry-parsed signal is emitted when a new entry is parsed.</p>
 <div class="refsect3">
-<a name="id-1.2.2.15.2.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="TotemPlParser-entry-parsed.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1603,7 +1591,7 @@ user_function (<a class="link" href="TotemPlParser.html" title="TotemPlParser"><
 </tbody>
 </table></div>
 </div>
-<p>Flags: Run Last</p>
+<p>Flags: <a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
 </div>
 <hr>
 <div class="refsect2">
@@ -1616,8 +1604,8 @@ user_function (<a class="link" href="TotemPlParser.html" title="TotemPlParser"><
 parsing. It is only called when <a class="link" href="TotemPlParser.html#TotemPlParser-playlist-started" title="The “playlist-started” signal"><span class="type">“playlist-started”</span></a>
 has been called for that playlist.</p>
 <div class="refsect3">
-<a name="id-1.2.2.15.3.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="TotemPlParser-playlist-ended.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1642,7 +1630,7 @@ has been called for that playlist.</p>
 </tbody>
 </table></div>
 </div>
-<p>Flags: Run Last</p>
+<p>Flags: <a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
 </div>
 <hr>
 <div class="refsect2">
@@ -1657,8 +1645,8 @@ started. This signal isn't emitted for all types of playlists, but
 can be relied on to be called for playlists which support playlist
 metadata, such as title.</p>
 <div class="refsect3">
-<a name="id-1.2.2.15.4.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="TotemPlParser-playlist-started.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -1689,12 +1677,11 @@ started. </p></td>
 </tbody>
 </table></div>
 </div>
-<p>Flags: Run Last</p>
+<p>Flags: <a href="https://developer.gnome.org/gobject/unstable/gobject-Signals.html#G-SIGNAL-RUN-LAST:CAPS">Run Last</a></p>
 </div>
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.25.1</div>
 </body>
 </html>

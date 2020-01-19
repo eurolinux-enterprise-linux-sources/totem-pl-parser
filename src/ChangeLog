@@ -1,4 +1,521 @@
-commit ec7f9672656a31b102e4b408697ef3dc8bdf5279
+commit a4c68b758e3ff9a9a88e0d3ea6593d2abc2e374f (HEAD -> master)
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Tue Sep 20 11:39:02 2016 +0200
+
+    3.10.7
+
+ NEWS         | 6 ++++++
+ configure.ac | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+commit 69d394974b7d7599d37e8993466753b3f73163b5
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Tue Sep 20 13:29:49 2016 +0200
+
+    tests: Fix old URLs used to ITMS link testing
+
+ plparse/tests/parser.c | 5 ++---
+ 1 file changed, 2 insertions(+), 3 deletions(-)
+
+commit a6a79ec9e4d6170abf55b40324670431e109b1e6
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Tue Sep 20 13:18:26 2016 +0200
+
+    podcast: Fix memory leak when parsing ITMS links
+
+ plparse/totem-pl-parser-podcast.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit f8171021952bb8b29422f04e2b07728557d10c36
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Tue Sep 20 13:18:14 2016 +0200
+
+    podcast: Add more debug to ITMS parsing
+
+ plparse/totem-pl-parser-podcast.c | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+commit 867cef3afc22011019d8b0f5111e9bb5f7a8b4b8
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Tue Sep 20 11:46:52 2016 +0200
+
+    build: Fix ChangeLog generation with srcdir != builddir
+
+ Makefile.am | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 33666ab7a36991bb8374d28b472b4edfbaeef218
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Tue Sep 20 11:44:56 2016 +0200
+
+    tests: Remove unused "pwd" variable
+
+ plparse/tests/Makefile.am | 1 -
+ 1 file changed, 1 deletion(-)
+
+commit b23645b5683b7c9986a443a379fedc5bf511cbce (origin/master, origin/HEAD)
+Author: David King <amigadave@amigadave.com>
+Date:   Sun Sep 18 10:29:15 2016 +0200
+
+    Update British English translation
+
+ po/en_GB.po | 30 ++++++++++++++++++------------
+ 1 file changed, 18 insertions(+), 12 deletions(-)
+
+commit acbc4fc78fe23b4087831f60ad27326026b20993
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Mon Aug 22 21:45:34 2016 +0200
+
+    Updated Polish translation
+
+ po/pl.po | 26 +++++++++++---------------
+ 1 file changed, 11 insertions(+), 15 deletions(-)
+
+commit a9cfce28ddfa59185ea83559a0982b1ca80b9dac
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Mon Jul 25 22:37:05 2016 +0200
+
+    Add Language headers to po files
+    
+    Future versions of gettext will fail if this header is missing.
+
+ po/am.po          | 1 +
+ po/ast.po         | 1 +
+ po/az.po          | 1 +
+ po/be@latin.po    | 1 +
+ po/bn.po          | 1 +
+ po/bn_IN.po       | 1 +
+ po/br.po          | 1 +
+ po/ca@valencia.po | 2 +-
+ po/cy.po          | 1 +
+ po/dz.po          | 1 +
+ po/en@shaw.po     | 1 +
+ po/en_CA.po       | 1 +
+ po/en_GB.po       | 1 +
+ po/eo.po          | 1 +
+ po/es.po          | 2 +-
+ po/fr.po          | 2 +-
+ po/ga.po          | 1 +
+ po/gu.po          | 1 +
+ po/hi.po          | 1 +
+ po/hr.po          | 1 +
+ po/ka.po          | 1 +
+ po/km.po          | 1 +
+ po/ko.po          | 2 +-
+ po/ku.po          | 1 +
+ po/mai.po         | 1 +
+ po/mg.po          | 1 +
+ po/mk.po          | 1 +
+ po/ml.po          | 1 +
+ po/mr.po          | 1 +
+ po/nds.po         | 1 +
+ po/ne.po          | 1 +
+ po/nl.po          | 1 +
+ po/nn.po          | 1 +
+ po/or.po          | 1 +
+ po/ps.po          | 1 +
+ po/rw.po          | 1 +
+ po/si.po          | 1 +
+ po/sl.po          | 6 +-----
+ po/sq.po          | 1 +
+ po/sr.po          | 2 +-
+ po/sr@latin.po    | 2 +-
+ po/ta.po          | 1 +
+ po/te.po          | 1 +
+ po/th.po          | 1 +
+ po/ug.po          | 1 +
+ po/vi.po          | 1 +
+ po/wa.po          | 1 +
+ po/xh.po          | 1 +
+ po/zh_CN.po       | 2 +-
+ po/zh_HK.po       | 2 +-
+ po/zh_TW.po       | 2 +-
+ 51 files changed, 51 insertions(+), 14 deletions(-)
+
+commit 2d001364fb7e786686fc30cd1996aabd19fd37f3
+Author: GNOME Translation Robot <gnome-sysadmin@gnome.org>
+Date:   Thu Jul 21 22:46:30 2016 +0000
+
+    Updated Croatian translation
+
+ po/hr.po | 37 ++++++++++++++++++-------------------
+ 1 file changed, 18 insertions(+), 19 deletions(-)
+
+commit ffb1aeb6b52aabf667d032bc9e4f7bc094be221c
+Author: Cédric Valmary <cvalmary@yahoo.fr>
+Date:   Mon May 30 19:45:58 2016 +0000
+
+    Updated Occitan translation
+
+ po/oc.po | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 67a61357778fda3312c7891cd80eeff02b5c115c
+Author: Cédric Valmary <cvalmary@yahoo.fr>
+Date:   Thu May 5 20:23:04 2016 +0000
+
+    Updated Occitan translation
+
+ po/oc.po | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+commit 71eaa864fe06f76398807ac3befd7b8576839347
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Fri Apr 15 15:47:43 2016 +0200
+
+    plparse: Simplify ITMS link parsing
+    
+    Instead of simply following the link and trying to guess what the end
+    format might be, parse the ITMS ID from the link, and grab the RSS
+    URL from the resulting json.
+    
+    With inspiration from:
+    https://github.com/vocalapp/vocal/blob/master/src/Utils/iTunesProvider.vala
+
+ plparse/totem-pl-parser-podcast.c | 182 +++++++++-----------------------------
+ 1 file changed, 43 insertions(+), 139 deletions(-)
+
+commit 150a2f0356c8ee9d91ac012090e66490c39fd36b
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Fri Apr 15 15:10:58 2016 +0200
+
+    tests: Disable broken test_parsing_404_error
+
+ plparse/tests/parser.c | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+commit ec5d412404739bfb10fba531dbb55492562c0091
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Fri Apr 15 14:42:52 2016 +0200
+
+    plparse: Better debug in M3U parsing
+
+ plparse/totem-pl-parser-lines.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+commit 32b2a71e3bd0b1fae5e94db92816aeddf7934f3e
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Fri Apr 15 14:38:02 2016 +0200
+
+    plparse: Don't consider M3U playlists as text/plain
+    
+    Until we have support for private inheritance in shared-mime-info, we
+    cannot simply ignore HLS playlists as if it were a text file, when
+    we should pass it on to the player to handle directly.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=752318
+
+ plparse/totem-pl-parser.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+commit 6a51abd33b4110a6c0c4c6a6d4b4077210c4d1df
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Fri Apr 15 14:12:50 2016 +0200
+
+    plparse: Fix return value in "is" function
+
+ plparse/totem-pl-parser-wm.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit c83d304b467c38555287ce8d9324c26a3da75422
+Author: Daniel Korostil <ted.korostiled@gmail.com>
+Date:   Wed Mar 16 21:10:30 2016 +0000
+
+    Updated Ukrainian translation
+
+ po/uk.po | 31 +++++++++++++++++++------------
+ 1 file changed, 19 insertions(+), 12 deletions(-)
+
+commit 7e4f4a64336a41da86c322894d4c5d2ea697a089
+Author: Michael McConville <mmcco@mykolab.com>
+Date:   Sat Jan 30 17:41:35 2016 -0500
+
+    Fix mmap error checking
+    
+    mmap returns MAP_FAILED, not NULL, on failure.
+
+ plparse/xmlparser.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+commit acf55f1dd2e3912e9b374d9e393c768145453e77
+Author: Jiro Matsuzawa <jmatsuzawa@gnome.org>
+Date:   Sat Jan 16 03:31:07 2016 +0000
+
+    Updated Japanese translation
+
+ po/ja.po | 37 ++++++++++++++++++++++---------------
+ 1 file changed, 22 insertions(+), 15 deletions(-)
+
+commit 1dc553657a6a11addf78585fb1134ad62b8dd665 (tag: V_3_10_6)
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Tue Dec 15 14:52:34 2015 +0100
+
+    3.10.6
+
+ NEWS         | 6 ++++++
+ configure.ac | 2 +-
+ 2 files changed, 7 insertions(+), 1 deletion(-)
+
+commit 4f15fe102858b3a9ca12158d14e078b8383bed0c
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Tue Dec 15 15:49:16 2015 +0100
+
+    plparse: Fix parsing of local HLS playlists
+    
+    Local HLS playlists will have their mime-type already set to the one
+    gathered through magic because of its locality. As the
+    application/vnd.apple.mpegurl mime-type descends from text/plain, it
+    will be ignored (as it shouldn't be needed to go through the M3U parser
+    for it) instead of unhandled.
+    
+    Fix this, and one of our tests, by checking for that playlist type.
+
+ plparse/totem-pl-parser-private.h | 1 +
+ plparse/totem-pl-parser.c         | 4 ++++
+ 2 files changed, 5 insertions(+)
+
+commit 32795be620ff1fda6f29088f4eb8d3e30303c1db
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Tue Dec 15 15:48:56 2015 +0100
+
+    plparse: Better debug when mime-types are ignored
+
+ plparse/totem-pl-parser.c | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+commit a580fa3afb5cc357ee3e591c36231874fa82795c
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Tue Dec 15 15:11:28 2015 +0100
+
+    tests: Use better assertion macros
+    
+    Using a bare g_assert() will not give us enough data for debugging,
+    compared to test-specific assertions which GLib offers. Use those to
+    know about the expected value, and the value we actually got.
+
+ plparse/tests/parser.c | 64 +++++++++++++++++++++++++-------------------------
+ 1 file changed, 32 insertions(+), 32 deletions(-)
+
+commit 21f64b6252445a79660797296d15b4cfa4e21360
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Thu Nov 26 17:36:17 2015 +0100
+
+    lines: Fix parsing of m3u files
+    
+    This was broken since commit d2caf76e0646f29ee8edcc89627398d8363dd327
+    (and version 3.10.4) which changed the functions used to emit new
+    playlist items.
+    
+    We didn't take enough care to replace totem_pl_parser_add_one_file()
+    calls by TOTEM_PL_PARSER_FIELD_FILE fields, and passed GFiles as URIs
+    instead, leading to garbage being added, and possibly to crashes.
+    
+    Include test case to avoid this sort of error in the future.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=758710
+
+ plparse/tests/Makefile.am       |  3 ++-
+ plparse/tests/parser.c          | 21 +++++++++++++++++++--
+ plparse/tests/relative.m3u      |  1 +
+ plparse/totem-pl-parser-lines.c |  4 ++--
+ 4 files changed, 24 insertions(+), 5 deletions(-)
+
+commit f8c6592395838a36d448fcb90b1d401524b39163
+Author: Cédric Valmary <cvalmary@yahoo.fr>
+Date:   Tue Nov 10 14:11:18 2015 +0000
+
+    Updated Occitan translation
+
+ po/oc.po | 43 +++++++++++++++++++++----------------------
+ 1 file changed, 21 insertions(+), 22 deletions(-)
+
+commit 1be3144e9a6bf183a61c9596165d52bbe405b5cc
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Wed Oct 28 15:31:22 2015 +0100
+
+    videosite: Fix alternative resolution scripts
+    
+    1147853ac9012c085ebb1d6306451c6d197542cf always returned the script's
+    filename instead of its fullpath, so never worked.
+
+ plparse/totem-pl-parser-videosite.c | 18 +++++++++++-------
+ 1 file changed, 11 insertions(+), 7 deletions(-)
+
+commit d2054d31f000cd131f05b749b210c3f9476dc9aa
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Fri Oct 23 12:59:14 2015 +0200
+
+    tests: Update ITMS test URLs
+    
+    For the first and third test, the RSS URL changed. For the second test,
+    use the same Podcast as for the other two tests, rather than Annie Mac's
+    Mini Mix.
+    
+    See https://bugzilla.redhat.com/show_bug.cgi?id=1274648
+
+ plparse/tests/parser.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+commit 7ec1a62ed5fed42d1c9b8b53f1233457646843d3
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Fri Oct 23 12:53:11 2015 +0200
+
+    plparse: Add debug in itms: link failure case
+    
+    When parsing an ITMS link fails, print out the captured XML plist
+    in the debug.
+
+ plparse/totem-pl-parser-podcast.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+commit 47a72b6ccbe87da3c7dd1cc2bb7f54181a4b535e
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Fri Sep 18 14:58:40 2015 +0200
+
+    disc: Remove MEDIA_TYPE_NUM_TYPES
+    
+    It was incorrect and unused.
+
+ plparse/totem-disc.h | 7 -------
+ 1 file changed, 7 deletions(-)
+
+commit c59014d7cecac2ed248ee5c958baf84d1653db36
+Author: Arash Mousavi <mousavi.arash@gmail.com>
+Date:   Thu Sep 17 01:35:42 2015 +0430
+
+    Update Persian translation
+
+ po/fa.po | 403 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++-------
+ 1 file changed, 358 insertions(+), 45 deletions(-)
+
+commit 6f490eade9d18e452c1e638809da9b0acc8ca174
+Author: Piotr Drąg <piotrdrag@gmail.com>
+Date:   Wed Aug 26 20:00:16 2015 +0200
+
+    Updated Polish translation
+
+ po/pl.po | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+commit 1b02f2c78dde0b5ff5177e6ef9c53921a84f8338
+Author: Chao-Hsiung Liao <j_h_liau@yahoo.com.tw>
+Date:   Wed Aug 26 13:00:06 2015 +0000
+
+    Updated Chinese (Taiwan) translation
+
+ po/zh_TW.po | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+commit 2bf5395a0102b16e4ae5ed05687732f1d0ea715e
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Tue Jul 28 12:11:29 2015 +0200
+
+    plparse: Fix locking bug when ignoring schemes
+    
+    Follow-up to edd1c84a548d402d7e7fde8c3e7f5ffa666d0b53
+    The early return was missing an unlock, as the normal return path has.
+    
+    Spotted by Matias De lellis <mati86dl@gmail.com>
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=752946
+
+ plparse/totem-pl-parser.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+commit 7d7c6d336e622a988337369df4b0ee2042bc9e20
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Wed Jul 15 11:48:20 2015 +0200
+
+    lines: Test whether it's HLS earlier
+    
+    No need to try and convert a playlist to UTF-8 from another format if
+    we're not going to be handling it anyway.
+
+ plparse/totem-pl-parser-lines.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
+
+commit 9f57d61db657ee591f500d02e8fb339791e39877
+Author: Pedro Albuquerque <palbuquerque73@gmail.com>
+Date:   Wed Jul 1 22:02:03 2015 +0000
+
+    Updated Portuguese translation
+
+ po/pt.po | 21 +++++++++++----------
+ 1 file changed, 11 insertions(+), 10 deletions(-)
+
+commit 768026bbc81281ae6a889a95e10e621bfb486be8
+Author: Daniel Șerbănescu <daniel@serbanescu.dk>
+Date:   Mon Jun 22 20:17:13 2015 +0200
+
+    Updated Romanian Translation
+
+ po/ro.po | 40 ++++++++++++++++++++++++----------------
+ 1 file changed, 24 insertions(+), 16 deletions(-)
+
+commit 1147853ac9012c085ebb1d6306451c6d197542cf
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Wed May 27 17:39:56 2015 +0200
+
+    videosite: Allow looking for alternative resolution scripts
+    
+    Third-parties are allowed to install scripts or binaries in
+    $(libexecdir)/totem-pl-parser/. The first script (as sorted through
+    strcmp()) will be chosen to resolve all possible websites.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=749977
+
+ plparse/Makefile.am                 |  9 +++++----
+ plparse/totem-pl-parser-videosite.c | 30 ++++++++++++++++++++++++++++--
+ 2 files changed, 33 insertions(+), 6 deletions(-)
+
+commit b524675634af60ae4b9f08b54ea47f308ae4c563
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Wed May 27 17:31:36 2015 +0200
+
+    videosite: Split off finding the appropriate helper script
+    
+    This also fixes the location of the script when building uninstalled
+    tests.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=749977
+
+ plparse/totem-pl-parser-videosite.c | 28 ++++++++++++++++++++++------
+ 1 file changed, 22 insertions(+), 6 deletions(-)
+
+commit 5c2190133328ee39764813ddee88a038dbf1d363
+Author: Bastien Nocera <hadess@hadess.net>
+Date:   Wed May 27 17:28:41 2015 +0200
+
+    videosite: Fix URI leak
+    
+    Make sure that "uri" is freed when exiting the function.
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=749977
+
+ plparse/totem-pl-parser-videosite.c | 22 ++++++++++++++++------
+ 1 file changed, 16 insertions(+), 6 deletions(-)
+
+commit 93b0e420dcd048e33218eaf257d26101432c6747
+Author: Philip Withnall <philip.withnall@collabora.co.uk>
+Date:   Fri Jun 5 07:59:15 2015 +0100
+
+    plparse: Fix a minor memory leak in totem_pl_parser_add_itms()
+
+ plparse/totem-pl-parser-podcast.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit 9ab937f164da9f148855f6c59b079f5f9a9b5e45
+Author: Andrew Cook <ariscop@gmail.com>
+Date:   Fri Jun 5 10:08:10 2015 +1000
+
+    plparse: Check return from load_http_itunes
+    
+    https://bugzilla.gnome.org/show_bug.cgi?id=750428
+
+ plparse/totem-pl-parser-podcast.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+commit ec7f9672656a31b102e4b408697ef3dc8bdf5279 (tag: V_3_10_5)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Thu Apr 30 13:12:23 2015 +0200
 
@@ -77,7 +594,7 @@ Date:   Wed Feb 25 18:25:28 2015 +0100
  plparse/totem-pl-parser-lines.c | 8 ++++++++
  1 file changed, 8 insertions(+)
 
-commit f742c7daf2b1de03ac4f47794d357a9b33118650
+commit f742c7daf2b1de03ac4f47794d357a9b33118650 (tag: V_3_10_4)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Tue Feb 17 13:43:28 2015 +0100
 
@@ -198,7 +715,7 @@ Date:   Mon Oct 6 10:51:06 2014 +0000
  po/kn.po | 37 ++++++++++++++++++++++---------------
  1 file changed, 22 insertions(+), 15 deletions(-)
 
-commit 6a54cf7f2d201dd8a1a79bcc5e3983e2a3fa1c72
+commit 6a54cf7f2d201dd8a1a79bcc5e3983e2a3fa1c72 (tag: V_3_10_3)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Mon Sep 22 06:20:29 2014 +0200
 
@@ -518,7 +1035,7 @@ Date:   Sat Feb 22 18:54:59 2014 +0100
  po/ca.po | 2267 +-------------------------------------------------------------
  1 file changed, 19 insertions(+), 2248 deletions(-)
 
-commit 5ebecbfa2fdac3bf70f1778ef610e37b9a0a3c09
+commit 5ebecbfa2fdac3bf70f1778ef610e37b9a0a3c09 (tag: V_3_10_1)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Tue Feb 18 17:03:08 2014 +0100
 
@@ -791,7 +1308,7 @@ Date:   Mon Sep 23 08:46:53 2013 +0200
  plparse/totem-pl-parser.c | 61 +++++++++++++----------------------------------
  1 file changed, 17 insertions(+), 44 deletions(-)
 
-commit 825e9a64beea735191e5c99aec266aa4c2b77aaf
+commit 825e9a64beea735191e5c99aec266aa4c2b77aaf (tag: V_3_10_0)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Mon Sep 23 08:56:19 2013 +0200
 
@@ -827,7 +1344,7 @@ Date:   Sat Sep 7 00:12:05 2013 +0800
  plparse/Makefile.am | 4 ++--
  1 file changed, 2 insertions(+), 2 deletions(-)
 
-commit 0d405f4c57b2114ed8ce5377a74d6d96595a03b5
+commit 0d405f4c57b2114ed8ce5377a74d6d96595a03b5 (tag: V_3_9_92)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Wed Sep 18 15:03:29 2013 +0200
 
@@ -886,7 +1403,7 @@ Date:   Sat Aug 24 03:18:52 2013 +0200
  plparse/Makefile.am                         |  7 +++----
  4 files changed, 4 insertions(+), 24 deletions(-)
 
-commit 015fff22f79b5e7d25c1f1db4898cea1e23d882b
+commit 015fff22f79b5e7d25c1f1db4898cea1e23d882b (tag: V_3_9_5)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Fri Aug 2 16:34:05 2013 +0200
 
@@ -1028,7 +1545,7 @@ Date:   Fri Jun 21 15:20:29 2013 +0200
  plparse/tests/parser.c | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-commit 86d8228cdaf32606099ec1d8443355ed576a5fa5
+commit 86d8228cdaf32606099ec1d8443355ed576a5fa5 (tag: V_3_4_5)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Tue May 14 12:52:28 2013 +0200
 
@@ -1099,7 +1616,7 @@ Date:   Fri Mar 29 17:37:36 2013 +0100
  plparse/totem-disc.c | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-commit 5718016386b123d735a9b45bd537867f62a1ac7c
+commit 5718016386b123d735a9b45bd537867f62a1ac7c (tag: V_3_4_4)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Tue Mar 26 08:22:10 2013 +0100
 
@@ -1361,10 +1878,9 @@ Date:   Fri Jan 4 10:02:50 2013 +0000
     The long-deprecated 'configure.in' name for the Autoconf input file
     will be dropped in future version of automake
 
- autogen.sh   |   2 +-
- configure.ac | 241 +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
- configure.in | 241 -----------------------------------------------------------
- 3 files changed, 242 insertions(+), 242 deletions(-)
+ autogen.sh                   | 2 +-
+ configure.in => configure.ac | 0
+ 2 files changed, 1 insertion(+), 1 deletion(-)
 
 commit a3a526b01c9690af99bd5932fb32da1a179939cf
 Author: TmTFx <f.t.public@gmail.com>
@@ -1511,7 +2027,7 @@ Date:   Tue Sep 18 16:28:51 2012 +0200
  plparse/totem-pl-parser.c | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
-commit 954b678334c307f51b537bef0d901c636e1dea1a
+commit 954b678334c307f51b537bef0d901c636e1dea1a (tag: V_3_4_3)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Tue Sep 18 11:42:52 2012 +0200
 
@@ -1744,7 +2260,7 @@ Date:   Mon May 28 12:53:13 2012 +0100
  plparse/totem-pl-parser-videosite.c | 5 +++--
  1 file changed, 3 insertions(+), 2 deletions(-)
 
-commit 9d7c0b31cb7a966cfd1b5d1721d60835bfa29649
+commit 9d7c0b31cb7a966cfd1b5d1721d60835bfa29649 (tag: V_3_4_2)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Tue May 15 15:12:07 2012 +0100
 
@@ -1779,7 +2295,7 @@ Date:   Thu Apr 26 13:00:06 2012 +0100
  plparse/totem-pl-parser.c                   | 3 +--
  3 files changed, 4 insertions(+), 3 deletions(-)
 
-commit f9ebc4a9f76296e44817f6c2f4062dbb17c26a22
+commit f9ebc4a9f76296e44817f6c2f4062dbb17c26a22 (tag: V_3_4_1)
 Author: Philip Withnall <philip@tecnocode.co.uk>
 Date:   Mon Apr 16 16:02:06 2012 +0100
 
@@ -1929,7 +2445,7 @@ Date:   Sun Apr 1 18:39:18 2012 +0300
  po/bg.po | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
-commit ddf13f81faf8a1989451e9e4c74ac5aae9a478eb
+commit ddf13f81faf8a1989451e9e4c74ac5aae9a478eb (tag: V_3_4_0)
 Author: Philip Withnall <philip@tecnocode.co.uk>
 Date:   Tue Mar 27 09:48:25 2012 +0100
 
@@ -1948,7 +2464,7 @@ Date:   Fri Mar 23 06:42:22 2012 +0200
  po/bg.po | 28 +++++++++++++++-------------
  1 file changed, 15 insertions(+), 13 deletions(-)
 
-commit d87752da4977d926cd6aad31e9cfaa3bd7035da3
+commit d87752da4977d926cd6aad31e9cfaa3bd7035da3 (tag: V_3_3_92)
 Author: Philip Withnall <philip@tecnocode.co.uk>
 Date:   Sat Mar 17 15:37:44 2012 +0000
 
@@ -2039,7 +2555,7 @@ Date:   Sun Feb 5 14:05:03 2012 +0000
  plparse/totem-pl-parser.h | 2 +-
  2 files changed, 6 insertions(+), 3 deletions(-)
 
-commit a24e51a8ecb3f8af12543ed5afb18cb2d877dfd5
+commit a24e51a8ecb3f8af12543ed5afb18cb2d877dfd5 (tag: V_3_2_0)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Mon Feb 20 00:05:57 2012 +0100
 
@@ -2418,7 +2934,7 @@ Date:   Thu Sep 22 20:29:08 2011 +0200
  po/as.po | 37 +++++++++++++++++++------------------
  1 file changed, 19 insertions(+), 18 deletions(-)
 
-commit 4e4100d3f96f0e68caf9dadb575cbaa69e382c7c
+commit 4e4100d3f96f0e68caf9dadb575cbaa69e382c7c (tag: V_2_32_6)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Tue Sep 20 15:35:39 2011 +0100
 
@@ -2516,7 +3032,7 @@ Date:   Mon Jul 18 10:12:09 2011 +0200
  po/af.po   | 52 ++++++++++++++++++++++++++++++++++++++++++++++++++++
  2 files changed, 53 insertions(+)
 
-commit 0fed7b9c663cbc0907f5ec79c1665a3eb3988e23
+commit 0fed7b9c663cbc0907f5ec79c1665a3eb3988e23 (tag: V_2_32_5)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Tue May 10 14:33:48 2011 +0100
 
@@ -2585,7 +3101,7 @@ Date:   Sun Mar 27 21:52:18 2011 +0200
  po/ug.po | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-commit 24ab9af8ede6d92c6cce9fc219708894ccae6b15
+commit 24ab9af8ede6d92c6cce9fc219708894ccae6b15 (tag: V_2_32_4)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Mon Mar 21 14:51:13 2011 +0000
 
@@ -2670,7 +3186,7 @@ Date:   Mon Feb 21 19:49:55 2011 +0000
  configure.in | 5 ++---
  1 file changed, 2 insertions(+), 3 deletions(-)
 
-commit 3f0c7ad81e2c8adb74c79289ca5431ff74de0e6b
+commit 3f0c7ad81e2c8adb74c79289ca5431ff74de0e6b (tag: V_2_32_3)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Mon Feb 21 16:48:08 2011 +0000
 
@@ -2717,7 +3233,7 @@ Date:   Sun Jan 30 19:02:18 2011 -0600
  configure.in | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-commit 9bb6b22c3a34224573a20a5fbb1ded8d27542078
+commit 9bb6b22c3a34224573a20a5fbb1ded8d27542078 (tag: V_2_32_2)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Fri Jan 28 15:37:21 2011 +0000
 
@@ -2982,7 +3498,7 @@ Date:   Wed Oct 20 22:55:18 2010 +1000
  plparse/tests/parser.c | 64 ++++++++++++++++++++++++++++++++++++++++++++++++++
  1 file changed, 64 insertions(+)
 
-commit 3184b216b5e7629f51dbad9a536cfc8c8a24dc21
+commit 3184b216b5e7629f51dbad9a536cfc8c8a24dc21 (tag: V_2_32_1)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Mon Oct 18 14:31:47 2010 +0100
 
@@ -2993,10 +3509,9 @@ Date:   Mon Oct 18 14:31:47 2010 +0100
  NEWS                                                               | 7 +++++++
  configure.in                                                       | 4 ++--
  plparse/tests/Makefile.am                                          | 2 +-
- ..._G_Money_-_Girl_Gotta_girlfriend_Feat._O_G_Money_Snoop_Dogg.m3u | 3 ---
- plparse/tests/O_G_Money_Snoop_Dogg.m3u                             | 3 +++
+ ...end_Feat._O_G_Money_Snoop_Dogg.m3u => O_G_Money_Snoop_Dogg.m3u} | 0
  plparse/tests/parser.c                                             | 2 +-
- 6 files changed, 14 insertions(+), 7 deletions(-)
+ 5 files changed, 11 insertions(+), 4 deletions(-)
 
 commit 5b090be68f48416b8034750366eae08ff541d0e7
 Author: Bastien Nocera <hadess@hadess.net>
@@ -3121,7 +3636,7 @@ Date:   Mon Oct 4 15:12:03 2010 +0100
  plparse/tests/parser.c    | 10 ++++++++++
  3 files changed, 26 insertions(+), 1 deletion(-)
 
-commit 1659b71a6992770cb1d80d9091e376bf647ed03e
+commit 1659b71a6992770cb1d80d9091e376bf647ed03e (tag: V_2_32_0)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Tue Sep 28 16:10:47 2010 +0100
 
@@ -3140,7 +3655,7 @@ Date:   Mon Sep 20 21:30:06 2010 +0900
  po/ja.po | 29 +++++++++++++++--------------
  1 file changed, 15 insertions(+), 14 deletions(-)
 
-commit bbc36382ad4c66bddbc7f93e20974e875ab82bc0
+commit bbc36382ad4c66bddbc7f93e20974e875ab82bc0 (tag: V_2_31_92)
 Author: Philip Withnall <philip@tecnocode.co.uk>
 Date:   Wed Sep 15 21:42:11 2010 +0100
 
@@ -3184,7 +3699,7 @@ Date:   Wed Sep 15 21:29:25 2010 +0100
  docs/reference/Makefile.am | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
-commit d0f36f59a0afce7ecd79ca7e1c3e6d10d0b024d5
+commit d0f36f59a0afce7ecd79ca7e1c3e6d10d0b024d5 (tag: V_2_30_3)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Mon Sep 13 14:40:12 2010 +0100
 
@@ -3267,7 +3782,7 @@ Date:   Mon Aug 23 10:42:32 2010 +0100
  plparse/tests/parser.c | 131 ++++++++-----------------------------------------
  1 file changed, 21 insertions(+), 110 deletions(-)
 
-commit 82d0e7af339f73f963f62735758e469c4f1d308c
+commit 82d0e7af339f73f963f62735758e469c4f1d308c (tag: V_2_30_2)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Wed Aug 4 14:57:03 2010 +0100
 
@@ -3532,7 +4047,7 @@ Date:   Wed May 12 18:41:06 2010 -0400
  po/en@shaw.po | 25 +++++++++++++------------
  1 file changed, 13 insertions(+), 12 deletions(-)
 
-commit 2dc1c1eac49a8c30aee89041d7857243fd31eff4
+commit 2dc1c1eac49a8c30aee89041d7857243fd31eff4 (tag: V_2_30_1)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Wed May 12 14:18:02 2010 +0100
 
@@ -3863,7 +4378,7 @@ Date:   Wed Apr 7 17:55:07 2010 +0100
  plparse/totem-pl-parser.c             |  19 +++++++++++++++++++
  4 files changed, 33 insertions(+), 1 deletion(-)
 
-commit ae5a941de79d336bd73448d1ddcd58fb614c1a85
+commit ae5a941de79d336bd73448d1ddcd58fb614c1a85 (tag: V_2_30_0)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Mon Mar 29 17:03:12 2010 +0100
 
@@ -3911,7 +4426,7 @@ Date:   Tue Mar 23 02:47:00 2010 +0100
  po/mn.po | 51 +++++++++++++++++++++++++++++++++++++++++++++++++++
  1 file changed, 51 insertions(+)
 
-commit a5478993b447ea9127b824050934fa3432999c23
+commit a5478993b447ea9127b824050934fa3432999c23 (tag: V_2_29_92)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Mon Mar 15 16:32:29 2010 +0000
 
@@ -4037,7 +4552,7 @@ Date:   Wed Jan 27 11:38:57 2010 +0100
  plparse/Makefile.am | 14 +++++++-------
  1 file changed, 7 insertions(+), 7 deletions(-)
 
-commit 14cce633d3759bd74ac349ca0cf8c7190beed8c5
+commit 14cce633d3759bd74ac349ca0cf8c7190beed8c5 (tag: V_2_29_1)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Tue Jan 26 11:07:39 2010 +0000
 
@@ -4253,7 +4768,7 @@ Date:   Mon Dec 14 10:53:20 2009 +0000
  plparse/totem-pl-parser.c | 3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
-commit a8efeafbe2591dff240821655ce3be13ef1c9d8a
+commit a8efeafbe2591dff240821655ce3be13ef1c9d8a (tag: V_2_28_2)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Fri Dec 11 12:26:50 2009 +0000
 
@@ -4539,7 +5054,7 @@ Date:   Fri Oct 2 05:41:54 2009 +0000
  po/is.po | 19 +++++++++----------
  1 file changed, 9 insertions(+), 10 deletions(-)
 
-commit 25a7d6754e988ce029cbf1151a32996dec8dc7f6
+commit 25a7d6754e988ce029cbf1151a32996dec8dc7f6 (tag: V_2_28_1)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Tue Sep 29 16:14:07 2009 +0100
 
@@ -4673,7 +5188,7 @@ Date:   Thu Sep 17 15:25:39 2009 +0100
  plparse/totem-pl-parser-xspf.c | 3 +--
  1 file changed, 1 insertion(+), 2 deletions(-)
 
-commit 853deec5fad8f62dce1a48faf2dd8ec58422c7d8
+commit 853deec5fad8f62dce1a48faf2dd8ec58422c7d8 (tag: V_2_28_0)
 Author: Bastien Nocera <hadess@hadess.net>
 Date:   Mon Sep 21 11:48:35 2009 +0100
 
@@ -4913,10 +5428,9 @@ Date:   Thu Jul 23 20:45:42 2009 +0100
 
     Use git to generate the ChangeLog
 
- ChangeLog            | 1434 --------------------------------------------------
- ChangeLog.pre-2.27.2 | 1434 ++++++++++++++++++++++++++++++++++++++++++++++++++
- Makefile.am          |   11 +
- 3 files changed, 1445 insertions(+), 1434 deletions(-)
+ ChangeLog => ChangeLog.pre-2.27.2 |  0
+ Makefile.am                       | 11 +++++++++++
+ 2 files changed, 11 insertions(+)
 
 commit 91d41f0130fbb62449d6c076b1f342621110061a
 Author: Bastien Nocera <hadess@hadess.net>
@@ -4937,8 +5451,8 @@ Date:   Thu Jul 23 20:18:45 2009 +0100
     
     2009-07-23  Bastien Nocera  <hadess@hadess.net>
     
-    	* configure.in: Fix substitution in pkg-config file,
-    	spotted by Philip
+            * configure.in: Fix substitution in pkg-config file,
+            spotted by Philip
 
  ChangeLog    | 5 +++++
  configure.in | 2 +-
@@ -4952,18 +5466,18 @@ Date:   Thu Jul 23 20:02:28 2009 +0100
     
     2009-07-23  Bastien Nocera  <hadess@hadess.net>
     
-    	* README:
-    	* configure.in:
-    	* plparse/totem-pl-parser-podcast.c (totem_pl_parser_add_rss),
-    	(totem_pl_parser_add_itpc), (totem_pl_parser_add_zune),
-    	(totem_pl_parser_add_atom), (totem_pl_parser_add_xml_feed),
-    	(totem_pl_parser_add_itms), (totem_pl_parser_add_opml):
-    	* plparse/totem-pl-parser-podcast.h:
-    	* plparse/totem-pl-parser.c (totem_pl_parser_parse_date):
-    	* totem-plparser-uninstalled.pc.in:
-    	* totem-plparser.pc.in: Use GMime instead of libcamel
-    	for dates parsing. Hopefully good enough for people to
-    	stop shipping crippled versions of totem-pl-parser
+            * README:
+            * configure.in:
+            * plparse/totem-pl-parser-podcast.c (totem_pl_parser_add_rss),
+            (totem_pl_parser_add_itpc), (totem_pl_parser_add_zune),
+            (totem_pl_parser_add_atom), (totem_pl_parser_add_xml_feed),
+            (totem_pl_parser_add_itms), (totem_pl_parser_add_opml):
+            * plparse/totem-pl-parser-podcast.h:
+            * plparse/totem-pl-parser.c (totem_pl_parser_parse_date):
+            * totem-plparser-uninstalled.pc.in:
+            * totem-plparser.pc.in: Use GMime instead of libcamel
+            for dates parsing. Hopefully good enough for people to
+            stop shipping crippled versions of totem-pl-parser
 
  ChangeLog                         | 15 +++++++++++
  README                            |  1 +
@@ -4983,8 +5497,8 @@ Date:   Thu Jul 23 19:57:12 2009 +0100
     
     2009-07-23  Bastien Nocera  <hadess@hadess.net>
     
-    	* plparse/tests/parser.c (test_data_get_data), (test_parsability):
-    	Add more debug when a parse error happens
+            * plparse/tests/parser.c (test_data_get_data), (test_parsability):
+            Add more debug when a parse error happens
 
  ChangeLog              | 5 +++++
  plparse/tests/parser.c | 9 ++++++---

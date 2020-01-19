@@ -2,13 +2,13 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Totem Playlist Parser Reference Manual: TotemPlPlaylist</title>
-<meta name="generator" content="DocBook XSL Stylesheets V1.78.1">
+<title>TotemPlPlaylist: Totem Playlist Parser Reference Manual</title>
+<meta name="generator" content="DocBook XSL Stylesheets V1.79.1">
 <link rel="home" href="index.html" title="Totem Playlist Parser Reference Manual">
 <link rel="up" href="api-reference.html" title="API Reference">
 <link rel="prev" href="TotemPlParser.html" title="TotemPlParser">
 <link rel="next" href="totem-pl-parser-TotemPlPlaylistIter.html" title="TotemPlPlaylistIter">
-<meta name="generator" content="GTK-Doc V1.21 (XML mode)">
+<meta name="generator" content="GTK-Doc V1.25.1 (XML mode)">
 <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
@@ -44,7 +44,7 @@ justifications.
 </div>
 <div class="refsect1">
 <a name="TotemPlPlaylist.functions"></a><h2>Functions</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="functions_return">
 <col class="functions_name">
@@ -167,7 +167,7 @@ justifications.
 </div>
 <div class="refsect1">
 <a name="TotemPlPlaylist.other"></a><h2>Types and Values</h2>
-<div class="informaltable"><table width="100%" border="0">
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="name">
 <col class="description">
@@ -186,7 +186,7 @@ justifications.
 </div>
 <div class="refsect1">
 <a name="TotemPlPlaylist.object-hierarchy"></a><h2>Object Hierarchy</h2>
-<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject">GObject</a>
+<pre class="screen">    <a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObject-struct">GObject</a>
     <span class="lineart">╰──</span> TotemPlPlaylist
 </pre>
 </div>
@@ -209,9 +209,8 @@ the playlist elements, or perform additions or modifications. See also
 totem_pl_playlist_new (<em class="parameter"><code><span class="type">void</span></code></em>);</pre>
 <p>Creates a new <a class="link" href="TotemPlPlaylist.html" title="TotemPlPlaylist"><span class="type">TotemPlPlaylist</span></a> object.</p>
 <div class="refsect3">
-<a name="id-1.2.3.9.2.5"></a><h4>Returns</h4>
+<a name="totem-pl-playlist-new.returns"></a><h4>Returns</h4>
 <p> The newly created <a class="link" href="TotemPlPlaylist.html" title="TotemPlPlaylist"><span class="type">TotemPlPlaylist</span></a></p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -222,8 +221,8 @@ totem_pl_playlist_size (<em class="parameter"><code><a class="link" href="TotemP
 <p>Returns the number of elements in <em class="parameter"><code>playlist</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.3.9.3.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-playlist-size.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -237,9 +236,8 @@ totem_pl_playlist_size (<em class="parameter"><code><a class="link" href="TotemP
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.3.9.3.6"></a><h4>Returns</h4>
+<a name="totem-pl-playlist-size.returns"></a><h4>Returns</h4>
 <p> The number of elements</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -254,8 +252,8 @@ totem_pl_playlist_prepend (<em class="parameter"><code><a class="link" href="Tot
 it points to it. To fill in values, you need to call
 <a class="link" href="TotemPlPlaylist.html#totem-pl-playlist-set" title="totem_pl_playlist_set ()"><code class="function">totem_pl_playlist_set()</code></a> or <a class="link" href="TotemPlPlaylist.html#totem-pl-playlist-set-value" title="totem_pl_playlist_set_value ()"><code class="function">totem_pl_playlist_set_value()</code></a>.</p>
 <div class="refsect3">
-<a name="id-1.2.3.9.4.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-playlist-prepend.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -288,8 +286,8 @@ totem_pl_playlist_append (<em class="parameter"><code><a class="link" href="Tote
 it points to it. To fill in values, you need to call
 <a class="link" href="TotemPlPlaylist.html#totem-pl-playlist-set" title="totem_pl_playlist_set ()"><code class="function">totem_pl_playlist_set()</code></a> or <a class="link" href="TotemPlPlaylist.html#totem-pl-playlist-set-value" title="totem_pl_playlist_set_value ()"><code class="function">totem_pl_playlist_set_value()</code></a>.</p>
 <div class="refsect3">
-<a name="id-1.2.3.9.5.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-playlist-append.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -328,8 +326,8 @@ totem_pl_playlist_insert (<em class="parameter"><code><a class="link" href="Tote
 the current <em class="parameter"><code>playlist</code></em>
  size to append elements.</p>
 <div class="refsect3">
-<a name="id-1.2.3.9.6.6"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-playlist-insert.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -365,8 +363,8 @@ totem_pl_playlist_iter_first (<em class="parameter"><code><a class="link" href="
  so it points to the first element in <em class="parameter"><code>playlist</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.3.9.7.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-playlist-iter-first.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -387,9 +385,8 @@ totem_pl_playlist_iter_first (<em class="parameter"><code><a class="link" href="
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.3.9.7.6"></a><h4>Returns</h4>
+<a name="totem-pl-playlist-iter-first.returns"></a><h4>Returns</h4>
 <p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if there is such first element.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -406,8 +403,8 @@ next element, or <em class="parameter"><code>iter</code></em>
 in <em class="parameter"><code>playlist</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.3.9.8.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-playlist-iter-next.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -429,9 +426,8 @@ in <em class="parameter"><code>playlist</code></em>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.3.9.8.6"></a><h4>Returns</h4>
+<a name="totem-pl-playlist-iter-next.returns"></a><h4>Returns</h4>
 <p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if there was next element.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -448,8 +444,8 @@ previous element, or <em class="parameter"><code>iter</code></em>
 in <em class="parameter"><code>playlist</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.3.9.9.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-playlist-iter-prev.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -471,9 +467,8 @@ in <em class="parameter"><code>playlist</code></em>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.3.9.9.6"></a><h4>Returns</h4>
+<a name="totem-pl-playlist-iter-prev.returns"></a><h4>Returns</h4>
 <p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if there was previous element.</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -489,8 +484,8 @@ totem_pl_playlist_get_value (<em class="parameter"><code><a class="link" href="T
 the playlist item pointed by <em class="parameter"><code>iter</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.3.9.10.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-playlist-get-value.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -522,11 +517,10 @@ the playlist item pointed by <em class="parameter"><code>iter</code></em>
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.3.9.10.6"></a><h4>Returns</h4>
+<a name="totem-pl-playlist-get-value.returns"></a><h4>Returns</h4>
 <p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if <em class="parameter"><code>iter</code></em>
 contains data for <em class="parameter"><code>key</code></em>
 .</p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -538,8 +532,8 @@ totem_pl_playlist_get_valist (<em class="parameter"><code><a class="link" href="
                               <em class="parameter"><code><span class="type">va_list</span> args</code></em>);</pre>
 <p>See <a class="link" href="TotemPlPlaylist.html#totem-pl-playlist-get" title="totem_pl_playlist_get ()"><code class="function">totem_pl_playlist_get()</code></a>, this function takes a va_list.</p>
 <div class="refsect3">
-<a name="id-1.2.3.9.11.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-playlist-get-valist.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -577,8 +571,8 @@ totem_pl_playlist_get (<em class="parameter"><code><a class="link" href="TotemPl
 by <em class="parameter"><code>iter</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.3.9.12.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-playlist-get.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -617,8 +611,8 @@ totem_pl_playlist_set_value (<em class="parameter"><code><a class="link" href="T
  in the element pointed by <em class="parameter"><code>iter</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.3.9.13.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-playlist-set-value.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -650,10 +644,9 @@ totem_pl_playlist_set_value (<em class="parameter"><code><a class="link" href="T
 </table></div>
 </div>
 <div class="refsect3">
-<a name="id-1.2.3.9.13.6"></a><h4>Returns</h4>
+<a name="totem-pl-playlist-set-value.returns"></a><h4>Returns</h4>
 <p> <a href="https://developer.gnome.org/glib/unstable/glib-Standard-Macros.html#TRUE:CAPS"><code class="literal">TRUE</code></a> if the value could be stored in <em class="parameter"><code>playlist</code></em>
 </p>
-<p></p>
 </div>
 </div>
 <hr>
@@ -665,8 +658,8 @@ totem_pl_playlist_set_valist (<em class="parameter"><code><a class="link" href="
                               <em class="parameter"><code><span class="type">va_list</span> args</code></em>);</pre>
 <p>See <a class="link" href="TotemPlPlaylist.html#totem-pl-playlist-set" title="totem_pl_playlist_set ()"><code class="function">totem_pl_playlist_set()</code></a>, this function takes a va_list.</p>
 <div class="refsect3">
-<a name="id-1.2.3.9.14.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-playlist-set-valist.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -704,8 +697,8 @@ totem_pl_playlist_set (<em class="parameter"><code><a class="link" href="TotemPl
 by <em class="parameter"><code>iter</code></em>
 .</p>
 <div class="refsect3">
-<a name="id-1.2.3.9.15.5"></a><h4>Parameters</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="totem-pl-playlist-set.parameters"></a><h4>Parameters</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="150px" class="parameters_name">
 <col class="parameters_description">
@@ -749,25 +742,20 @@ by <em class="parameter"><code>iter</code></em>
 </pre>
 <p>All the fields in the <a class="link" href="TotemPlPlaylist.html#TotemPlPlaylistClass" title="TotemPlPlaylistClass"><span class="type">TotemPlPlaylistClass</span></a> structure are private and should never be accessed directly.</p>
 <div class="refsect3">
-<a name="id-1.2.3.10.3.5"></a><h4>Members</h4>
-<div class="informaltable"><table width="100%" border="0">
+<a name="TotemPlPlaylistClass.members"></a><h4>Members</h4>
+<div class="informaltable"><table class="informaltable" width="100%" border="0">
 <colgroup>
 <col width="300px" class="struct_members_name">
 <col class="struct_members_description">
 <col width="200px" class="struct_members_annotations">
 </colgroup>
-<tbody><tr>
-<td class="struct_member_name"><p><a href="https://developer.gnome.org/gobject/unstable/gobject-The-Base-Object-Type.html#GObjectClass"><span class="type">GObjectClass</span></a> <em class="structfield"><code><a name="TotemPlPlaylistClass.parent-class"></a>parent_class</code></em>;</p></td>
-<td class="struct_member_description"><p>the parent class</p></td>
-<td class="struct_member_annotations"> </td>
-</tr></tbody>
+<tbody></tbody>
 </table></div>
 </div>
 </div>
 </div>
 </div>
 <div class="footer">
-<hr>
-          Generated by GTK-Doc V1.21</div>
+<hr>Generated by GTK-Doc V1.25.1</div>
 </body>
 </html>

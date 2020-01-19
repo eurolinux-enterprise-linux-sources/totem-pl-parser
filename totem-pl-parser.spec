@@ -1,13 +1,11 @@
 Name:		totem-pl-parser
-Version:	3.10.5
+Version:	3.10.7
 Release:	1%{?dist}
 Summary:	Totem Playlist Parser library
 
-Group:		System Environment/Libraries
 License:	LGPLv2+
-Url:		http://www.gnome.org/projects/totem/
-Source0:	http://download.gnome.org/sources/%{name}/3.10/%{name}-%{version}.tar.xz
-Obsoletes:	totem-plparser
+Url:		https://wiki.gnome.org/Apps/Videos
+Source0:	https://download.gnome.org/sources/%{name}/3.10/%{name}-%{version}.tar.xz
 
 BuildRequires:	glib2-devel
 BuildRequires:	libxml2-devel
@@ -28,8 +26,6 @@ A library to parse and save playlists, as used in music and movie players.
 
 %package        devel
 Summary:        Development files for %{name}
-Group:          Development/Libraries
-Obsoletes:	totem-devel < 2.21.90
 Requires:       %{name}%{?_isa} = %{version}-%{release}
 
 %description    devel
@@ -47,7 +43,7 @@ autoreconf -f -i
 make %{?_smp_mflags}
 
 %install
-make install DESTDIR=$RPM_BUILD_ROOT
+%make_install
 find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 
 %find_lang %{name} --with-gnome
@@ -57,13 +53,15 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %postun -p /sbin/ldconfig
 
 %files -f %{name}.lang
-%defattr(-,root,root,-)
-%doc AUTHORS COPYING.LIB NEWS README
+%license COPYING.LIB
+%doc AUTHORS NEWS README
 %{_libdir}/*.so.*
 %{_libdir}/girepository-1.0/*.typelib
+%if 0%{?fedora}
+%{_libexecdir}/totem-pl-parser/
+%endif
 
 %files devel
-%defattr(-,root,root,-)
 %{_includedir}/*
 %{_libdir}/*.so
 %{_libdir}/pkgconfig/*.pc
@@ -72,6 +70,10 @@ find $RPM_BUILD_ROOT -name '*.la' -exec rm -f {} ';'
 %{_datadir}/gir-1.0/*.gir
 
 %changelog
+* Wed Sep 21 2016 Kalev Lember <klember@redhat.com> - 3.10.7-1
+- Update to 3.10.7
+- Resolves: #1387049
+
 * Thu Apr 30 2015 Bastien Nocera <bnocera@redhat.com> 3.10.5-1
 - Update to 3.10.5
 Resolves: #1174531

@@ -1,4 +1,4 @@
-From a03264b4b739eb1d75822ded7dff8ca9a42ef6b0 Mon Sep 17 00:00:00 2001
+From 270781537f0f3e2b6e6a1c7ac0e4e65e9150526e Mon Sep 17 00:00:00 2001
 From: Alex Larsson <alexl@redhat.com>
 Date: Tue, 1 Jun 2010 16:59:22 +0100
 Subject: [PATCH] Remove gmime dependency
@@ -16,7 +16,7 @@ Subject: [PATCH] Remove gmime dependency
  create mode 100644 plparse/totem-pl-parser-decode-date.h
 
 diff --git a/configure.ac b/configure.ac
-index 849eb2b..2124408 100644
+index 11e5938..66b0d0e 100644
 --- a/configure.ac
 +++ b/configure.ac
 @@ -71,35 +71,50 @@ pkg_modules="glib-2.0 >= $GLIB_REQS libxml-2.0 gthread-2.0 gio-2.0 >= $GIO_REQS
@@ -99,7 +99,7 @@ index 849eb2b..2124408 100644
  
  ##################################
 diff --git a/plparse/Makefile.am b/plparse/Makefile.am
-index 949975b..edbd653 100644
+index 688040e..6c6be4a 100644
 --- a/plparse/Makefile.am
 +++ b/plparse/Makefile.am
 @@ -48,6 +48,8 @@ dist_libtotem_plparser_la_SOURCES =		\
@@ -757,7 +757,7 @@ index 0000000..f1a7725
 +time_t g_mime_utils_header_decode_date (const char *str, int *tz_offset);
 +
 diff --git a/plparse/totem-pl-parser-podcast.c b/plparse/totem-pl-parser-podcast.c
-index 7e1b57f..175a0f8 100644
+index 263dccd..f64345f 100644
 --- a/plparse/totem-pl-parser-podcast.c
 +++ b/plparse/totem-pl-parser-podcast.c
 @@ -289,9 +289,6 @@ totem_pl_parser_add_rss (TotemPlParser *parser,
@@ -849,18 +849,18 @@ index 7e1b57f..175a0f8 100644
 -#endif /* !HAVE_GMIME */
  }
  
- static GByteArray *
-@@ -750,9 +730,6 @@ totem_pl_parser_add_itms (TotemPlParser *parser,
+ static char *
+@@ -656,9 +636,6 @@ totem_pl_parser_add_itms (TotemPlParser *parser,
  			  TotemPlParseData *parse_data,
  			  gpointer data)
  {
 -#ifndef HAVE_GMIME
 -	WARN_NO_GMIME;
 -#else
- 	GByteArray *content;
- 	char *itms_uri;
- 	GFile *feed_file;
-@@ -784,7 +761,6 @@ totem_pl_parser_add_itms (TotemPlParser *parser,
+ 	GFile *json_file, *feed_file;
+ 	TotemPlParserResult ret;
+ 	char *contents, *id, *json_uri, *feed_url;
+@@ -701,7 +678,6 @@ totem_pl_parser_add_itms (TotemPlParser *parser,
  	g_object_unref (feed_file);
  
  	return ret;
@@ -868,7 +868,7 @@ index 7e1b57f..175a0f8 100644
  }
  
  gboolean
-@@ -874,9 +850,6 @@ totem_pl_parser_add_opml (TotemPlParser *parser,
+@@ -791,9 +767,6 @@ totem_pl_parser_add_opml (TotemPlParser *parser,
  			  TotemPlParseData *parse_data,
  			  gpointer data)
  {
@@ -878,7 +878,7 @@ index 7e1b57f..175a0f8 100644
  	xml_node_t* doc;
  	char *contents, *uri;
  	gsize size;
-@@ -906,7 +879,6 @@ totem_pl_parser_add_opml (TotemPlParser *parser,
+@@ -823,7 +796,6 @@ totem_pl_parser_add_opml (TotemPlParser *parser,
  	xml_parser_free_tree (doc);
  
  	return TOTEM_PL_PARSER_RESULT_SUCCESS;
@@ -887,7 +887,7 @@ index 7e1b57f..175a0f8 100644
  
  #endif /* !TOTEM_PL_PARSER_MINI */
 diff --git a/plparse/totem-pl-parser.c b/plparse/totem-pl-parser.c
-index 934c250..f9ff3fb 100644
+index 527cfb4..80309c9 100644
 --- a/plparse/totem-pl-parser.c
 +++ b/plparse/totem-pl-parser.c
 @@ -132,16 +132,13 @@
@@ -908,7 +908,7 @@ index 934c250..f9ff3fb 100644
  #include "totem-pl-parser-wm.h"
  #include "totem-pl-parser-qt.h"
  #include "totem-pl-parser-pls.h"
-@@ -2332,7 +2329,6 @@ totem_pl_parser_parse_duration (const char *duration, gboolean debug)
+@@ -2348,7 +2345,6 @@ totem_pl_parser_parse_duration (const char *duration, gboolean debug)
  guint64
  totem_pl_parser_parse_date (const char *date_str, gboolean debug)
  {
@@ -916,7 +916,7 @@ index 934c250..f9ff3fb 100644
  	GTimeVal val;
  
  	g_return_val_if_fail (date_str != NULL, -1);
-@@ -2346,9 +2342,6 @@ totem_pl_parser_parse_date (const char *date_str, gboolean debug)
+@@ -2362,9 +2358,6 @@ totem_pl_parser_parse_date (const char *date_str, gboolean debug)
  	D(g_message ("Failed to parse duration '%s' using the ISO8601 parser", date_str));
  	/* Fall back to RFC 2822 date parsing */
  	return g_mime_utils_header_decode_date (date_str, NULL);
@@ -940,5 +940,5 @@ index 16f9240..0830b7e 100644
  Libs.private: @LIBGCRYPT_LIBS@
  Cflags: -I${includedir}/totem-pl-parser/1/plparser @LIBGCRYPT_CFLAGS@
 -- 
-2.3.5
+2.7.4
 

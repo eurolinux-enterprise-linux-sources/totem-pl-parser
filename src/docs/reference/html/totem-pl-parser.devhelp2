@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8" standalone="no"?>
-<!DOCTYPE book PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "">
-<book xmlns="http://www.devhelp.net/book" title="Totem Playlist Parser Reference Manual" link="index.html" author="" name="totem-pl-parser" version="2" language="c">
+<book xmlns="http://www.devhelp.net/book" title="Totem Playlist Parser Reference Manual" link="index.html" author="" name="totem-pl-parser" version="2" language="c" online="http://library.gnome.org/devel/totem-pl-parser/">
   <chapters>
     <sub name="API Reference" link="api-reference.html">
       <sub name="TotemPlParser" link="TotemPlParser.html"/>
@@ -88,5 +87,21 @@
     <keyword type="struct" name="TotemPlPlaylist" link="TotemPlPlaylist.html#TotemPlPlaylist-struct"/>
     <keyword type="struct" name="TotemPlPlaylistClass" link="TotemPlPlaylist.html#TotemPlPlaylistClass"/>
     <keyword type="struct" name="TotemPlPlaylistIter" link="totem-pl-parser-TotemPlPlaylistIter.html#TotemPlPlaylistIter"/>
+    <keyword type="constant" name="TOTEM_PL_PARSER_RESULT_UNHANDLED" link="TotemPlParser.html#TOTEM-PL-PARSER-RESULT-UNHANDLED:CAPS"/>
+    <keyword type="constant" name="TOTEM_PL_PARSER_RESULT_ERROR" link="TotemPlParser.html#TOTEM-PL-PARSER-RESULT-ERROR:CAPS"/>
+    <keyword type="constant" name="TOTEM_PL_PARSER_RESULT_SUCCESS" link="TotemPlParser.html#TOTEM-PL-PARSER-RESULT-SUCCESS:CAPS"/>
+    <keyword type="constant" name="TOTEM_PL_PARSER_RESULT_IGNORED" link="TotemPlParser.html#TOTEM-PL-PARSER-RESULT-IGNORED:CAPS"/>
+    <keyword type="constant" name="TOTEM_PL_PARSER_RESULT_CANCELLED" link="TotemPlParser.html#TOTEM-PL-PARSER-RESULT-CANCELLED:CAPS"/>
+    <keyword type="constant" name="TOTEM_PL_PARSER_PLS" link="TotemPlParser.html#TOTEM-PL-PARSER-PLS:CAPS"/>
+    <keyword type="constant" name="TOTEM_PL_PARSER_M3U" link="TotemPlParser.html#TOTEM-PL-PARSER-M3U:CAPS"/>
+    <keyword type="constant" name="TOTEM_PL_PARSER_M3U_DOS" link="TotemPlParser.html#TOTEM-PL-PARSER-M3U-DOS:CAPS"/>
+    <keyword type="constant" name="TOTEM_PL_PARSER_XSPF" link="TotemPlParser.html#TOTEM-PL-PARSER-XSPF:CAPS"/>
+    <keyword type="constant" name="TOTEM_PL_PARSER_IRIVER_PLA" link="TotemPlParser.html#TOTEM-PL-PARSER-IRIVER-PLA:CAPS"/>
+    <keyword type="constant" name="TOTEM_PL_PARSER_ERROR_NO_DISC" link="TotemPlParser.html#TOTEM-PL-PARSER-ERROR-NO-DISC:CAPS"/>
+    <keyword type="constant" name="TOTEM_PL_PARSER_ERROR_MOUNT_FAILED" link="TotemPlParser.html#TOTEM-PL-PARSER-ERROR-MOUNT-FAILED:CAPS"/>
+    <keyword type="constant" name="TOTEM_PL_PARSER_ERROR_EMPTY_PLAYLIST" link="TotemPlParser.html#TOTEM-PL-PARSER-ERROR-EMPTY-PLAYLIST:CAPS"/>
+    <keyword type="member" name="TotemPlParserClass.entry-parsed" link="TotemPlParser.html#TotemPlParserClass.entry-parsed"/>
+    <keyword type="member" name="TotemPlParserClass.playlist-started" link="TotemPlParser.html#TotemPlParserClass.playlist-started"/>
+    <keyword type="member" name="TotemPlParserClass.playlist-ended" link="TotemPlParser.html#TotemPlParserClass.playlist-ended"/>
   </functions>
 </book>
